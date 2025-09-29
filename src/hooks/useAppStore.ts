@@ -1,37 +1,21 @@
+// src/hooks/useAppStore.ts
 import { create } from "zustand";
+import { ScenePhase } from "@/constants/ScenePhase";
 
 interface AppState {
-  overlayDone: boolean;
-  modelEntryDone: boolean;
-  heroAnimationDone: boolean;
-  currentScene: string;
+  scenePhase: ScenePhase;
+  setScenePhase: (phase: ScenePhase) => void;
 
-  setOverlayDone: () => void;
-  setModelEntryDone: () => void;
-  setHeroAnimationDone: () => void;
-  setCurrentScene: (scene: string) => void;
+  emptySlotRef: HTMLDivElement | null;
+  setEmptySlotRef: (ref: HTMLDivElement | null) => void;
 }
 
 export const useAppStore = create<AppState>((set) => ({
-  overlayDone: false,
-  modelEntryDone: false,
-  heroAnimationDone: false,
-  currentScene: "intro",
-
-  setOverlayDone: () => {
-    console.log("✅ Overlay done");
-    set({ overlayDone: true });
+  scenePhase: ScenePhase.LOADING,
+  setScenePhase: (phase) => {
+    console.log("🔁 Switching to:", phase);
+    set({ scenePhase: phase });
   },
-  setModelEntryDone: () => {
-    console.log("✅ Model entry animation done");
-    set({ modelEntryDone: true });
-  },
-  setHeroAnimationDone: () => {
-    console.log("✅ Hero animation done");
-    set({ heroAnimationDone: true });
-  },
-  setCurrentScene: (scene) => {
-    console.log("🔁 Switching scene to:", scene);
-    set({ currentScene: scene });
-  },
+  emptySlotRef: null,
+  setEmptySlotRef: (ref) => set({ emptySlotRef: ref }),
 }));

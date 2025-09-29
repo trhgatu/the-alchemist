@@ -1,23 +1,30 @@
+// PreLoaderOverlay.tsx
 "use client";
 
-import { useRef, useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
+import { useAppStore } from "@/hooks/useAppStore";
 import { useProgressLoader } from "@/hooks/useProgressLoader";
+import { ScenePhase } from "@/constants/ScenePhase";
 
-export default function LoaderWithOverlay({ onComplete }: { onComplete: () => void }) {
+export default function LoaderWithOverlay() {
   const [ready, setReady] = useState(false);
   const count = useProgressLoader(() => setReady(true));
+
+  const { scenePhase, setScenePhase } = useAppStore();
 
   const leftRef = useRef<HTMLDivElement>(null);
   const rightRef = useRef<HTMLDivElement>(null);
   const countRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!ready) return;
-
+    if (!ready || scenePhase !== ScenePhase.MODEL_ENTRY) return;
+    console.log("🎯 Overlay animation triggered");
     const tl = gsap.timeline({
       defaults: { ease: "power4.inOut" },
-      onComplete,
+      onComplete: () => {
+        setScenePhase(ScenePhase.OVERLAY_ANIMATION);
+      },
     });
 
     tl.to(countRef.current, { autoAlpha: 0, duration: 1 }, 0);
@@ -25,7 +32,7 @@ export default function LoaderWithOverlay({ onComplete }: { onComplete: () => vo
     tl.set(rightRef.current, { borderLeftColor: "#ffffff" }, 0.2);
     tl.to(leftRef.current, { xPercent: -100, duration: 2 }, 0.3);
     tl.to(rightRef.current, { xPercent: 100, duration: 2 }, 0.3);
-  }, [ready, onComplete]);
+  }, [ready, scenePhase, setScenePhase]);
 
   return (
     <div className="fixed inset-0 z-[9999] pointer-events-none">
