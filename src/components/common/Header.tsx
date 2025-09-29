@@ -1,12 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { ScrambleTextPlugin } from "gsap/ScrambleTextPlugin";
-import { useIntroStore } from "@/app/stores/introStore";
 
 gsap.registerPlugin(ScrollTrigger, ScrambleTextPlugin);
 
@@ -17,14 +16,7 @@ const navItems = [
 ];
 
 export default function Header() {
-  const { hasIntroPlayed } = useIntroStore();
   const [menuOpen, setMenuOpen] = useState(false);
-
-  useEffect(() => {
-    if (hasIntroPlayed) {
-      gsap.fromTo(".header", { y: -40, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.6 });
-    }
-  }, [hasIntroPlayed]);
 
   useGSAP(() => {
     if (!window.matchMedia("(min-width: 768px)").matches) return;
@@ -79,10 +71,10 @@ export default function Header() {
             <a
               key={item.href}
               href={item.href}
-              className="nav-link relative inline-block font-mono text-white/80 transition hover:text-cyan-300"
+              className="relative inline-block font-mono text-white/80 transition hover:text-cyan-300"
               aria-label={item.label}
             >
-              <span className="font-share-tech-mono nav-anim px-4 py-2 whitespace-nowrap">{item.label}</span>
+              <span className="font-share-tech-mono px-4 py-2 whitespace-nowrap">{item.label}</span>
             </a>
           ))}
         </nav>

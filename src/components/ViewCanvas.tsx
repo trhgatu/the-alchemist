@@ -21,7 +21,7 @@ export default function ViewCanvas() {
           transform: "translateX(-50%)",
           overflow: "hidden",
           pointerEvents: "none",
-          zIndex: 30
+          zIndex: 20
         }}
         shadows
         dpr={[1, 1.5]}
