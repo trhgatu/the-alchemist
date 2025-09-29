@@ -8,7 +8,6 @@ import { InfiniteMovingCards } from '@/components/ui/infinite-moving-cards';
 import { GridCardsSkeleton } from '../skeletons';
 import { Project } from '@/types';
 import { Spotlight } from '@/components/ui/spotlight-new';
-import { FallingLeaves } from '@/features/forge/home/components/FallingLeaves';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -38,10 +37,7 @@ export function TheCraftings({
 
   return (
     <section id="craftings" className="relative w-full py-20 overflow-hidden">
-      <FallingLeaves />
       <Spotlight />
-
-      {/* Sun top-left */}
       <div className="absolute top-0 left-0 w-40 h-40 md:w-60 md:h-60 z-20">
         <Image
           src="/assets/images/the-sun-left.svg"
@@ -51,7 +47,6 @@ export function TheCraftings({
         />
       </div>
 
-      {/* Moon top-right */}
       <div className="absolute top-0 right-0 w-40 h-40 md:w-60 md:h-60 z-20">
         <Image
           src="/assets/images/the-moon-right.svg"
@@ -61,7 +56,6 @@ export function TheCraftings({
         />
       </div>
 
-      {/* Cloud spanning below them */}
       <div className="absolute top-10 left-0 right-0 w-full z-10 cloud-parallax">
         <Image
           src="/assets/images/cloud.avif"
