@@ -141,7 +141,7 @@ export const TechArsenal = () => {
           alt="The Sun"
           width={250}
           height={250}
-          className="opacity-20 select-none animate-pulse"
+          className="opacity-20 select-none "
         />
       </div>
 
@@ -161,7 +161,7 @@ export const TechArsenal = () => {
           alt="The Sun"
           width={250}
           height={250}
-          className="opacity-20 select-none animate-pulse"
+          className="opacity-20 select-none "
         />
       </div>
       <div className="relative z-10 w-full py-20 max-w-5xl px-6 text-center">
