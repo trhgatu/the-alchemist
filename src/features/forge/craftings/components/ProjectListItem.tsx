@@ -17,7 +17,7 @@ export const ProjectListItem = ({ project }: ProjectListItemProps) => (
   >
     <div className="relative w-20 h-20 rounded-lg overflow-hidden flex-shrink-0">
       <Image
-        src={project.image || ''}
+        src={project.thumbnail || ''}
         alt={project.name}
         fill
         className="object-cover"

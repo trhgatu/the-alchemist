@@ -18,7 +18,7 @@ export const FoundationCard = ({
   >
     <div className={`relative ${featured ? 'h-64' : 'h-48'}`}>
       <Image
-        src={foundation.image ?? 'https://placehold.co/600x400.png'}
+        src={foundation.thumbnail ?? 'https://placehold.co/600x400.png'}
         alt={foundation.name}
         fill
         className="object-cover group-hover:scale-105 transition-transform duration-300"
