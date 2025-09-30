@@ -61,9 +61,8 @@ export const TechArsenal = () => {
         scrollTrigger: {
           trigger: '#tech-arsenal',
           start: 'top 60%',
-          end: 'bottom 80%',
+          end: 'bottom 100%',
           scrub: true,
-          markers: true,
         },
       }
     );

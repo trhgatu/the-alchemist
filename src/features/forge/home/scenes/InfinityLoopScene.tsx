@@ -41,7 +41,6 @@ export default function InfinityLoopScene() {
         start: "top center",
         end: "bottom center",
         scrub: 1,
-        markers: true,
       },
     });
 
@@ -67,7 +66,6 @@ export default function InfinityLoopScene() {
         start: "top center",
         end: "bottom center",
         scrub: 1,
-        markers: true,
       },
     });
 

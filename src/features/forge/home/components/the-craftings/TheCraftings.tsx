@@ -24,7 +24,7 @@ export function TheCraftings({
 }: ProjectHomeProps) {
   useEffect(() => {
     gsap.to('.cloud-parallax', {
-      yPercent: 30, // chỉnh độ sâu parallax
+      yPercent: 30,
       ease: 'none',
       scrollTrigger: {
         trigger: '#craftings',
@@ -90,7 +90,7 @@ export function TheCraftings({
             <InfiniteMovingCards
               items={projects}
               direction="left"
-              speed="slow"
+              speed="normal"
             />
           )}
         </div>
