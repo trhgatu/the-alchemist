@@ -94,10 +94,10 @@ export default function CraftingDetailPage() {
         </div>
 
         {/* IMAGE */}
-        {item.image && (
+        {item.thumbnail && (
           <div className="mb-8 rounded-xl overflow-hidden aspect-video bg-zinc-900 shadow-lg border-2 border-zinc-800">
             <Image
-              src={item.image}
+              src={item.thumbnail}
               alt={item.name}
               width={800}
               height={400}
@@ -105,6 +105,7 @@ export default function CraftingDetailPage() {
             />
           </div>
         )}
+
 
         {/* DESCRIPTION */}
         <div className="prose prose-invert max-w-none text-gray-200 mb-8 text-lg">
