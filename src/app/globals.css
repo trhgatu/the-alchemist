@@ -15,6 +15,10 @@
   .font-kings {
     font-family: var(--font-kings);
   }
+
+  .font-beau-rivage {
+    font-family: var(--font-beau-rivage);
+  }
 }
 
 /* #smooth-content {
