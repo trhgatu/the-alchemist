@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Share_Tech_Mono, Space_Mono, Kings } from "next/font/google";
+import { Share_Tech_Mono, Space_Mono, Kings, Beau_Rivage } from "next/font/google";
 import "./globals.css";
 import ViewCanvas from "@/components/ViewCanvas";
 import LenisScroll from "@/components/common/LenisScroll";
@@ -7,6 +7,13 @@ import { ThemeProvider } from "@/components/shared/ThemeProvider";
 import { ReduxProvider } from "@/store/provider";
 import { ReactQueryProvider } from "@/app/providers/react-query-provider";
 import { siteConfig } from "@/config/site";
+
+const beauRivage = Beau_Rivage({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-beau-rivage",
+  display: "swap",
+})
 
 const kings = Kings({
   subsets: ["latin"],
@@ -45,7 +52,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${spaceMono.variable} ${shareTechMono.variable} ${kings.variable}`}>
+    <html lang="en" className={`${spaceMono.variable} ${shareTechMono.variable} ${kings.variable} ${beauRivage.variable}`}>
       <body suppressHydrationWarning={false}>
         <div className="lenis-body">
           <div className="lenis-content">
