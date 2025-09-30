@@ -3,10 +3,10 @@ export interface Project {
   slug: string;
   name: string;
   description: string;
-  image?: string;
+  thumbnail?: string;
+  images?: string[];
   tech?: {
     name: string;
-    icon: string;
   }[];
   category?: string;
   projectStatus: 'Completed' | 'In Progress';

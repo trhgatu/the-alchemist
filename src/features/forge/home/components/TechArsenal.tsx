@@ -11,36 +11,9 @@ import { useEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/all';
 import { useGSAP } from '@gsap/react';
+import { SKILLS } from '@/constants/Skills';
 
 gsap.registerPlugin(useGSAP, ScrollTrigger)
-
-type Skill = {
-  name: string;
-  iconPath: string;
-  category: 'frontend' | 'backend' | 'database' | 'tools' | 'language';
-};
-
-const skills: Skill[] = [
-  { name: 'HTML5', category: 'frontend', iconPath: '/assets/icons/HTML5.svg' },
-  { name: 'CSS3', category: 'frontend', iconPath: '/assets/icons/CSS3.svg' },
-  { name: 'TypeScript', category: 'language', iconPath: '/assets/icons/TypeScript.svg' },
-  { name: 'JavaScript', category: 'language', iconPath: '/assets/icons/JavaScript.svg' },
-  { name: 'ReactJS', category: 'frontend', iconPath: '/assets/icons/React.svg' },
-  { name: 'NextJS', category: 'frontend', iconPath: '/assets/icons/Next.js.svg' },
-  { name: 'TailwindCSS', category: 'frontend', iconPath: '/assets/icons/TailwindCSS.svg' },
-  { name: 'GSAP', category: 'frontend', iconPath: '/assets/icons/gsap.svg' },
-  { name: 'Node.js', category: 'backend', iconPath: '/assets/icons/Node.js.svg' },
-  { name: 'ExpressJS', category: 'backend', iconPath: '/assets/icons/Express.svg' },
-  { name: 'NestJS', category: 'backend', iconPath: '/assets/icons/Nest.js.svg' },
-  { name: 'MongoDB', category: 'database', iconPath: '/assets/icons/MongoDB.svg' },
-  { name: 'GraphQL', category: 'backend', iconPath: '/assets/icons/GraphQL.svg' },
-  { name: 'Redis', category: 'backend', iconPath: '/assets/icons/Redis.svg' },
-  { name: 'Git', category: 'tools', iconPath: '/assets/icons/Git.svg' },
-  { name: 'VSCode', category: 'tools', iconPath: '/assets/icons/VSCode.svg' },
-  { name: 'Postman', category: 'tools', iconPath: '/assets/icons/Postman.svg' },
-  { name: 'Docker', category: 'tools', iconPath: '/assets/icons/Docker.svg' },
-  { name: 'Redux', category: 'frontend', iconPath: '/assets/icons/Redux.svg' },
-];
 
 export const TechArsenal = () => {
   useEffect(() => {
@@ -176,7 +149,7 @@ export const TechArsenal = () => {
         <TooltipProvider delayDuration={100}>
           <div className="max-w-3xl mx-auto">
             <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-6">
-              {skills.map((skill) => (
+              {SKILLS.map((skill) => (
                 <Tooltip key={skill.name}>
                   <TooltipTrigger asChild>
                     <div className="flex flex-col tech-icon items-center justify-center cursor-pointer group">

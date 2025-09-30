@@ -18,13 +18,13 @@ export const ForgeFooter = () => (
         <Link href="/" passHref>
           <span className="cursor-pointer px-1 transition hover:underline hover:decoration-white hover:text-white">Forge</span>
         </Link>
-        <Link href="/about" passHref>
+        <Link href="/forge/craftings" passHref>
           <span className="cursor-pointer px-1 transition hover:underline hover:decoration-white hover:text-white">Craftings</span>
         </Link>
-        <Link href="/projects" passHref>
+        <Link href="/forge/timeline" passHref>
           <span className="cursor-pointer px-1 transition hover:underline hover:decoration-white hover:text-white">Timeline</span>
         </Link>
-        <Link href="/contact" passHref>
+        <Link href="/forge/the-alchemist" passHref>
           <span className="cursor-pointer px-1 transition hover:underline hover:decoration-white hover:text-white">The Alchemist</span>
         </Link>
       </div>

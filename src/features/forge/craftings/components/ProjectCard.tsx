@@ -16,7 +16,7 @@ export const ProjectCard = ({ project }: ProjectCardProps) => (
   >
     <div className="relative h-48">
       <Image
-        src={project.image ?? 'https://placehold.co/600x400.png'}
+        src={project.thumbnail ?? 'https://placehold.co/600x400.png'}
         alt={project.name}
         fill
         className="object-cover group-hover:scale-105 transition-transform duration-300"

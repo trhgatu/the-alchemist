@@ -13,7 +13,7 @@ export const FeaturedProjectCard = ({ project }: FeaturedProjectCardProps) => (
   >
     <div className="relative h-64">
       <Image
-        src={project.image ?? 'https://placehold.co/600x400.png'}
+        src={project.thumbnail ?? 'https://placehold.co/600x400.png'}
         alt={project.name}
         fill
         className="object-cover group-hover:scale-105 transition-transform duration-300"
