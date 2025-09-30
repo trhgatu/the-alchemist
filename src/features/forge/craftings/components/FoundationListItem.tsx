@@ -10,7 +10,7 @@ export const FoundationListItem = ({ foundation }: { foundation: Project }) => (
   >
     <div className="relative w-20 h-20 rounded-lg overflow-hidden flex-shrink-0">
       <Image
-        src={foundation.image || ''}
+        src={foundation.thumbnail || ''}
         alt={foundation.name}
         fill
         className="object-cover"
