@@ -26,7 +26,7 @@ export const GridCards = ({ items, className }: GridCardsProps) => {
             className="flex flex-col gap-3 group"
           >
             <Image
-              src={item.image ?? 'https://placehold.co/600x400.png'}
+              src={item.thumbnail ?? 'https://placehold.co/600x400.png'}
               alt={item.name}
               className="rounded-lg w-full h-36 object-cover mb-2 border border-zinc-700 group-hover:opacity-90 transition"
               width={400}
