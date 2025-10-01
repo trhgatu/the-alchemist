@@ -19,6 +19,15 @@
   .font-beau-rivage {
     font-family: var(--font-beau-rivage);
   }
+  .font-metamorphous {
+    font-family: var(--font-metamorphous);
+  }
+  .font-cinzel-decorative {
+    font-family: var(--font-cinzel-decorative);
+  }
+  .font-oldenburg {
+    font-family: var(--font-oldenburg);
+  }
 }
 
 /* #smooth-content {

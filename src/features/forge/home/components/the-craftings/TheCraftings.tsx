@@ -66,8 +66,7 @@ export function TheCraftings({
         />
       </div>
 
-      {/* Content */}
-      <div className="relative max-w-7xl mx-auto text-center px-6 z-30">
+      <div className="relative text-white max-w-7xl mx-auto text-center px-6 z-30">
         <h2 className="text-5xl md:text-7xl font-kings tracking-wide drop-shadow-sm mb-4">
           The Craftings
         </h2>

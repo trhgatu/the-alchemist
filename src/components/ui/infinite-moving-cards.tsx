@@ -82,7 +82,6 @@ export const InfiniteMovingCards = ({
                 className="rounded-md w-full h-36 object-cover mb-3 border border-zinc-200 dark:border-zinc-700 group-hover:opacity-90 transition"
               />
 
-              {/* Extra images preview */}
               {item.images && item.images.length > 1 && (
                 <div className="flex gap-2 overflow-x-auto mb-3">
                   {item.images.slice(1, 4).map((img, idx) => (
@@ -105,7 +104,6 @@ export const InfiniteMovingCards = ({
                 {item.description}
               </p>
 
-              {/* Tech stack with icons */}
               <div className="flex flex-wrap gap-2 mt-2 items-center">
                 {item.tech?.slice(0, 4).map((tech) => (
                   <div
@@ -118,27 +116,6 @@ export const InfiniteMovingCards = ({
                 ))}
               </div>
             </Link>
-
-            <div className="flex gap-4 mt-3 text-xs">
-              {item.link && (
-                <a
-                  href={item.link}
-                  target="_blank"
-                  className="text-orange-500 hover:underline"
-                >
-                  Demo
-                </a>
-              )}
-              {item.repo && (
-                <a
-                  href={item.repo}
-                  target="_blank"
-                  className="text-zinc-500 hover:underline"
-                >
-                  Code
-                </a>
-              )}
-            </div>
           </li>
         ))}
       </ul>

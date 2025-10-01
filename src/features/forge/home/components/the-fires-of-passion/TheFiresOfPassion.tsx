@@ -47,18 +47,7 @@ export function TheFiresOfPassion() {
 
   return (
     <section id="fires" className="relative min-h-screen">
-      <div className="relative text-center px-2 sm:px-4 md:px-12 lg:px-24 max-w-5xl mx-auto py-28 md:py-40 select-none">
-        {/*  <Image
-          src="/assets/images/flower_divider.svg"
-          alt="Medieval Frame"
-          fill
-          className="absolute hidden md:block inset-0 w-full h-full object-cover pointer-events-none select-none opacity-20 z-0"
-          style={{
-            filter: 'drop-shadow(0 0 24px #fbbf2499) drop-shadow(0 0 8px #fff4)',
-          }}
-          priority
-        /> */}
-
+      <div className="relative text-white text-center px-2 sm:px-4 md:px-12 lg:px-24 max-w-5xl mx-auto py-28 md:py-40 select-none">
         <div className="relative z-20">
           <p className="text-lg sm:text-xl md:text-4xl font-serif italic mb-6 drop-shadow">
             “I don&apos;t just write code. I temper spirit into logic.”
@@ -71,10 +60,6 @@ export function TheFiresOfPassion() {
             am.
           </p>
         </div>
-
-        <div className="absolute inset-0 bg-gradient-radial from-orange-900/10 via-transparent to-transparent rounded-lg pointer-events-none z-10" />
-
-
       </div>
       {stars.map((star) => (
         <Image
