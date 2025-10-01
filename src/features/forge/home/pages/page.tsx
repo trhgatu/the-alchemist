@@ -15,7 +15,7 @@ import { usePublicProjects } from '@/features/forge/craftings/hooks';
 import LoaderWithOverlay from '@/components/PreLoaderOverlay';
 import { ScenePhase } from '@/constants/ScenePhase';
 import ScrollVelocity from '@/features/forge/home/components/ScrollVelocity';
-import { CraftingLegacies } from '@/features/forge/home/components/the-alchemist/CraftingLegacies';
+import { CraftingLegacies } from '@/features/forge/home/components/CraftingLegacies';
 
 export default function ForgeHome() {
   const { scenePhase } = useAppStore();
@@ -38,7 +38,7 @@ export default function ForgeHome() {
           'Forging Ideas Into Reality - Code is the Fire, Imagination the Anvil - Every Bug is a Spark, Every Fix a Blade - Tempered by Challenge, Sharpened by Failure - Building Dreams One Line at a Time - The Forge Never Sleeps -',
         ]}
         velocity={80}
-        className="md:text-4xl font-beau-rivage text-light text-4xl border-t border-b border-white/20 py-6 italic tracking-wide"
+        className="md:text-4xl font-beau-rivage text-white text-4xl border-t border-b border-white/20 py-6 italic tracking-wide"
       />
       <TheCraftings
         projects={project}

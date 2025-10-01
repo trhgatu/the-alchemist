@@ -84,21 +84,17 @@ export function TheAlchemist() {
       id="about"
       className="about min-h-screen relative z-0 border-t border-white/20"
     >
-       <div className="absolute inset-0 -z-10 opacity-30">
-          <Image
-            src="/assets/images/frame.svg"
-            alt="Background Frame"
-            fill
-            className="object-cover"
-          />
-        </div>
+      <div className="absolute inset-0 -z-10 opacity-30">
+        <Image
+          src="/assets/images/frame.svg"
+          alt="Background Frame"
+          fill
+          className="object-cover"
+        />
+      </div>
       <div className="about-wrapper max-w-7xl mx-auto py-20 relative">
-
-
         <FallingLeaves />
-
-        {/* Title */}
-        <div className="about-title-container text-center mb-16">
+        <div className="about-title-container text-center text-white md:mb-16">
           <div className="about-title line-1 text-4xl md:text-7xl font-kings tracking-wide">
             {'Forged in Code'.split('').map((char, idx) => (
               <span key={idx} className="inline-block">
@@ -116,10 +112,8 @@ export function TheAlchemist() {
           </div>
         </div>
 
-        {/* 2 cột */}
-        <div className="about-content-container font-serif pt-10">
+        <div className="about-content-container font-serif">
           <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 px-6 items-center">
-            {/* Left: text */}
             <div className="space-y-12">
               <p className="about-desc-1 text-xl md:text-2xl leading-relaxed">
                 {'A passionate software engineer — an alchemist of code who forges ideas where logic meets imagination. Every challenge is a forge, every bug a spark, and from each trial I carry forward one mission: to grow, to learn, and to shape raw concepts into lasting creations.'
@@ -155,8 +149,6 @@ export function TheAlchemist() {
                   ))}
               </p>
             </div>
-
-            {/* Right: avatar */}
             <div className="flex justify-center">
               <TheAlchemistCard />
             </div>

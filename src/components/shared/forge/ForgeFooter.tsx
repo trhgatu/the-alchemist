@@ -15,19 +15,36 @@ export const ForgeFooter = () => (
   <footer className="w-full bg-black border-t border-white/10 text-white font-mono relative overflow-hidden">
     <div className="max-w-7xl mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-3 items-center gap-6">
       <div className="flex flex-col gap-7 text-lg md:text-base">
-        <Link href="/" passHref>
-          <span className="cursor-pointer px-1 transition hover:underline hover:decoration-white hover:text-white">Forge</span>
+        <Link
+          href="/"
+          className="nav-link relative cursor-pointer px-1 text-neutral-600 dark:text-neutral-300"
+        >
+          <span className="nav-anim block">Forge</span>
         </Link>
-        <Link href="/forge/craftings" passHref>
-          <span className="cursor-pointer px-1 transition hover:underline hover:decoration-white hover:text-white">Craftings</span>
+
+        <Link
+          href="/forge/craftings"
+          className="nav-link relative cursor-pointer px-1 text-neutral-600 dark:text-neutral-300"
+        >
+          <span className="nav-anim block">Craftings</span>
         </Link>
-        <Link href="/forge/timeline" passHref>
-          <span className="cursor-pointer px-1 transition hover:underline hover:decoration-white hover:text-white">Timeline</span>
+
+        <Link
+          href="/forge/timeline"
+          className="nav-link relative cursor-pointer px-1 text-neutral-600 dark:text-neutral-300"
+        >
+          <span className="nav-anim block">Timeline</span>
         </Link>
-        <Link href="/forge/the-alchemist" passHref>
-          <span className="cursor-pointer px-1 transition hover:underline hover:decoration-white hover:text-white">The Alchemist</span>
+
+        <Link
+          href="/forge/the-alchemist"
+          className="nav-link relative cursor-pointer px-1 text-neutral-600 dark:text-neutral-300"
+        >
+          <span className="nav-anim block">The Alchemist</span>
         </Link>
       </div>
+
+
 
       <div className="flex flex-col items-center justify-center relative">
         <span className="text-7xl md:text-9xl font-black tracking-tight font-kings leading-tight whitespace-pre special-font drop-shadow-2xl select-none">
