@@ -19,7 +19,7 @@ export function CraftingLegacies() {
       ease: "power2.inOut",
       scrollTrigger: {
         trigger: sectionRef.current,
-        start: "top center",
+        start: "top 40%",
         end: "bottom center",
         scrub: true,
       },
@@ -75,7 +75,7 @@ export function CraftingLegacies() {
           width={800}
           height={800}
           priority
-          className="object-contain opacity-10"
+          className="object-cover opacity-10"
         />
       </div>
       <h2 className="crafting-title text-5xl md:text-7xl font-kings tracking-wide mb-8 text-white">
