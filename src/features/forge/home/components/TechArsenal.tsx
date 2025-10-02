@@ -17,6 +17,22 @@ gsap.registerPlugin(useGSAP, ScrollTrigger)
 
 export const TechArsenal = () => {
   useEffect(() => {
+    gsap.fromTo(
+      '.arsenal-title span',
+      { opacity: 0, y: 40, filter: 'blur(6px)' },
+      {
+        opacity: 1,
+        y: 0,
+        filter: 'blur(0px)',
+        stagger: 0.05,
+        duration: 0.8,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: '#tech-arsenal',
+          start: 'top 70%',
+        },
+      }
+    );
 
     const techTL = gsap.timeline({})
     techTL.fromTo(
@@ -137,8 +153,12 @@ export const TechArsenal = () => {
         />
       </div>
       <div className="relative z-10 w-full pt-28 pb-20 max-w-5xl px-6 text-center">
-        <h2 className="text-4xl md:text-6xl font-kings text-black mb-4 tracking-wide drop-shadow-sm">
-          The Arsenal of Code
+        <h2 className="arsenal-title text-4xl md:text-6xl font-kings text-black mb-4 tracking-wide drop-shadow-sm">
+          {'The Arsenal of Code'.split('').map((char, i) => (
+            <span key={i} className="inline-block">
+              {char === ' ' ? '\u00A0' : char}
+            </span>
+          ))}
         </h2>
         <p className="text-black mb-10 italic text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
           Every line of code is forged with purpose.
