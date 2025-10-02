@@ -75,7 +75,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${spaceMono.variable} ${oldenBurg.variable} ${cinzelDecorative.variable} ${shareTechMono.variable} ${kings.variable} ${metamorphous.variable} ${beauRivage.variable}`}>
       <body suppressHydrationWarning={false}>
-        <div id="page-wrapper" className="overflow-x-hidden">
+        <div id="page-wrapper">
           <div className="lenis-body">
             <div className="lenis-content">
               <ReduxProvider>

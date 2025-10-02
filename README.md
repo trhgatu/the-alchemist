@@ -1,36 +1,140 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🌌 trhgatu-3d-portfolio
 
-## Getting Started
+> **"Forged in pixels, powered by code."**
+> A personal 3D-coded forge that blends creativity, technology, and identity.
 
-First, run the development server:
+## 🔥 About
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+**`trhgatu-3d-portfolio`** is not just a portfolio — it’s a **forge**.
+This project represents a journey of a software engineer who forges solutions with passion, tempers logic with imagination, and builds legacies through code.
+
+Developed with cutting-edge tools like **React Three Fiber**, **GSAP**, **Next.js**, and **TailwindCSS**, the site is a multi-section, multi-layered experience that combines 3D interactivity, scroll animations, and personal storytelling.
+
+---
+
+## 🌐 Live Demo
+
+🔗 [https://thatu.is-a.dev](https://thatu.is-a.dev)
+
+> **Note**: Cold start time may occur due to backend hosted on Render.
+
+---
+
+## 🧰 Tech Stack
+
+| Frontend     | Animation / 3D         | Tooling & Others      |
+|--------------|------------------------|------------------------|
+| Next.js (App Router) | React Three Fiber (r3f) | TailwindCSS |
+| ReactJS      | GSAP (ScrollTrigger)   | Zustand, React Query   |
+| TypeScript   | Drei, Leva             | i18n, Zod              |
+| Framer Motion | PostCSS               | Custom theme provider  |
+
+---
+
+## 🧪 Features
+
+- ⚙️ **Preload with cinematic overlay**
+- 🌐 **Internationalization (English / Vietnamese)**
+- 🎞️ **Hero section with GSAP + 3D animation**
+- 🪶 **Falling leaves, floating objects, dynamic text effects**
+- 🧱 **Tech stack showcase with custom icons and animated entry**
+- 🧠 **Personal quotes and philosophies throughout the scroll**
+- 📂 **Project gallery with filters, list/grid toggle, skeleton loading**
+- 📜 **Timeline visualization for developer journey**
+- 📸 **Personalized visuals and identity (photo, typography, environment)**
+
+---
+
+## 📂 Folder Structure (Simplified)
+
+```
+trhgatu-3d-portfolio/
+├── public/                # Static assets (images, HDRI, etc.)
+├── src/
+│   ├── app/               # App router pages (Next.js)
+│   ├── components/        # UI, shared and layout components
+│   ├── features/forge/    # Feature-based modules (home, craftings, timeline)
+│   ├── hooks/             # Custom hooks (lenis scroll, scramble text, etc.)
+│   ├── lib/               # Axios + utilities
+│   ├── store/             # Zustand slices
+│   ├── constants/         # Scene phases, skills map
+│   ├── config/            # Site config
+│   └── types/             # Global TypeScript types
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+> 💡 **3D scenes, preload, animations, and scroll logic** are all modularized inside `features/forge/home/` and `components/shared/`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🚀 Getting Started
 
-## Learn More
+### 1. Clone the repo
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+git clone https://github.com/trhgatu/trhgatu-3d-portfolio.git
+cd trhgatu-3d-portfolio
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 2. Install dependencies
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+pnpm install
+```
 
-## Deploy on Vercel
+> Or use `npm install` / `yarn` depending on your setup.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 3. Run locally
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+pnpm dev
+```
+
+### 4. Build for production
+
+```bash
+pnpm build && pnpm start
+```
+
+---
+
+## 🌍 Environment Setup
+
+You may optionally configure these (not required for local preview):
+
+```env
+NEXT_PUBLIC_API_URL=https://your-backend-api
+NEXT_PUBLIC_DEFAULT_LOCALE=en
+```
+
+> Backend is expected to provide `projects`, `templates`, etc. via RESTful API.
+
+---
+
+## 🎨 Inspirations
+
+- **The Alchemist** by Paulo Coelho — a recurring theme throughout the site.
+- Anime-inspired visual metaphors (fire, forge, moon, mountains, blade).
+- Portfolio pioneers like [fizzi-demo.vercel.app](https://fizzi-demo.vercel.app/), [codium.dev](https://www.codium.dev/), and [juno](https://junocollege.com/).
+
+---
+
+## 🛠️ Todo / Ideas
+
+- [ ] Custom loading animation with dynamic splash
+- [ ] Sound layer integration (subtle forge ambiance)
+- [ ] More scroll-based narrative scenes (e.g. “Trial by Fire”)
+- [ ] Adaptive 3D scenes for mobile
+- [ ] GitHub Contributions Heatmap (3D style)
+
+---
+
+## 🧙 Author
+
+> **Anh Tú** – _The alchemist of code._
+> trhgatu | [GitHub](https://github.com/trhgatu) | [Portfolio](https://thatu.is-a.dev)
+
+---
+
+## 📜 License
+
+MIT © 2025 – crafted with pixels, powered by code.

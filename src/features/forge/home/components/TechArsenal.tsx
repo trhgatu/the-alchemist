@@ -136,7 +136,7 @@ export const TechArsenal = () => {
           className="opacity-20 select-none "
         />
       </div>
-      <div className="relative z-10 w-full py-20 max-w-5xl px-6 text-center">
+      <div className="relative z-10 w-full pt-28 pb-20 max-w-5xl px-6 text-center">
         <h2 className="text-4xl md:text-6xl font-kings text-black mb-4 tracking-wide drop-shadow-sm">
           The Arsenal of Code
         </h2>
