@@ -33,6 +33,23 @@ export function TheCraftings({
         scrub: true,
       },
     });
+
+    gsap.fromTo(
+      '.craftings-title span',
+      { opacity: 0, y: 40, filter: 'blur(6px)' },
+      {
+        opacity: 1,
+        y: 0,
+        filter: 'blur(0px)',
+        stagger: 0.05,
+        duration: 0.8,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: '#craftings',
+          start: 'top 70%',
+        },
+      }
+    );
   }, []);
 
   return (
@@ -67,9 +84,14 @@ export function TheCraftings({
       </div>
 
       <div className="relative text-white max-w-7xl mx-auto text-center px-6 z-30">
-        <h2 className="text-5xl md:text-7xl font-kings tracking-wide drop-shadow-sm mb-4">
-          The Craftings
+        <h2 className="craftings-title text-5xl md:text-7xl font-kings tracking-wide drop-shadow-sm mb-4">
+          {'The Craftings'.split('').map((char, i) => (
+            <span key={i} className="inline-block">
+              {char === ' ' ? '\u00A0' : char}
+            </span>
+          ))}
         </h2>
+
         <p className="font-serif italic text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-12">
           Forged in fire, each project is a testament to battles fought, lessons
           learned, and dreams brought to life through code and will.
