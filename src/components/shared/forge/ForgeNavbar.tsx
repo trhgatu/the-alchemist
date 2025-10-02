@@ -34,6 +34,10 @@ export function NavbarForge() {
       name: 'Timeline',
       link: '/forge/timeline',
     },
+    {
+      name: 'The Alchemist',
+      link: '/forge/the-alchemist',
+    },
   ];
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);

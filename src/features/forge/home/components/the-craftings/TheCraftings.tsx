@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/all';
 import { InfiniteMovingCards } from '@/components/ui/infinite-moving-cards';
-import { GridCardsSkeleton } from '../skeletons';
+import { InfiniteMovingCardsSkeleton } from '../skeletons';
 import { Project } from '@/types';
 import { Spotlight } from '@/components/ui/spotlight-new';
 
@@ -98,7 +98,7 @@ export function TheCraftings({
         </p>
         <div>
           {isLoading ? (
-            <GridCardsSkeleton />
+            <InfiniteMovingCardsSkeleton />
           ) : isError ? (
             <div className="text-red-400 text-sm italic text-center mt-4">
               Failed to load projects.
