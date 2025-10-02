@@ -25,6 +25,17 @@ export function CraftingLegacies() {
       },
     });
 
+    gsap.to('.legacies-parallax', {
+      yPercent: -20,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '#legacies',
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: true,
+      },
+    });
+
     gsap.to(
       sectionRef.current.querySelectorAll(
         '.crafting-title span, .crafting-text span, .crafting-quote span'
@@ -114,7 +125,7 @@ export function CraftingLegacies() {
       ref={sectionRef}
       className="legacies relative min-h-screen flex flex-col items-center overflow-hidden justify-center text-center px-6"
     >
-      <div className="absolute inset-0 z-0">
+      <div className="legacies-parallax absolute inset-0 z-0">
         <Image
           src="/assets/images/adventure.svg"
           alt="Desert Adventure"
@@ -135,13 +146,14 @@ export function CraftingLegacies() {
 
       <p className="crafting-text text-xl md:text-2xl leading-relaxed max-w-3xl text-white">
         {'Every line of code is not just a solution — it’s a legacy, a trace left behind to inspire, empower, and endure.'
-          .split('')
-          .map((char, i) => (
-            <span key={i} className="inline-block">
-              {char === ' ' ? '\u00A0' : char}
+          .split(' ')
+          .map((word, i) => (
+            <span key={i} className="inline-block mr-2">
+              {word}
             </span>
           ))}
       </p>
+
 
       <div className="crafting-quote relative mt-12 italic text-lg md:text-xl max-w-2xl text-white">
         <Image
@@ -160,13 +172,14 @@ export function CraftingLegacies() {
         />
         <span className="relative z-10 block leading-relaxed text-3xl font-oldenburg">
           {'And, when you want something, all the universe conspires in helping you to achieve it.'
-            .split('')
-            .map((char, i) => (
-              <span key={i} className="inline-block">
-                {char === ' ' ? '\u00A0' : char}
+            .split(' ')
+            .map((word, i) => (
+              <span key={i} className="inline-block mr-2">
+                {word}
               </span>
             ))}
         </span>
+
         <div className="mt-4 relative z-10 not-italic">
           — Paulo Coelho, <span className="italic">The Alchemist</span>
         </div>
