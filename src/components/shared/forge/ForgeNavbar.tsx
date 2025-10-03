@@ -16,6 +16,7 @@ import { ScrambleTextPlugin, ScrollTrigger } from 'gsap/all';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { useScrambleText } from '@/hooks/useScrambleText';
+import { LanguageSelector } from '@/components/shared/LanguageSelector';
 
 gsap.registerPlugin(useGSAP, ScrollTrigger, ScrambleTextPlugin)
 
@@ -47,6 +48,7 @@ export function NavbarForge() {
       <NavBody>
         <NavbarLogo />
         <NavItems items={navItems} />
+        <LanguageSelector/>
       </NavBody>
       <MobileNav>
         <MobileNavHeader>

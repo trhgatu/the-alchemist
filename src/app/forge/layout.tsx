@@ -1,5 +1,4 @@
 import { ForgeFooter, NavbarForge } from '@/components/shared/forge';
-import { LanguageSelector } from '@/components/shared';
 import SplashCursor from '@/features/forge/home/components/SplashCursor';
 
 export default function ForgeLayout({
@@ -14,7 +13,6 @@ export default function ForgeLayout({
         <main className=" overflow-x-hidden">{children}</main>
         <div className="fixed bottom-6 left-6 z-50 pointer-events-auto">
           <SplashCursor/>
-          <LanguageSelector />
         </div>
       </div>
       <ForgeFooter />

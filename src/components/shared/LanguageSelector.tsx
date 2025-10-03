@@ -22,7 +22,7 @@ export const LanguageSelector = () => {
   };
 
   return (
-    <div className="flex items-center gap-2 text-sm">
+    <div className="flex relative items-center gap-2 text-sm">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button

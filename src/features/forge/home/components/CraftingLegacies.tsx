@@ -100,23 +100,6 @@ export function CraftingLegacies() {
         },
       }
     );
-
-    gsap.fromTo(
-      '.apos',
-      { opacity: 0, scale: 0.8, rotate: -10 },
-      {
-        opacity: 0.25,
-        scale: 1,
-        rotate: 0,
-        duration: 1.2,
-        stagger: 0.2,
-        ease: 'back.out(1.7)',
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top 75%',
-        },
-      }
-    );
   }, []);
 
   return (
@@ -161,14 +144,14 @@ export function CraftingLegacies() {
           alt="quote open mark"
           width={64}
           height={64}
-          className="apos absolute -top-6 -left-10 opacity-0 select-none pointer-events-none"
+          className=" absolute -top-6 -left-10 opacity-30 select-none pointer-events-none"
         />
         <Image
           src="/assets/images/apos.svg"
           alt="quote close mark"
           width={64}
           height={64}
-          className="apos absolute -bottom-6 -right-10 opacity-0 rotate-180 select-none pointer-events-none"
+          className=" absolute -bottom-6 -right-10 opacity-30 rotate-180 select-none pointer-events-none"
         />
         <span className="relative z-10 block leading-relaxed text-3xl font-oldenburg">
           {'And, when you want something, all the universe conspires in helping you to achieve it.'
