@@ -2,8 +2,8 @@
 
 import { ForgeFooter, NavbarForge } from '@/components/shared/forge';
 import SplashCursor from '@/features/forge/home/components/SplashCursor';
-import { View } from '@react-three/drei';
-import InfinityLoopScene from '@/features/forge/home/scenes/InfinityLoopScene';
+// import { View } from '@react-three/drei';
+// import InfinityLoopScene from '@/features/forge/home/scenes/InfinityLoopScene';
 
 export default function ForgeLayout({
   children,

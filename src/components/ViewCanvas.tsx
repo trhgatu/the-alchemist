@@ -3,7 +3,6 @@
 import { Canvas } from "@react-three/fiber";
 import { Preload, View } from "@react-three/drei";
 import { Suspense } from "react";
-import dynamic from "next/dynamic";
 
 
 export default function ViewCanvas() {

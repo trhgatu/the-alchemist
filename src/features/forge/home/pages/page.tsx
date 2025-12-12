@@ -10,8 +10,8 @@ import {
   TheFiresOfPassion,
   TheAlchemist,
 } from '@/features/forge/home/components';
-import { View } from '@react-three/drei';
-import InfinityLoopScene from '@/features/forge/home/scenes/InfinityLoopScene';
+/* import { View } from '@react-three/drei';
+import InfinityLoopScene from '@/features/forge/home/scenes/InfinityLoopScene'; */
 import { useAppStore, useLang } from '@/hooks';
 import { usePublicProjects } from '@/features/forge/craftings/hooks';
 // import LoaderWithOverlay from '@/components/PreLoaderOverlay';

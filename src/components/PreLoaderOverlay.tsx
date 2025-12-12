@@ -1,4 +1,3 @@
-// PreLoaderOverlay.tsx
 "use client";
 
 import { useEffect, useRef, useState } from "react";
@@ -12,14 +11,15 @@ export default function LoaderWithOverlay() {
   const count = useProgressLoader(() => setReady(true));
 
   const { scenePhase, setScenePhase } = useAppStore();
-
-  if (typeof window !== 'undefined' && sessionStorage.getItem("forge_visited")) return null;
-
   const leftRef = useRef<HTMLDivElement>(null);
   const rightRef = useRef<HTMLDivElement>(null);
   const countRef = useRef<HTMLDivElement>(null);
 
+  const isVisited = typeof window !== 'undefined' && sessionStorage.getItem("forge_visited");
+
   useEffect(() => {
+    if (isVisited) return;
+
     // Original logic: wait for MODEL_ENTRY
     if (ready && scenePhase === ScenePhase.MODEL_ENTRY) {
       console.log("🎯 Overlay animation triggered");
@@ -45,7 +45,9 @@ export default function LoaderWithOverlay() {
       // If we set to MODEL_ENTRY, the above effect will run in the next render cycle.
       setScenePhase(ScenePhase.MODEL_ENTRY);
     }
-  }, [ready, scenePhase, setScenePhase]);
+  }, [ready, scenePhase, setScenePhase, isVisited]);
+
+  if (isVisited) return null;
 
   return (
     <div className="fixed inset-0 z-[9999] pointer-events-none">

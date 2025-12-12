@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { IconFlame, IconCode, IconTemplate } from '@tabler/icons-react';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { ViewMode, Category } from '@/types';
 import { useLang } from '@/hooks';
@@ -124,10 +123,6 @@ export default function CraftingsPage() {
 
   return (
     <div className="min-h-screen">
-      {/* Background layers - Removed for shared layout background */}
-
-
-      {/* Header */}
       <div className="relative overflow-hidden">
         <div className="relative max-w-7xl mx-auto px-4 py-16">
           <motion.div
@@ -174,8 +169,8 @@ export default function CraftingsPage() {
                     key={type}
                     onClick={() => setContentType(type)}
                     className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-all ${contentType === type
-                        ? 'bg-gradient-to-r from-red-600 to-orange-600 text-white shadow-lg'
-                        : 'text-gray-300 hover:text-white hover:bg-zinc-700'
+                      ? 'bg-gradient-to-r from-red-600 to-orange-600 text-white shadow-lg'
+                      : 'text-gray-300 hover:text-white hover:bg-zinc-700'
                       }`}
                   >
                     <Icon className="w-4 h-4" />
