@@ -16,7 +16,7 @@ export const HeroForgeEntry = () => {
   const animated = useRef(false);
 
   useGSAP(() => {
-    if (scenePhase !== ScenePhase.OVERLAY_ANIMATION || animated.current) return;
+    if ((scenePhase !== ScenePhase.OVERLAY_ANIMATION && scenePhase !== ScenePhase.HERO_ANIMATION) || animated.current) return;
     animated.current = true;
 
     const tl = gsap.timeline({ defaults: { ease: "power3.out", opacity: 1 } });
@@ -75,6 +75,7 @@ export const HeroForgeEntry = () => {
     });
 
     tl.call(() => {
+      sessionStorage.setItem("forge_visited", "true");
       setScenePhase(ScenePhase.HERO_ANIMATION);
     });
   }, [scenePhase]);

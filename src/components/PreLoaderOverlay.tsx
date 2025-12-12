@@ -13,25 +13,38 @@ export default function LoaderWithOverlay() {
 
   const { scenePhase, setScenePhase } = useAppStore();
 
+  if (typeof window !== 'undefined' && sessionStorage.getItem("forge_visited")) return null;
+
   const leftRef = useRef<HTMLDivElement>(null);
   const rightRef = useRef<HTMLDivElement>(null);
   const countRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!ready || scenePhase !== ScenePhase.MODEL_ENTRY) return;
-    console.log("🎯 Overlay animation triggered");
-    const tl = gsap.timeline({
-      defaults: { ease: "power4.inOut" },
-      onComplete: () => {
-        setScenePhase(ScenePhase.OVERLAY_ANIMATION);
-      },
-    });
+    // Original logic: wait for MODEL_ENTRY
+    if (ready && scenePhase === ScenePhase.MODEL_ENTRY) {
+      console.log("🎯 Overlay animation triggered");
+      const tl = gsap.timeline({
+        defaults: { ease: "power4.inOut" },
+        onComplete: () => {
+          setScenePhase(ScenePhase.OVERLAY_ANIMATION);
+        },
+      });
 
-    tl.to(countRef.current, { autoAlpha: 0, duration: 1 }, 0);
-    tl.set(leftRef.current, { borderRightColor: "#ffffff" }, 0.2);
-    tl.set(rightRef.current, { borderLeftColor: "#ffffff" }, 0.2);
-    tl.to(leftRef.current, { xPercent: -100, duration: 2 }, 0.3);
-    tl.to(rightRef.current, { xPercent: 100, duration: 2 }, 0.3);
+      tl.to(countRef.current, { autoAlpha: 0, duration: 1 }, 0);
+      tl.set(leftRef.current, { borderRightColor: "#ffffff" }, 0.2);
+      tl.set(rightRef.current, { borderLeftColor: "#ffffff" }, 0.2);
+      tl.to(leftRef.current, { xPercent: -100, duration: 2 }, 0.3);
+      tl.to(rightRef.current, { xPercent: 100, duration: 2 }, 0.3);
+    }
+    // New logic: if ready and still in LOADING (which means no model triggered MODEL_ENTRY),
+    // we should trigger it ourselves.
+    else if (ready && scenePhase === ScenePhase.LOADING) {
+      // Since the 3D model is gone, we can skip MODEL_ENTRY or transition to it.
+      // Let's transition to MODEL_ENTRY so the above effect picks it up,
+      // or just run the animation directly?
+      // If we set to MODEL_ENTRY, the above effect will run in the next render cycle.
+      setScenePhase(ScenePhase.MODEL_ENTRY);
+    }
   }, [ready, scenePhase, setScenePhase]);
 
   return (

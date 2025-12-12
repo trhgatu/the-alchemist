@@ -123,18 +123,9 @@ export default function CraftingsPage() {
   if (isError) return <p>Có lỗi xảy ra khi tải dữ liệu.</p>;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-zinc-900 via-black to-red-950">
-      {/* Background layers */}
-      <div className="absolute inset-0 bg-gradient-to-r from-red-900/20 to-orange-900/20 -z-10" />
-      <div className="absolute inset-0 -z-10 opacity-40">
-        <Image
-          src="/assets/images/frame.svg"
-          alt="Forge Background Frame"
-          fill
-          priority
-          className="object-cover object-center"
-        />
-      </div>
+    <div className="min-h-screen">
+      {/* Background layers - Removed for shared layout background */}
+
 
       {/* Header */}
       <div className="relative overflow-hidden">
@@ -182,11 +173,10 @@ export default function CraftingsPage() {
                   <button
                     key={type}
                     onClick={() => setContentType(type)}
-                    className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-all ${
-                      contentType === type
+                    className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-all ${contentType === type
                         ? 'bg-gradient-to-r from-red-600 to-orange-600 text-white shadow-lg'
                         : 'text-gray-300 hover:text-white hover:bg-zinc-700'
-                    }`}
+                      }`}
                   >
                     <Icon className="w-4 h-4" />
                     {type === 'all'
@@ -375,23 +365,23 @@ export default function CraftingsPage() {
                 ? filteredTemplates
                 : [...filteredProjects, ...filteredTemplates]
             ).length === 0 && (
-              <div className="text-center py-16">
-                <div className="text-gray-400 text-lg">
-                  No {contentType === 'all' ? 'craftings' : contentType} found
-                  matching your criteria.
+                <div className="text-center py-16">
+                  <div className="text-gray-400 text-lg">
+                    No {contentType === 'all' ? 'craftings' : contentType} found
+                    matching your criteria.
+                  </div>
+                  <button
+                    onClick={() => {
+                      setSelectedCategory('All');
+                      setSelectedTech([]);
+                      setSearchQuery('');
+                    }}
+                    className="mt-4 px-4 py-2 bg-gradient-to-r from-red-600 to-orange-600 text-white rounded-lg hover:from-red-700 hover:to-orange-700 transition-all shadow-lg"
+                  >
+                    Clear Filters
+                  </button>
                 </div>
-                <button
-                  onClick={() => {
-                    setSelectedCategory('All');
-                    setSelectedTech([]);
-                    setSearchQuery('');
-                  }}
-                  className="mt-4 px-4 py-2 bg-gradient-to-r from-red-600 to-orange-600 text-white rounded-lg hover:from-red-700 hover:to-orange-700 transition-all shadow-lg"
-                >
-                  Clear Filters
-                </button>
-              </div>
-            )}
+              )}
           </>
         )}
       </div>

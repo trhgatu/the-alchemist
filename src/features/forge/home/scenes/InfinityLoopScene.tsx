@@ -1,5 +1,7 @@
 "use client";
 
+import { usePathname } from "next/navigation";
+
 import { useEffect, useRef } from "react";
 import { Group } from "three";
 import gsap from "gsap";
@@ -13,6 +15,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function InfinityLoopScene() {
   const modelRef = useRef<Group>(null);
+  const pathname = usePathname();
   const { scenePhase, setScenePhase } = useAppStore();
 
   useEffect(() => {
@@ -79,7 +82,7 @@ export default function InfinityLoopScene() {
       aboutTl.kill();
       techTl.kill();
     };
-  }, []);
+  }, [pathname]);
 
   return (
     <group>

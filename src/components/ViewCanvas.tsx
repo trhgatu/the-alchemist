@@ -5,10 +5,6 @@ import { Preload, View } from "@react-three/drei";
 import { Suspense } from "react";
 import dynamic from "next/dynamic";
 
-const Loader = dynamic(
-  () => import("@react-three/drei").then((mod) => mod.Loader),
-  { ssr: false },
-);
 
 export default function ViewCanvas() {
   return (
@@ -32,10 +28,9 @@ export default function ViewCanvas() {
       >
         <Suspense fallback={null}>
           <View.Port />
-          <Preload all/>
+          <Preload all />
         </Suspense>
       </Canvas>
-      <Loader />
     </>
   );
 }
