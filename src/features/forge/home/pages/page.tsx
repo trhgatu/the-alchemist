@@ -1,7 +1,7 @@
 // src/app/forge/page.tsx
 'use client';
 
-import dynamic from 'next/dynamic';
+// import dynamic from 'next/dynamic';
 
 import {
   HeroForgeEntry,
@@ -16,30 +16,35 @@ import { useAppStore, useLang } from '@/hooks';
 import { usePublicProjects } from '@/features/forge/craftings/hooks';
 // import LoaderWithOverlay from '@/components/PreLoaderOverlay';
 import { ScenePhase } from '@/constants/ScenePhase';
-
-const LoaderWithOverlay = dynamic(
-  () => import('@/components/PreLoaderOverlay'),
-  { ssr: false }
-);
 import ScrollVelocity from '@/features/forge/home/components/ScrollVelocity';
 import { CraftingLegacies } from '@/features/forge/home/components/CraftingLegacies';
 import { useGSAP } from '@gsap/react';
 
 
-export default function ForgeHome() {
+interface ForgeHomeProps {
+  isVisited?: boolean;
+}
+
+export default function ForgeHome({ isVisited = false }: ForgeHomeProps) {
   const { scenePhase, setScenePhase } = useAppStore();
   const lang = useLang();
   const { data: project = [] } = usePublicProjects(lang);
 
   useGSAP(() => {
-    if (typeof window !== 'undefined' && sessionStorage.getItem("forge_visited")) {
-      setScenePhase(ScenePhase.HERO_ANIMATION);
+    // If visited, ensure we skip to HERO_ANIMATION immediately on client
+    // Or let the store handle it if we sync state.
+    // For now, if isVisited is true, we might want to ensure scenePhase is correct?
+    // But since SSR won't render loader, we just need to ensure client doesn't flicker it back.
+    if (typeof window !== 'undefined' && (isVisited || sessionStorage.getItem("forge_visited"))) {
+      if (scenePhase === ScenePhase.LOADING) {
+        setScenePhase(ScenePhase.HERO_ANIMATION);
+      }
     }
-  }, [setScenePhase]);
+  }, [setScenePhase, isVisited]);
 
   return (
     <section>
-      {scenePhase !== ScenePhase.HERO_ANIMATION && <LoaderWithOverlay />}
+      {/* {!isVisited && scenePhase !== ScenePhase.HERO_ANIMATION && <LoaderWithOverlay />} */}
 
       <HeroForgeEntry />
 

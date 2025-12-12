@@ -96,8 +96,11 @@ export default function SplashCursor({
       TRANSPARENT
     };
 
-    const { gl, ext } = getWebGLContext(canvas);
-    if (!gl || !ext) return;
+    const context = getWebGLContext(canvas);
+    if (!context.gl || !context.ext) return;
+
+    const gl = context.gl;
+    const ext = context.ext;
 
     if (!ext.supportLinearFiltering) {
       config.DYE_RESOLUTION = 256;
@@ -121,7 +124,8 @@ export default function SplashCursor({
       }
 
       if (!gl) {
-        throw new Error('Unable to initialize WebGL.');
+        console.error('Unable to initialize WebGL.');
+        return { gl: null, ext: null };
       }
 
       const isWebGL2 = 'drawBuffers' in gl;

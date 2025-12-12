@@ -82,8 +82,9 @@ export default function RootLayout({
                 <ReactQueryProvider>
                   <ThemeProvider
                     attribute="class"
-                    defaultTheme="system"
-                    enableSystem
+                    defaultTheme="dark"
+                    forcedTheme="dark"
+                    enableSystem={false}
                     disableTransitionOnChange
                   >
                     <LenisScroll />

@@ -27,6 +27,9 @@ export default function LoaderWithOverlay() {
         defaults: { ease: "power4.inOut" },
         onComplete: () => {
           setScenePhase(ScenePhase.OVERLAY_ANIMATION);
+          // Set cookie for server-side check
+          document.cookie = "forge_visited=true; path=/; max-age=31536000"; // 1 year
+          sessionStorage.setItem("forge_visited", "true");
         },
       });
 
