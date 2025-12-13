@@ -2,8 +2,7 @@
 
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
-import { usePathname } from 'next/navigation';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 
 // Register GSAP plugins (if not already registered globally)
 // gsap.registerPlugin(useGSAP); // Usually done in a global provider, but safe here too
@@ -11,7 +10,6 @@ import { useRef, useState } from 'react';
 export default function Template({ children }: { children: React.ReactNode }) {
     const containerRef = useRef<HTMLDivElement>(null);
     const overlayRef = useRef<HTMLDivElement>(null);
-    const pathname = usePathname();
 
     return (
         <div ref={containerRef} className="relative min-h-screen">
@@ -77,7 +75,7 @@ function ScriptForAnimation({ overlayRef }: { overlayRef: React.RefObject<HTMLDi
                 // Hard edge for ink, fuzzy edge for water? Let's go sort of hard but with displacement
                 const mask = `radial-gradient(circle at center, transparent ${p}%, black ${p + 10}%)`;
                 overlay.style.maskImage = mask;
-                overlay.style.WebkitMaskImage = mask;
+                overlay.style.webkitMaskImage = mask;
             },
             onComplete: () => {
                 overlay.style.display = 'none';

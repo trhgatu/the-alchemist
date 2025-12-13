@@ -87,7 +87,7 @@ export default function TimelinePage() {
     });
 
     // 2. Node & Content Reveals
-    const nodes = gsap.utils.toArray('.timeline-node');
+    const nodes = gsap.utils.toArray('.timeline-node') as Element[];
     nodes.forEach((node: Element) => {
       gsap.from(node, {
         scale: 0,
@@ -101,7 +101,7 @@ export default function TimelinePage() {
       });
     });
 
-    const cards = gsap.utils.toArray('.timeline-card');
+    const cards = gsap.utils.toArray('.timeline-card') as Element[];
     cards.forEach((card: Element, i: number) => {
       const isLeft = i % 2 === 0;
       gsap.from(card, {
