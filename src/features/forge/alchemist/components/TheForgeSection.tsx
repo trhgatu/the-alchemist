@@ -54,8 +54,8 @@ export function TheForgeSection() {
         });
 
         // Timeline Steps - Hammer Blow Effect
-        const steps = gsap.utils.toArray('.forge-step');
-        steps.forEach((step: any, i) => {
+        const steps = gsap.utils.toArray('.forge-step') as Element[];
+        steps.forEach((step: Element) => {
             gsap.fromTo(
                 step,
                 { opacity: 0, scale: 0.9, y: 50 },
@@ -91,7 +91,7 @@ export function TheForgeSection() {
 
             <div className="relative z-10 container mx-auto px-6">
                 <h2 className="text-5xl md:text-7xl font-kings text-white text-center mb-12 drop-shadow-[0_0_10px_rgba(255,200,200,0.2)]">
-                    The Alchemist's Code
+                    The Alchemist&apos;s Code
                 </h2>
                 <p className="font-space-mono text-center text-gray-500 max-w-2xl mx-auto mb-32">
                     The principles that govern every line of code I write.
@@ -111,7 +111,7 @@ export function TheForgeSection() {
                             <div className="w-full md:w-[45%] p-6 border-l-2 md:border-l-0 md:border-b-2 border-red-900/30 bg-black/60 backdrop-blur-sm group hover:border-red-500 transition-colors duration-500">
                                 <div className="font-cinzel-decorative text-red-500 mb-2 text-sm tracking-widest uppercase flex items-center gap-2 md:justify-end">
                                     {index % 2 !== 0 && <span>{step.element}</span>}
-                                    <span>// {step.subtitle}</span>
+                                    <span>{'//'} {step.subtitle}</span>
                                     {index % 2 === 0 && <span>{step.element}</span>}
                                 </div>
                                 <h3 className="font-kings text-3xl text-white mb-4 group-hover:text-red-500 transition-colors">{step.phase}</h3>

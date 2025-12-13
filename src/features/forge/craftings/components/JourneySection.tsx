@@ -61,7 +61,7 @@ export function JourneySection() {
 
         // Milestone Stones
         const stones = gsap.utils.toArray('.milestone-stone');
-        stones.forEach((stone: any) => {
+        stones.forEach((stone: Element) => {
             gsap.fromTo(
                 stone,
                 { opacity: 0, y: 100, scale: 0.8 },

@@ -119,11 +119,11 @@ export function AwakeningSection() {
                 <div className="h-px w-32 bg-gradient-to-r from-transparent via-red-500 to-transparent opacity-50" />
 
                 <p className="font-cinzel-decorative text-xl text-red-400 tracking-widest uppercase">
-                    "The spark isn't magic. It's friction."
+                    &quot;The spark isn&apos;t magic. It&apos;s friction.&quot;
                 </p>
 
                 <p className="font-space-mono text-gray-400 text-lg leading-relaxed max-w-2xl px-4">
-                    <span className="text-white">Creation is violent.</span> It requires tearing apart silence to make sound. Breaking emptiness to build structure. That first line of code wasn't just logic—it was an act of defiance against the void.
+                    <span className="text-white">Creation is violent.</span> It requires tearing apart silence to make sound. Breaking emptiness to build structure. That first line of code wasn&apos;t just logic—it was an act of defiance against the void.
                 </p>
 
             </div>

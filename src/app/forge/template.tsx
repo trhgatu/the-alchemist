@@ -12,43 +12,6 @@ export default function Template({ children }: { children: React.ReactNode }) {
     const containerRef = useRef<HTMLDivElement>(null);
     const overlayRef = useRef<HTMLDivElement>(null);
     const pathname = usePathname();
-    const [isAnimating, setIsAnimating] = useState(true);
-
-    useGSAP(() => {
-        if (!overlayRef.current) return;
-
-        // Reset state for new page load
-        setIsAnimating(true);
-
-        // THE INK BLEED EFFECT
-        // 1. Initial State: Screen is covered in black (Overlay visible)
-        // 2. Animation: A "hole" opens up with jagged, heavy turbulence edges (Ink receding)
-
-        const tl = gsap.timeline({
-            onComplete: () => {
-                setIsAnimating(false);
-                // Optional: Hide overlay completely to prevent interaction blocking
-                gsap.set(overlayRef.current, { display: 'none' });
-            }
-        });
-
-        // Current clip-path: Circle(0% at 50% 50%) -> Screen full black
-        // Target clip-path: Circle(150% at 50% 50%) -> Screen full revealed
-        // We use a custom SVG filter (defined in layout or global) to distort this circle
-
-        tl.fromTo(overlayRef.current,
-            {
-                clipPath: 'circle(0% at 50% 50%)',
-                filter: 'url(#ink-paper-texture)', // Assuming we'll add this filter
-            },
-            {
-                clipPath: 'circle(150% at 50% 50%)',
-                duration: 1.5,
-                ease: 'power2.inOut',
-            }
-        );
-
-    }, [pathname]); // Re-run on route change
 
     return (
         <div ref={containerRef} className="relative min-h-screen">
@@ -70,37 +33,10 @@ export default function Template({ children }: { children: React.ReactNode }) {
                 </defs>
             </svg>
 
-            {/* THE VEIL (Overlay) */}
-            {/* We invert the logic: The DIV is the CONTENT revealing itself?
-                No, usually overlay is on top.
-                If overlay is black, and we clip-path circle 0% -> 150%, the overlay GROWS.
-                So we start with full black overlay?
-
-                Correction:
-                To "Reveal" content from black:
-                Method A: Overlay is Black. ClipPath starts at circle(150%) (Full visible) -> shrinks to 0%? No.
-                Method B: Overlay is Black. ClipPath starts at "Inverted Circle"? CSS doesn't support inverted shapes easily without mask-composite.
-
-                Method C (Simplest):
-                The Overlay surrounds the content? No.
-
-                Let's use mask-image instead of clip-path for "Holed" overlay.
-                mask-image: radial-gradient(circle, transparent 0%, black 0%);
-                Animate the transparent stop from 0% to 150%.
-            */}
-
-            {/*
-                Update: Changed pointer-events-none to pointer-events-auto initially
-                to BLOCK interactions until the reveal is done.
-            */}
             <div
                 ref={overlayRef}
                 className="fixed inset-0 bg-black z-[100] pointer-events-auto"
                 style={{
-                    // Masking logic:
-                    // Black pixels = Visible Overlay (Screen Black)
-                    // Transparent pixels = Invisible Overlay (Content Visible)
-                    // We want a hole expanding from center.
                     maskImage: 'radial-gradient(circle at center, transparent 0%, black 0%)',
                     WebkitMaskImage: 'radial-gradient(circle at center, transparent 0%, black 0%)',
                     filter: 'url(#ink-bleed-edge)' // Apply the uneven edge effect
@@ -115,7 +51,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
 }
 
 // Separate component to handle the logic cleanly or just use inline GSAP above
-function ScriptForAnimation({ overlayRef }: { overlayRef: any }) {
+function ScriptForAnimation({ overlayRef }: { overlayRef: React.RefObject<HTMLDivElement | null> }) {
     useGSAP(() => {
         // Animate the mask-image gradient stops
         // Since we can't easily animate complex gradients with simple tweens,

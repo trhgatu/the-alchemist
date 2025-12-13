@@ -99,8 +99,8 @@ export function PhilosopherPathSection() {
 
                 <div className="vision-text max-w-2xl font-space-mono text-gray-300 text-lg leading-relaxed mb-16">
                     <p className="mb-6">
-                        "I am no longer just a builder of things. I am a student of the craft.
-                        The code is simply the hammer; the mind is the steel."
+                        &quot;I am no longer just a builder of things. I am a student of the craft.
+                        The code is simply the hammer; the mind is the steel.&quot;
                     </p>
                     <p className="text-sm text-gray-400">
                         My journey is not towards a destination, but towards a deeper understanding of the art itself.

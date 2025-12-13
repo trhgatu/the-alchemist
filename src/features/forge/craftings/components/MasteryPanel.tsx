@@ -100,7 +100,7 @@ export function MasteryPanel() {
 
                     <div className="text-center mt-16">
                         <p className="font-space-mono text-xs text-gray-500 italic">
-                            "To know ten thousand things, know one well." — Miyamoto Musashi
+                            &quot;To know ten thousand things, know one well.&quot; — Miyamoto Musashi
                         </p>
                     </div>
                 </div>

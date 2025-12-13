@@ -205,7 +205,7 @@ export default function CraftingDetailPage() {
           {/* Meta Badges */}
           <div className="hero-meta flex justify-center gap-4 mb-6 font-space-mono text-xs uppercase tracking-[0.2em] text-red-500">
             <span>{item.type || 'Undefined'}</span>
-            <span>//</span>
+            <span>{'//'}</span>
             <span>{item.year || '20XX'}</span>
           </div>
 
@@ -260,7 +260,7 @@ export default function CraftingDetailPage() {
 
               {/* Tech Stack Sigils */}
               <div>
-                <h3 className="text-xl font-space-mono text-red-500 mb-6 uppercase tracking-widest text-sm">Alchemy Components</h3>
+                <h3 className="text-xl font-space-mono text-red-500 mb-6 uppercase tracking-widest">Alchemy Components</h3>
                 <div className="flex flex-wrap gap-4">
                   {item.tech?.map((tech) => (
                     <div key={tech.name} className="group relative px-6 py-3 border border-white/10 bg-white/5 hover:border-red-500/50 transition-all duration-300 backdrop-blur-sm cursor-default">

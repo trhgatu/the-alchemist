@@ -77,9 +77,8 @@ export function ArsenalGrid() {
     useGSAP(() => {
         if (!sectionRef.current || !containerRef.current) return;
 
-        const cards = containerRef.current.children;
+
         // Width: 220 card + 32 gap = 252. Use 260 safe estimate.
-        const totalWidth = cards.length * 260;
 
         // Horizontal Scroll Animation with Kinetic Skew
         const scrollTween = gsap.to(containerRef.current, {
@@ -108,7 +107,7 @@ export function ArsenalGrid() {
         });
 
         // Parallax for Card Content (Internal Depth)
-        gsap.utils.toArray('.artifact-card-bg').forEach((bg: any) => {
+        (gsap.utils.toArray('.artifact-card-bg') as Element[]).forEach((bg: Element) => {
             gsap.to(bg, {
                 xPercent: 20,
                 ease: 'none',
@@ -213,7 +212,7 @@ export function ArsenalGrid() {
                                 </h3>
 
                                 <p className="font-space-mono text-[9px] text-gray-500 uppercase tracking-widest mb-1">
-                                    {item.type} <span className="text-red-900 mx-1">//</span> {item.year}
+                                    {item.type} <span className="text-red-900 mx-1">{'//'}</span> {item.year}
                                 </p>
 
                                 <p className="font-space-mono text-[9px] text-gray-400 leading-relaxed mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-75 max-h-0 group-hover:max-h-20 overflow-hidden text-ellipsis line-clamp-3">
