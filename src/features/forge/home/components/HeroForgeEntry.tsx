@@ -12,8 +12,10 @@ gsap.registerPlugin(useGSAP);
 export const HeroForgeEntry = () => {
 
   const { scenePhase, setScenePhase } = useAppStore();
-  const scope = useRef(null);
+  const scope = useRef<HTMLDivElement>(null);
   const animated = useRef(false);
+  const bgRef = useRef<HTMLImageElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
     if ((scenePhase !== ScenePhase.OVERLAY_ANIMATION && scenePhase !== ScenePhase.HERO_ANIMATION) || animated.current) return;
@@ -23,46 +25,48 @@ export const HeroForgeEntry = () => {
 
     tl.set(scope.current, { autoAlpha: 1 });
 
-    tl.to(".hero-text-mini span", {
-      opacity: 1,
-      y: 0,
-      duration: 0.6,
-      stagger: 0.03,
-    })
-      .to(
-        ".hero-text-name span",
+    // Intro Sequence
+    tl.fromTo(".hero-text-mini span",
+      { y: 20, opacity: 0 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        stagger: 0.03,
+      })
+      .fromTo(".hero-text-name span",
+        { y: 30, opacity: 0 },
         {
           opacity: 1,
           y: 0,
-          duration: 0.8,
+          duration: 1,
           stagger: 0.06,
-        },
-        "-=0.4"
-      )
-      .to(
-        ".hero-title span",
+        }, "-=0.4")
+      .fromTo(".hero-title span",
+        { y: 20, opacity: 0 },
         {
           opacity: 1,
           y: 0,
           duration: 1,
           stagger: 0.04,
-        },
-        "-=0.6"
-      )
-      .from(".hero-subtitle", {
-        opacity: 0,
-        y: 20,
-        duration: 0.6,
-      })
-      .from(
-        ".hero-description",
+        }, "-=0.6")
+      .fromTo(".hero-subtitle",
+        { y: 20, opacity: 0 },
         {
-          opacity: 0,
-          y: 20,
+          opacity: 1,
+          y: 0,
           duration: 0.6,
-        },
-        "-=0.4"
-      )
+        }, "-=0.2")
+      .fromTo(".hero-description span",
+        { y: 10, opacity: 0 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.5,
+          stagger: 0.02,
+        }, "-=0.4");
+
+    // Scroll Parallax
     gsap.to(".hero-frame", {
       yPercent: 15,
       ease: "none",
@@ -78,39 +82,82 @@ export const HeroForgeEntry = () => {
       sessionStorage.setItem("forge_visited", "true");
       setScenePhase(ScenePhase.HERO_ANIMATION);
     });
+
+    // Ambient Breathing (Cloud)
+    gsap.to(bgRef.current, {
+      scale: 1.05,
+      duration: 10,
+      repeat: -1,
+      yoyo: true,
+      ease: "sine.inOut"
+    });
+
   }, [scenePhase]);
 
+  // Mouse Parallax Update
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!bgRef.current || !contentRef.current) return;
+    const { clientX, clientY, currentTarget } = e;
+    const { width, height } = currentTarget.getBoundingClientRect();
+
+    const xPos = (clientX / width - 0.5);
+    const yPos = (clientY / height - 0.5);
+
+    // Cloud (Mid Background)
+    gsap.to(bgRef.current, {
+      x: xPos * -30,
+      y: yPos * -30,
+      duration: 1,
+      ease: "power2.out"
+    });
+
+    // Content (Foreground - Moves most)
+    gsap.to(contentRef.current, {
+      x: xPos * 15,
+      y: yPos * 15,
+      duration: 1,
+      ease: "power2.out"
+    });
+  };
+
   const name = "trhgatu";
+  const introText = "I am";
   const firstTitle = "Software";
   const secondTitle = "Engineer";
-  const introText = "Hi, I'm";
+  const descriptionText = '"I do not just write code; I transmute problems into elegant solutions. Standing at the intersection of raw engineering and digital art."';
 
   return (
     <section
       id='hero'
       ref={scope}
-      className="hero relative opacity-0 min-h-screen flex items-center text-center text-white">
+      onMouseMove={handleMouseMove}
+      className="hero relative opacity-0 min-h-screen flex items-center justify-center text-center text-white overflow-hidden"
+    >
+      {/* --- LAYER 1: CLOUD (Background) --- */}
       <Image
+        ref={bgRef}
         src="/assets/images/cloud.avif"
         alt="Frame"
         fill
-        className="hero-frame absolute inset-0 z-10 object-contain"
+        className="hero-frame absolute inset-0 z-10 object-contain scale-100 will-change-transform"
       />
-      <div className="py-20 w-full mx-auto max-w-7xl">
-        <div className="hero-wrapper-content relative z-30">
-          <p className="hero-subtitle text-sm uppercase tracking-widest text-gray-50 mb-4">
-            forged in pixels · powered by code
+
+      {/* --- LAYER 2: CONTENT (Front) --- */}
+      <div ref={contentRef} className="py-20 w-full mx-auto max-w-7xl relative z-30 will-change-transform flex flex-col items-center justify-center">
+        <div className="hero-wrapper-content max-w-4xl">
+          <p className="hero-subtitle text-xs md:text-sm font-space-mono uppercase tracking-[0.3em] text-gray-400 mb-6 drop-shadow-md opacity-80">
+            Forged in Logic · Tempered by Design
           </p>
 
-          <div className="hero-text-first font-mono items-baseline justify-center flex">
-            <div className="hero-text-mini justify-center gap-1 mr-6 text-3xl">
+          <div className="hero-text-first font-mono items-center justify-center flex flex-col md:flex-row mb-2">
+            <div className="hero-text-mini justify-center gap-1 md:mr-6 text-2xl md:text-3xl text-gray-300 font-cinzel-decorative mb-2 md:mb-0">
               {introText.split("").map((char, idx) => (
-                <span key={idx} className="inline-block font-kings opacity-0">
+                <span key={idx} className="inline-block opacity-0">
                   {char === " " ? "\u00A0" : char}
                 </span>
               ))}
             </div>
-            <h1 className="hero-text-name justify-center gap-1 text-5xl md:text-8xl font-bold">
+            <h1 className="hero-text-name justify-center gap-1 text-7xl md:text-9xl font-bold text-white drop-shadow-[0_0_40px_rgba(255,255,255,0.4)] leading-none">
               {name.split("").map((char, idx) => (
                 <span key={idx} className="inline-block font-kings opacity-0">
                   {char === " " ? "\u00A0" : char}
@@ -119,29 +166,33 @@ export const HeroForgeEntry = () => {
             </h1>
           </div>
 
-          <div className="hero-text-second font-mono">
-            <h1 className="hero-title flex flex-wrap justify-center gap-1 text-5xl md:text-8xl font-bold pr-10 md:pr-40">
+          <div className="hero-text-second font-mono mb-6 md:mb-10">
+            <h1 className="hero-title flex flex-wrap justify-center gap-2 text-2xl md:text-4xl font-bold pr-4 md:pr-0">
               {firstTitle.split("").map((char, idx) => (
-                <span key={idx} className="inline-block font-kings opacity-0">
+                <span key={idx} className="inline-block font-cinzel-decorative opacity-0 text-gray-300">
                   {char === " " ? "\u00A0" : char}
                 </span>
               ))}
-            </h1>
-            <h1 className="hero-title flex flex-wrap justify-center gap-1 text-5xl md:text-8xl font-bold pl-10 md:pl-40">
+              <span className="w-2 md:w-5" /> {/* Spacer */}
               {secondTitle.split("").map((char, idx) => (
-                <span key={idx} className="inline-block font-kings opacity-0">
+                <span key={idx} className="inline-block font-cinzel-decorative opacity-0 text-gray-300">
                   {char === " " ? "\u00A0" : char}
                 </span>
               ))}
             </h1>
           </div>
 
-          <div className="description flex justify-center">
-            <p className="hero-description font-mono mt-6 max-w-2xl text-gray-300 text-lg">
-              In this forge, my code is tempered by challenge and fueled by
-              passion. I battle through every obstacle, forging solutions with
-              relentless spirit.
-            </p>
+          <div className="description flex justify-center px-4">
+            <div className="hero-description relative mt-2 md:mt-6 max-w-2xl">
+              <div className="absolute -inset-8 bg-black/40 blur-2xl -z-10 rounded-full" />
+              <p className="font-cinzel-decorative text-gray-400 text-sm md:text-base leading-relaxed mix-blend-screen block tracking-wider">
+                {descriptionText.split(" ").map((word, idx) => (
+                  <span key={idx} className="inline-block opacity-0 mr-1.5">
+                    {word}
+                  </span>
+                ))}
+              </p>
+            </div>
           </div>
         </div>
       </div>
