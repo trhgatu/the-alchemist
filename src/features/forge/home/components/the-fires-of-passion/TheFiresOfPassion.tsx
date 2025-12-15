@@ -1,175 +1,125 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useRef } from 'react';
 import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/all';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import Image from 'next/image';
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 export function TheFiresOfPassion() {
-  const [stars, setStars] = useState<
-    { id: number; x: number; y: number; size: number; type: '1' | '2'; depth: number; dir: number }[]
-  >([]);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const generated = Array.from({ length: 40 }).map((_, i) => ({
-      id: i,
-      x: Math.random() * 100,
-      y: Math.random() * 100,
-      size: Math.random() * 18 + 8,
-      type: (Math.random() > 0.5 ? '1' : '2') as '1' | '2',
-      depth: Math.random() * 0.6 + 0.2,
-      dir: Math.random() > 0.5 ? 1 : -1,
-    }));
-    setStars(generated);
-  }, []);
 
   useGSAP(() => {
-    // timeline chung cho 2 dòng
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: '#fires',
-        start: 'top 70%',
-        toggleActions: 'play none none reverse',
+    if (!containerRef.current) return;
+
+    // 1. Ink Breathing (Background - CSS Only)
+    gsap.to('.ink-blot', {
+      scale: 1.1,
+      opacity: 0.8,
+      duration: 4,
+      stagger: {
+        amount: 2,
+        from: "random"
       },
+      repeat: -1,
+      yoyo: true,
+      ease: "sine.inOut"
     });
 
-    tl.fromTo(
-      '.quote-main.line-1 span',
-      { opacity: 0, y: 40, filter: 'blur(6px)' },
+    // 2. Parallax Ink Flow
+    gsap.to('.ink-layer', {
+      yPercent: 20,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: true,
+      }
+    });
+
+    // 3. Text Reveal
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: 'top 60%',
+        toggleActions: 'play none none reverse',
+      }
+    });
+
+    tl.fromTo('.ink-title span',
+      { opacity: 0, y: 50, filter: 'blur(10px)' },
       {
         opacity: 1,
         y: 0,
         filter: 'blur(0px)',
-        stagger: 0.05,
-        duration: 0.8,
-        ease: 'power3.out',
-      }
-    ).fromTo(
-      '.quote-main.line-2 span',
-      { opacity: 0, y: 40, filter: 'blur(6px)' },
-      {
-        opacity: 1,
-        y: 0,
-        filter: 'blur(0px)',
-        stagger: 0.05,
-        duration: 0.8,
-        ease: 'power3.out',
-      },
-      '-=0.3' // overlap nhẹ với line-1
-    );
-
-    // sub quote
-    gsap.fromTo(
-      '.quote-sub',
-      { opacity: 0, y: 20 },
-      {
-        opacity: 1,
-        y: 0,
+        stagger: 0.1,
         duration: 1.2,
-        delay: 0.2,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: '#fires',
-          start: 'top 75%',
-        },
+        ease: 'power3.out'
       }
-    );
+    )
+      .fromTo('.ink-divider',
+        { scaleX: 0 },
+        { scaleX: 1, duration: 1.5, ease: 'expo.out' },
+        "-=1.0"
+      )
+      .fromTo('.ink-subtitle',
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 1 },
+        "-=0.5"
+      );
 
-    // apos marks
-    gsap.fromTo(
-      '.apos',
-      { opacity: 0, scale: 0.8, rotate: -10 },
-      {
-        opacity: 0.25,
-        scale: 1,
-        rotate: 0,
-        duration: 1.2,
-        stagger: 0.2,
-        ease: 'back.out(1.7)',
-        scrollTrigger: {
-          trigger: '#fires',
-          start: 'top 75%',
-        },
-      }
-    );
-  }, [stars]);
-
+  }, []);
 
   return (
     <section
+      ref={containerRef}
       id="fires"
-      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden"
+      className="relative min-h-[60vh] md:min-h-[80vh] flex flex-col items-center justify-center overflow-hidden bg-neutral-950 text-white border-b border-neutral-900"
     >
-      <div className="absolute inset-0 bg-gradient-radial from-yellow-100/10 via-black to-black" />
+      {/* --- BACKGROUND TEXTURE --- */}
+      <div className="absolute inset-0 opacity-20 pointer-events-none z-0">
+        <Image
+          src="/assets/images/craftings/texture_washi.png"
+          alt="Washi Texture"
+          fill
+          className="object-cover invert" // Invert texture for dark mode
+        />
+      </div>
 
-      <div className="relative font-oldenburg z-20 text-white text-center px-6 max-w-7xl mx-auto py-28 md:py-40 select-none">
-        <div className="relative inline-block max-w-3xl mx-auto">
-          <Image
-            src="/assets/images/apos.svg"
-            alt="quote open mark"
-            width={64}
-            height={64}
-            className="apos absolute -top-8 -left-10 opacity-0 select-none pointer-events-none filter invert"
-          />
-          <Image
-            src="/assets/images/apos.svg"
-            alt="quote close mark"
-            width={64}
-            height={64}
-            className="apos absolute -bottom-8 -right-10 opacity-0 rotate-180 select-none pointer-events-none filter invert"
-          />
+      {/* --- INK LAYER (White Smoke/Mist) --- */}
+      <div className="ink-layer absolute inset-0 pointer-events-none select-none z-0 overflow-hidden opacity-20 mix-blend-screen">
+        <div className="ink-blot absolute top-1/4 -left-20 w-[600px] h-[600px] bg-neutral-400 rounded-full blur-[80px]" />
+        <div className="ink-blot absolute bottom-1/4 -right-20 w-[500px] h-[500px] bg-neutral-500 rounded-full blur-[60px]" />
+      </div>
 
-          <p className="quote-main line-1 text-lg sm:text-xl md:text-4xl italic drop-shadow leading-relaxed">
-            {"I don't just write code."
-              .split('')
-              .map((char, i) => (
-                <span key={i} className="inline-block">
-                  {char === ' ' ? '\u00A0' : char}
-                </span>
-              ))}
-          </p>
+      {/* --- CONTENT --- */}
+      <div className="relative z-10 max-w-5xl px-8 text-center pb-20">
 
-          <p className="quote-main line-2 text-lg sm:text-xl md:text-4xl italic drop-shadow leading-relaxed mt-2">
-            {'I temper spirit into logic.'
-              .split('')
-              .map((char, i) => (
-                <span key={i} className="inline-block">
-                  {char === ' ' ? '\u00A0' : char}
-                </span>
-              ))}
+        {/* Top 'Kanji' Flow Line */}
+        <div className="ink-divider w-px h-24 bg-gradient-to-b from-transparent to-neutral-500 mx-auto mb-10 opacity-50" />
+
+        <h2 className="ink-title text-5xl md:text-8xl font-kings text-white mb-6 tracking-tight leading-none drop-shadow-lg">
+          {"The Living Ink".split(' ').map((word, i) => (
+            <span key={i} className="inline-block mr-4">{word}</span>
+          ))}
+        </h2>
+
+        <div className="ink-subtitle font-space-mono text-neutral-400 text-sm md:text-lg max-w-2xl mx-auto leading-loose tracking-wide">
+          <p>
+            Code is not static. It flows, it adapts, it breathes.
+            <br />
+            Like ink on paper, it captures the impermanent motion of thought.
           </p>
         </div>
 
-        <p className="quote-sub text-zinc-300 text-sm sm:text-base md:text-lg leading-relaxed font-light tracking-wide max-w-2xl mx-auto mt-6">
-          In this forge, every line of code is a hammer strike.
-          <br />
-          Every project is a blade tempered through trials and passion.
-          <br />I don&apos;t code just to survive — I code to live true to who I am.
-        </p>
-      </div>
+        {/* Bottom Anchor */}
+        <div className="ink-divider w-px h-16 bg-gradient-to-b from-neutral-500 to-transparent mx-auto mt-12 opacity-30" />
 
-      {stars.map((star) => (
-        <Image
-          key={star.id}
-          src={`/assets/images/union_${star.type}.svg`}
-          alt="star"
-          width={star.size}
-          height={star.size}
-          className="star-parallax absolute pointer-events-none"
-          data-depth={star.depth}
-          data-dir={star.dir}
-          data-type={star.type}
-          style={{
-            top: `${star.y}%`,
-            left: `${star.x}%`,
-            transform: 'translate(-50%, -50%)',
-            filter: 'drop-shadow(0 0 6px #facc15aa)',
-          }}
-        />
-      ))}
+      </div>
     </section>
   );
 }

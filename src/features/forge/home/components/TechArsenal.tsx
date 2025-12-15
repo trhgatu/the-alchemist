@@ -2,205 +2,196 @@
 
 import Image from 'next/image';
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-  TooltipProvider,
+    Tooltip,
+    TooltipContent,
+    TooltipTrigger,
+    TooltipProvider,
 } from '@/components/ui/tooltip';
-import { useEffect } from 'react';
+import { useRef } from 'react';
 import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/all';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import { SKILLS } from '@/constants/Skills';
 
-gsap.registerPlugin(useGSAP, ScrollTrigger)
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 export const TechArsenal = () => {
-  useEffect(() => {
-    gsap.fromTo(
-      '.arsenal-title span',
-      { opacity: 0, y: 40, filter: 'blur(6px)' },
-      {
-        opacity: 1,
-        y: 0,
-        filter: 'blur(0px)',
-        stagger: 0.05,
-        duration: 0.8,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: '#tech-arsenal',
-          start: 'top 70%',
-        },
-      }
-    );
+    const containerRef = useRef<HTMLDivElement>(null);
+    const titleRef = useRef<HTMLHeadingElement>(null);
 
-    const techTL = gsap.timeline({})
-    techTL.fromTo(
-      '.tech-icon',
-      {
-        opacity: 0,
-        y: 50,
-      },
-      {
-        opacity: 1,
-        y: 0,
-        stagger: 0.15,
-        duration: 0.6,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: '#tech-arsenal',
-          start: 'top 60%',
-          end: 'bottom 100%',
-          scrub: true,
-        },
-      }
-    );
+    useGSAP(() => {
+        if (!containerRef.current) return;
 
 
-    gsap.to('.mountain-back', {
-      yPercent: 80,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: '#tech-arsenal',
-        start: 'top bottom',
-        end: 'bottom top',
-        scrub: true,
-      },
-    });
 
-    gsap.to('.mountain-front', {
-      yPercent: 60,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: '#tech-arsenal',
-        start: 'top bottom',
-        end: 'bottom top',
-        scrub: true,
-      },
-    });
-    gsap.to('.dragon-front img', {
-      scale: 1.05,
-      yPercent: -5,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: '#tech-arsenal',
-        start: 'top bottom',
-        end: 'bottom top',
-        scrub: true,
-      },
-    });
+        // Dragon - Subtle float parallax
+        gsap.to('.dragon-layer', {
+            yPercent: 10,
+            scale: 1.05,
+            ease: 'none',
+            scrollTrigger: {
+                trigger: containerRef.current,
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: 2, // Smooth follow
+            }
+        });
 
-    gsap.to('.dragon-front', {
-      yPercent: 15,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: '#tech-arsenal',
-        start: 'top bottom',
-        end: 'bottom top',
-        scrub: true
-      }
-    })
+        // 2. Title Animation
+        gsap.fromTo(titleRef.current,
+            { opacity: 0, y: 50, filter: 'blur(10px)' },
+            {
+                opacity: 1,
+                y: 0,
+                filter: 'blur(0px)',
+                duration: 1.2,
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: containerRef.current,
+                    start: 'top 70%',
+                }
+            }
+        );
 
-  }, []);
+        // 3. Staggered Grid Entry
+        const wrappers = gsap.utils.toArray('.tech-icon-wrapper');
+        gsap.fromTo(wrappers,
+            { opacity: 0, y: 30, scale: 0.8 },
+            {
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                stagger: 0.03, // Fast ripple
+                duration: 0.8,
+                ease: 'back.out(1.5)',
+                scrollTrigger: {
+                    trigger: '.tech-grid',
+                    start: 'top 80%',
+                }
+            }
+        );
 
-  return (
-    <section id="tech-arsenal" className="relative bg-[#f0f0f0] w-full min-h-screen flex items-center justify-center">
-      <div className="mountain-front absolute -top-[50px] md:-top-[200px] z-10 pointer-events-none">
-        <Image
-          src="/assets/images/mountain_divider.webp"
-          alt="Divider"
-          width={1200}
-          height={150}
-          className="h-full object-cover select-none w-full"
-        />
-      </div>
-      <div className="mountain-back absolute -top-[18px] md:-top-[100px] left-0 right-0 w-full z-10 pointer-events-none">
-        <Image
-          src="/assets/images/mountain_2.svg"
-          alt="Divider"
-          width={1600}
-          height={200}
-          className="h-auto object-cover select-none w-full"
-        />
-      </div>
-      <div className="absolute top-20 left-0 z-0 pointer-events-none">
-        <Image
-          src="/assets/images/the-sun.svg"
-          alt="The Sun"
-          width={250}
-          height={250}
-          className="opacity-20 select-none "
-        />
-      </div>
+        // 4. Magnetic & Hover Effect
+        // We bind events individually for that premium feel
+        const iconItems = gsap.utils.toArray('.tech-icon-item') as HTMLElement[];
 
-      <div className="dragon-front absolute inset-0 flex items-center justify-center pointer-events-none z-20">
-        <Image
-          src="/assets/images/medieval_dragon.png"
-          alt="Dragon"
-          width={900}
-          height={900}
-          className="object-contain opacity-10"
-        />
-      </div>
+        iconItems.forEach((item) => {
+            const image = item.querySelector('img');
 
-      <div className="absolute right-0 bottom-0 z-0 pointer-events-none">
-        <Image
-          src="/assets/images/knight_state.svg"
-          alt="The Sun"
-          width={250}
-          height={250}
-          className="opacity-20 select-none "
-        />
-      </div>
-      <div className="relative z-10 w-full pt-28 pb-20 max-w-5xl px-6 text-center">
-        <h2 className="arsenal-title text-4xl md:text-6xl font-kings text-black mb-4 tracking-wide drop-shadow-sm">
-          {'The Arsenal of Code'.split('').map((char, i) => (
-            <span key={i} className="inline-block">
-              {char === ' ' ? '\u00A0' : char}
-            </span>
-          ))}
-        </h2>
-        <p className="text-black mb-10 italic text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
-          Every line of code is forged with purpose.
-          These are the tools, languages, and frameworks I have tempered —
-          my arsenal in the endless forge of creation.
-        </p>
+            item.addEventListener('mousemove', (e: MouseEvent) => {
+                const rect = item.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
 
-        <TooltipProvider delayDuration={100}>
-          <div className="max-w-3xl mx-auto">
-            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-6">
-              {SKILLS.map((skill) => (
-                <Tooltip key={skill.name}>
-                  <TooltipTrigger asChild>
-                    <div className="flex flex-col tech-icon items-center justify-center cursor-pointer group">
-                      <div className="w-12 h-12 flex items-center justify-center transition-transform duration-300 group-hover:scale-105 ">
-                        <Image
-                          width={40}
-                          height={40}
-                          src={skill.iconPath}
-                          alt={skill.name}
-                        />
-                      </div>
-                      <p className="text-black text-xs font-mono font-medium text-center group-hover:text-red-600 transition-colors duration-300 mt-2">
-                        {skill.name}
-                      </p>
-                    </div>
-                  </TooltipTrigger>
-                  <TooltipContent
-                    side="top"
-                    className="bg-background text-white border z-50"
-                  >
-                    <div className="px-3 py-2 text-center">
-                      <p className="font-bold">{skill.name}</p>
-                      <p className="text-xs capitalize mt-1">{skill.category}</p>
-                    </div>
-                  </TooltipContent>
-                </Tooltip>
-              ))}
+                // Move container slightly
+                gsap.to(item, {
+                    x: x * 0.4,
+                    y: y * 0.4,
+                    duration: 0.3,
+                    ease: 'power2.out'
+                });
+
+                // Move inner image slightly more (parallax inside button)
+                if (image) {
+                    gsap.to(image, {
+                        x: x * 0.2,
+                        y: y * 0.2,
+                        duration: 0.3,
+                        ease: 'power2.out'
+                    });
+                }
+            });
+
+            item.addEventListener('mouseleave', () => {
+                gsap.to([item, image], {
+                    x: 0,
+                    y: 0,
+                    duration: 0.6,
+                    ease: 'elastic.out(1, 0.5)'
+                });
+            });
+        });
+
+    }, []);
+
+    return (
+        <section ref={containerRef} id="tech-arsenal" className="relative bg-[#f0f0f0] w-full min-h-screen flex items-center justify-center overflow-hidden">
+            
+            {/* --- BACKGROUND LAYERS --- */}
+
+            {/* Sun - Top Left */}
+            <div className="absolute top-10 left-10 md:top-20 md:left-20 z-0 pointer-events-none mix-blend-multiply opacity-10 select-none">
+                <Image src="/assets/images/the-sun.svg" alt="The Sun" width={300} height={300} className="w-32 md:w-64" />
             </div>
-          </div>
-        </TooltipProvider>
-      </div>
-    </section>
-  );
+
+            {/* Knight - Bottom Right */}
+            <div className="absolute right-0 bottom-0 z-0 pointer-events-none opacity-10 select-none">
+                <Image src="/assets/images/knight_state.svg" alt="Knight" width={300} height={300} className="w-48 md:w-80" />
+            </div>
+
+            {/* Dragon - Center/Background */}
+            <div className="dragon-layer absolute inset-0 flex items-center justify-center pointer-events-none z-0 opacity-10 select-none">
+                <Image src="/assets/images/medieval_dragon.png" alt="Dragon" width={1000} height={1000} className="object-contain w-[120%] h-[120%]" />
+            </div>
+
+
+
+
+            {/* --- CONTENT --- */}
+            <div className="relative z-20 w-full pt-40 pb-32 max-w-7xl px-6 text-center">
+
+                {/* Title Group */}
+                <div className="mb-20">
+                    <h2 ref={titleRef} className="text-5xl md:text-7xl font-kings text-neutral-800 mb-6 drop-shadow-sm flex items-center justify-center gap-6">
+                        <span className="text-4xl text-neutral-300 opacity-50">✦</span>
+                        The Arsenal of Code
+                        <span className="text-4xl text-neutral-300 opacity-50">✦</span>
+                    </h2>
+
+                    <div className="flex items-center justify-center gap-4 mb-8">
+                        <div className="w-16 h-[1px] bg-neutral-300" />
+                        <div className="w-2 h-2 rotate-45 border border-neutral-400" />
+                        <div className="w-16 h-[1px] bg-neutral-300" />
+                    </div>
+
+                    <p className="text-neutral-600 italic text-lg md:text-xl max-w-4xl mx-auto leading-loose font-serif">
+                        &quot;Every line of code is forged with purpose. These are the tools, languages, and frameworks I have tempered — my arsenal in the endless forge of creation.&quot;
+                    </p>
+                </div>
+
+                {/* --- GRID --- */}
+                <TooltipProvider delayDuration={0}>
+                    <div className="tech-grid grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-x-8 gap-y-12 mx-auto justify-items-center">
+                        {SKILLS.map((skill) => (
+                            <div key={skill.name} className="tech-icon-wrapper flex flex-col items-center group relative w-24">
+                                <Tooltip>
+                                    <TooltipTrigger asChild>
+                                        {/* Magnetic Icon Container */}
+                                        <div className="tech-icon-item w-20 h-20 bg-white rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.05)] border border-neutral-100 flex items-center justify-center cursor-pointer transition-all duration-300 hover:shadow-[0_20px_40px_rgba(0,0,0,0.15)] hover:border-neutral-200 hover:-translate-y-2 z-10">
+                                            <Image
+                                                src={skill.iconPath}
+                                                alt={skill.name}
+                                                width={48}
+                                                height={48}
+                                                className="w-10 h-10 object-contain group-hover:scale-110 transition-transform duration-300"
+                                            />
+                                        </div>
+                                    </TooltipTrigger>
+                                    <TooltipContent side="top" className="bg-neutral-800 text-white border-none shadow-xl font-space-mono text-xs px-3 py-1.5">
+                                        <p className="font-semibold">{skill.name}</p>
+                                    </TooltipContent>
+                                </Tooltip>
+
+                                {/* Label - Appears on Hover */}
+                                <span className="absolute -bottom-8 text-[10px] font-space-mono text-neutral-400 font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 pointer-events-none whitespace-nowrap">
+                                    {skill.name}
+                                </span>
+                            </div>
+                        ))}
+                    </div>
+                </TooltipProvider>
+
+            </div>
+        </section>
+    );
 };

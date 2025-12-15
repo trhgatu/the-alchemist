@@ -77,9 +77,6 @@ export function ArsenalGrid() {
     useGSAP(() => {
         if (!sectionRef.current || !containerRef.current) return;
 
-
-        // Width: 220 card + 32 gap = 252. Use 260 safe estimate.
-
         // Horizontal Scroll Animation with Kinetic Skew
         const scrollTween = gsap.to(containerRef.current, {
             x: () => -(containerRef.current!.scrollWidth - window.innerWidth + 100),

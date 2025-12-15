@@ -46,7 +46,7 @@ export function TheAlchemist() {
 
     gsap.to('.about-desc-1 span, .about-desc-2 span', {
       opacity: 1,
-      color: '#ffffff',
+      color: '#171717', // Neutral-900
       stagger: 0.3,
       scrollTrigger: {
         trigger: '.about-content-container',
@@ -56,45 +56,62 @@ export function TheAlchemist() {
       },
     });
 
-    gsap.to('.avatar-image-frame', {
-      yPercent: -20,
+    // Unified Card Parallax (Moves the whole card together)
+    gsap.to('.alchemist-card-container', {
+      yPercent: -10,
       ease: 'none',
       scrollTrigger: {
         trigger: '#about',
-        start: 'top top',
+        start: 'top bottom',
         end: 'bottom top',
-        scrub: true,
+        scrub: 1,
       },
     });
-    gsap.to('.avatar-image', {
-      yPercent: -15,
+
+    // Background Frame Subtle Parallax/Breath
+    gsap.to('.frame-layer', {
+      scale: 1.15,
+      yPercent: 5,
       ease: 'none',
-      scale: 1.05,
       scrollTrigger: {
         trigger: '#about',
-        start: 'top top',
+        start: 'top bottom',
         end: 'bottom top',
-        scrub: true,
-      },
+        scrub: 1.5
+      }
     });
+
   }, []);
 
   return (
     <section
       id="about"
-      className="about min-h-screen relative z-0 border-t border-white/20"
+      className="about min-h-screen relative z-0 border-t border-neutral-200 bg-[#f4f2ef] overflow-hidden"
     >
-      <div className="absolute inset-0 -z-10 opacity-30">
+
+      {/* --- BACKGROUND TEXTURE --- */}
+      <div className="absolute inset-0 opacity-40 pointer-events-none mix-blend-multiply z-0">
         <Image
-          src="/assets/images/frame.svg"
-          alt="Background Frame"
+          src="/assets/images/craftings/texture_washi.png"
+          alt="Washi Texture"
           fill
           className="object-cover"
         />
       </div>
-      <div className="about-wrapper max-w-7xl mx-auto py-20 relative">
+
+      <div className="absolute inset-0 -z-10 opacity-30 mix-blend-multiply pointer-events-none frame-layer">
+        <Image
+          src="/assets/images/frame.svg"
+          alt="Background Frame"
+          fill
+          className="object-cover invert scale-110"
+        />
+      </div>
+
+      <div className="about-wrapper max-w-7xl mx-auto py-20 relative z-10">
         <FallingLeaves />
-        <div className="about-title-container text-center text-white md:mb-16">
+        {/* Particles Removed for cleaner look */}
+        <div className="about-title-container text-center text-neutral-900 md:mb-16">
           <div className="about-title line-1 text-4xl md:text-7xl font-kings tracking-wide">
             {'Forged in Code'.split('').map((char, idx) => (
               <span key={idx} className="inline-block">
@@ -103,7 +120,18 @@ export function TheAlchemist() {
             ))}
           </div>
 
-          <div className="about-title line-2 text-2xl font-kings md:text-4xl italic mt-4">
+          {/* Decorative Divider (Arsenal Style) */}
+          <div className="flex items-center justify-center gap-4 my-6 opacity-0 animate-fade-in-up" ref={(el) => {
+            if (el) {
+              gsap.fromTo(el, { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 1, delay: 0.2, ease: "expo.out", scrollTrigger: { trigger: el, start: "top 85%" } });
+            }
+          }}>
+            <div className="w-16 h-[1px] bg-neutral-400" />
+            <div className="w-2 h-2 rotate-45 border border-neutral-600" />
+            <div className="w-16 h-[1px] bg-neutral-400" />
+          </div>
+
+          <div className="about-title line-2 text-2xl font-kings md:text-4xl italic mt-0 text-neutral-700">
             {'Tempered by Challenge'.split('').map((char, idx) => (
               <span key={idx} className="inline-block">
                 {char === ' ' ? '\u00A0' : char}
@@ -115,7 +143,7 @@ export function TheAlchemist() {
         <div className="about-content-container font-serif">
           <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 px-6 items-center">
             <div className="space-y-12">
-              <p className="about-desc-1 text-xl md:text-2xl leading-relaxed">
+              <p className="about-desc-1 text-xl md:text-2xl leading-relaxed text-neutral-900">
                 {'A passionate software engineer — an alchemist of code who forges ideas where logic meets imagination. Every challenge is a forge, every bug a spark, and from each trial I carry forward one mission: to grow, to learn, and to shape raw concepts into lasting creations.'
                   .split(' ')
                   .map((word, wi) => (
@@ -123,7 +151,7 @@ export function TheAlchemist() {
                       {word.split('').map((char, ci) => (
                         <span
                           key={ci}
-                          className="char inline-block opacity-30 text-gray-400"
+                          className="char inline-block opacity-30 text-neutral-400"
                         >
                           {char}
                         </span>
@@ -132,7 +160,7 @@ export function TheAlchemist() {
                   ))}
               </p>
 
-              <p className="about-desc-2 text-xl md:text-2xl leading-relaxed">
+              <p className="about-desc-2 text-xl md:text-2xl leading-relaxed text-neutral-900">
                 {'To create digital experiences that breathe with elegance and strike with impact — not just tools, but stories that resonate and endure.'
                   .split(' ')
                   .map((word, wi) => (
@@ -140,7 +168,7 @@ export function TheAlchemist() {
                       {word.split('').map((char, ci) => (
                         <span
                           key={ci}
-                          className="char inline-block opacity-30 text-gray-400"
+                          className="char inline-block opacity-30 text-neutral-400"
                         >
                           {char}
                         </span>
@@ -149,7 +177,7 @@ export function TheAlchemist() {
                   ))}
               </p>
             </div>
-            <div className="flex justify-center">
+            <div className="flex justify-center alchemist-card-container">
               <TheAlchemistCard />
             </div>
           </div>
