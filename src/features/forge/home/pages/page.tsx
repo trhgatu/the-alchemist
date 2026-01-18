@@ -7,7 +7,7 @@ import {
   HeroForgeEntry,
   TechArsenal,
   TheCraftings,
-  TheFiresOfPassion,
+  TheLivingInk,
   TheAlchemist,
 } from '@/features/forge/home/components';
 /* import { View } from '@react-three/drei';
@@ -49,7 +49,7 @@ export default function ForgeHome({ isVisited = false }: ForgeHomeProps) {
       <HeroForgeEntry />
 
       <TheAlchemist />
-      <TheFiresOfPassion />
+      <TheLivingInk />
       <TechArsenal />
       <ScrollVelocity
         texts={[
