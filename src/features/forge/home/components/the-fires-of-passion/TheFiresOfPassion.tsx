@@ -15,7 +15,6 @@ export function TheFiresOfPassion() {
   useGSAP(() => {
     if (!containerRef.current) return;
 
-    // 1. Ink Breathing (Background - CSS Only)
     gsap.to('.ink-blot', {
       scale: 1.1,
       opacity: 0.8,
@@ -29,7 +28,6 @@ export function TheFiresOfPassion() {
       ease: "sine.inOut"
     });
 
-    // 2. Parallax Ink Flow
     gsap.to('.ink-layer', {
       yPercent: 20,
       ease: 'none',
@@ -41,7 +39,6 @@ export function TheFiresOfPassion() {
       }
     });
 
-    // 3. Text Reveal
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: containerRef.current,
@@ -80,26 +77,22 @@ export function TheFiresOfPassion() {
       id="fires"
       className="relative min-h-[60vh] md:min-h-[80vh] flex flex-col items-center justify-center overflow-hidden bg-neutral-950 text-white border-b border-neutral-900"
     >
-      {/* --- BACKGROUND TEXTURE --- */}
       <div className="absolute inset-0 opacity-20 pointer-events-none z-0">
         <Image
           src="/assets/images/craftings/texture_washi.png"
           alt="Washi Texture"
           fill
-          className="object-cover invert" // Invert texture for dark mode
+          className="object-cover invert"
         />
       </div>
 
-      {/* --- INK LAYER (White Smoke/Mist) --- */}
       <div className="ink-layer absolute inset-0 pointer-events-none select-none z-0 overflow-hidden opacity-20 mix-blend-screen">
         <div className="ink-blot absolute top-1/4 -left-20 w-[600px] h-[600px] bg-neutral-400 rounded-full blur-[80px]" />
         <div className="ink-blot absolute bottom-1/4 -right-20 w-[500px] h-[500px] bg-neutral-500 rounded-full blur-[60px]" />
       </div>
 
-      {/* --- CONTENT --- */}
       <div className="relative z-10 max-w-5xl px-8 text-center pb-20">
 
-        {/* Top 'Kanji' Flow Line */}
         <div className="ink-divider w-px h-24 bg-gradient-to-b from-transparent to-neutral-500 mx-auto mb-10 opacity-50" />
 
         <h2 className="ink-title text-5xl md:text-8xl font-kings text-white mb-6 tracking-tight leading-none drop-shadow-lg">
@@ -116,7 +109,6 @@ export function TheFiresOfPassion() {
           </p>
         </div>
 
-        {/* Bottom Anchor */}
         <div className="ink-divider w-px h-16 bg-gradient-to-b from-neutral-500 to-transparent mx-auto mt-12 opacity-30" />
 
       </div>

@@ -54,8 +54,6 @@ export function TheAlchemistCard() {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-
-      {/* --- SVG FILTER DEFINITION --- */}
       <svg className="absolute w-0 h-0 pointer-events-none">
         <defs>
           <filter id="alchemist-ink-distortion">

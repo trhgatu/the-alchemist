@@ -31,23 +31,15 @@ export default function LoaderWithOverlay() {
     if (ready && scenePhase === ScenePhase.MODEL_ENTRY) {
       const tl = gsap.timeline({
         onComplete: () => {
-          // Cleanup only - Phase is triggered early for visibility
+
           document.cookie = "forge_visited=true; path=/; max-age=31536000";
           sessionStorage.setItem("forge_visited", "true");
         },
       });
-
-      // --- SEQUENCE: WABI SABI DROP ---
-
-      // 0. TRIGGER HERO VISIBILITY (Early)
-      // We start the phase here so the Hero background is rendered and ready
-      // BEHIND the black screen before we punch a hole in it.
       tl.call(() => {
         setScenePhase(ScenePhase.OVERLAY_ANIMATION);
       }, [], 0.5);
 
-      // 1. DISSOLVE (The Heavy Mist)
-      // Text blurs and fades out slowly, organic and soft
       tl.to(contentRef.current, {
         duration: 1.2,
         scale: 0.9,
@@ -56,8 +48,6 @@ export default function LoaderWithOverlay() {
         ease: "power2.inOut",
       }, 0);
 
-      // 2. SOFT BLOOM (The Ripple)
-      // A soft light emerges and spreads gently
       tl.fromTo(shockwaveRef.current,
         { scale: 0.5, opacity: 0 },
         {
@@ -66,21 +56,18 @@ export default function LoaderWithOverlay() {
           duration: 2.5,
           ease: "power2.out"
         },
-        0.5 // Start overlapping with dissolve
+        0.5
       );
 
-      // 3. FLOW (Ink Spread)
-      // The screen opens up following the bloom
       const state = { p: 0 };
       tl.to(state, {
         p: 150,
         duration: 3,
-        ease: "power2.inOut", // Smooth, non-violent
+        ease: "power2.inOut",
         onUpdate: () => {
-          // Check ref to avoid errors if unmounted (though it shouldn't be)
+
           if (containerRef.current) {
             const v = state.p;
-            // Soft edge mask
             const mask = `radial-gradient(circle at center, transparent ${v}%, black ${v + 30}%)`;
             containerRef.current.style.maskImage = mask;
             containerRef.current.style.webkitMaskImage = mask;
@@ -97,7 +84,6 @@ export default function LoaderWithOverlay() {
 
   return (
     <>
-      {/* SVG Filters for Ink Effect */}
       <svg className="absolute w-0 h-0 pointer-events-none">
         <defs>
           <filter id="ink-bleed">
@@ -107,7 +93,6 @@ export default function LoaderWithOverlay() {
         </defs>
       </svg>
 
-      {/* LAYER 1: Background + Filter + Shockwave */}
       <div
         ref={containerRef}
         className="fixed inset-0 z-[9998] bg-[#050608] pointer-events-none overflow-hidden"
@@ -117,23 +102,18 @@ export default function LoaderWithOverlay() {
           filter: 'url(#ink-bleed)'
         }}
       >
-        {/* Background Atmosphere */}
         <div className="absolute inset-0 bg-radial-gradient from-[#1a202c] via-[#050608] to-[#050608] opacity-60" />
 
-        {/* Wabi Sabi Ripple Element (Soft Light) */}
         <div
           ref={shockwaveRef}
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40vw] h-[40vw] rounded-full bg-blue-100/20 blur-[60px] opacity-0 mix-blend-overlay"
         />
       </div>
 
-
-      {/* LAYER 2: Content (Sharp) */}
       <div
         ref={contentRef}
         className="fixed inset-0 z-[9999] flex items-center justify-center pointer-events-none"
       >
-        {/* Ripples */}
         <div className="absolute inset-0 flex items-center justify-center opacity-30">
           {[1, 2, 3].map((i) => (
             <div
@@ -150,7 +130,6 @@ export default function LoaderWithOverlay() {
         </div>
 
         <div className="relative flex flex-col items-center gap-6 mix-blend-screen">
-          {/* Ring */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] h-[320px] -rotate-90 pointer-events-none">
             <svg width="320" height="320" viewBox="0 0 100 100" className="w-full h-full drop-shadow-[0_0_10px_rgba(200,230,255,0.4)]">
               <circle cx="50" cy="50" r="48" fill="none" stroke="currentColor" strokeWidth="0.5" className="text-white/10" />
@@ -158,7 +137,6 @@ export default function LoaderWithOverlay() {
             </svg>
           </div>
 
-          {/* Text */}
           <h2 className="font-beau-rivage text-5xl md:text-7xl text-blue-100/90 tracking-wider blur-[0.5px]">
             Flowing
           </h2>
