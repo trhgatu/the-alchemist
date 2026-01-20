@@ -265,6 +265,7 @@ export function TheCraftings({ projects, isLoading, isError }: ProjectHomeProps)
                       <Link
                         href={p.link}
                         target="_blank"
+                        rel="noopener noreferrer"
                         className="group flex items-center gap-2 text-amber-500 hover:text-white transition-colors mt-auto pt-4 border-t border-white/5"
                       >
                         <span className="font-kings text-lg border-b border-transparent group-hover:border-amber-500 transition-all">
