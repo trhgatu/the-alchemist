@@ -3,12 +3,7 @@
 import { useRef } from "react";
 
 import Image from "next/image";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-  TooltipProvider,
-} from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "@/components/ui/tooltip";
 
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -25,7 +20,6 @@ export const TechArsenal = () => {
   useGSAP(() => {
     if (!containerRef.current) return;
 
-    // Dragon Parallax
     gsap.to(".dragon-layer", {
       yPercent: 10,
       scale: 1.05,
@@ -38,7 +32,6 @@ export const TechArsenal = () => {
       },
     });
 
-    // Title Reveal
     gsap.fromTo(
       titleRef.current,
       { opacity: 0, y: 50, filter: "blur(10px)" },
@@ -52,7 +45,7 @@ export const TechArsenal = () => {
           trigger: containerRef.current,
           start: "top 70%",
         },
-      },
+      }
     );
 
     const wrappers = gsap.utils.toArray(".tech-icon-wrapper");
@@ -73,7 +66,7 @@ export const TechArsenal = () => {
           trigger: "#tech-arsenal",
           start: "top 70%",
         },
-      },
+      }
     );
 
     gsap.to(".tech-icon-wrapper img", {
@@ -172,7 +165,6 @@ export const TechArsenal = () => {
       id="tech-arsenal"
       className="relative bg-[#f0f0f0] w-full min-h-screen flex items-center justify-center overflow-hidden"
     >
-      {/* --- TEXTURE OVERLAY (Noise) --- */}
       <div
         className="absolute inset-0 z-0 pointer-events-none opacity-40 mix-blend-multiply"
         style={{
@@ -180,10 +172,7 @@ export const TechArsenal = () => {
         }}
       />
 
-      {/* --- BACKGROUND LAYERS --- */}
-
-      {/* Sun - Top Left */}
-      <div className="absolute top-10 left-10 md:top-20 md:left-20 z-0 pointer-events-none mix-blend-multiply opacity-10 select-none">
+      <div className="absolute top-10 left-10 md:top-20 md:left-20 z-0 pointer-events-none mix-blend-multiply opacity-20 select-none">
         <Image
           src="/assets/images/the-sun.svg"
           alt="The Sun"
@@ -193,8 +182,7 @@ export const TechArsenal = () => {
         />
       </div>
 
-      {/* Knight - Bottom Right */}
-      <div className="absolute right-0 bottom-0 z-0 pointer-events-none opacity-10 select-none">
+      <div className="absolute right-0 bottom-0 z-0 pointer-events-none opacity-20 select-none">
         <Image
           src="/assets/images/knight_state.svg"
           alt="Knight"
@@ -204,8 +192,7 @@ export const TechArsenal = () => {
         />
       </div>
 
-      {/* Dragon - Center/Background */}
-      <div className="dragon-layer absolute inset-0 flex items-center justify-center pointer-events-none z-0 opacity-10 select-none">
+      <div className="dragon-layer z-10 absolute inset-0 flex items-center justify-center pointer-events-none opacity-60 select-none">
         <Image
           src="/assets/images/medieval_dragon.png"
           alt="Dragon"
@@ -235,9 +222,8 @@ export const TechArsenal = () => {
           </div>
 
           <p className="text-neutral-600 italic text-lg md:text-xl max-w-4xl mx-auto leading-loose font-serif">
-            &quot;Every line of code is forged with purpose. These are the
-            tools, languages, and frameworks I have tempered — my arsenal in the
-            endless forge of creation.&quot;
+            &quot;Every line of code is forged with purpose. These are the tools, languages, and
+            frameworks I have tempered — my arsenal in the endless forge of creation.&quot;
           </p>
         </div>
 
@@ -247,10 +233,7 @@ export const TechArsenal = () => {
             className="flex flex-wrap justify-center gap-12 max-w-5xl mx-auto py-10 px-4 perspective-1000"
           >
             {SKILLS.map((skill) => (
-              <div
-                key={skill.name}
-                className="tech-icon-wrapper group relative"
-              >
+              <div key={skill.name} className="tech-icon-wrapper group relative">
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <div className="relative isolate">
@@ -293,9 +276,7 @@ export const TechArsenal = () => {
                     <p className="font-semibold tracking-wider font-kings text-lg text-amber-600">
                       {skill.name}
                     </p>
-                    <p className="text-[10px] text-neutral-400 capitalize">
-                      {skill.category} Rune
-                    </p>
+                    <p className="text-[10px] text-neutral-400 capitalize">{skill.category} Rune</p>
                   </TooltipContent>
                 </Tooltip>
               </div>
