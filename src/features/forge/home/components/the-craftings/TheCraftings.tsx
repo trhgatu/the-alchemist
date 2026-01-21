@@ -1,15 +1,16 @@
-'use client';
+"use client";
 
-import Image from 'next/image';
-import { useEffect } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/all';
-import { InfiniteMovingCards } from '@/components/ui/infinite-moving-cards';
-import { InfiniteMovingCardsSkeleton } from '../skeletons';
-import { Project } from '@/types';
-import { Spotlight } from '@/components/ui/spotlight-new';
+import Image from "next/image";
+import { useRef, useState } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/all";
+import { useGSAP } from "@gsap/react";
+import { Project } from "@/types";
+import { BackgroundLayers } from "./BackgroundLayers";
+import { OrbitalSystem } from "./OrbitalSystem";
+import { ProphecyCard } from "./ProphecyCard";
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 interface ProjectHomeProps {
   projects: Project[];
@@ -17,103 +18,249 @@ interface ProjectHomeProps {
   isError?: boolean;
 }
 
-export function TheCraftings({
-  projects,
-  isLoading,
-  isError,
-}: ProjectHomeProps) {
-  useEffect(() => {
-    gsap.to('.cloud-parallax', {
-      yPercent: 30,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: '#craftings',
-        start: 'top bottom',
-        end: 'bottom top',
-        scrub: true,
-      },
-    });
+export function TheCraftings({ projects, isLoading, isError }: ProjectHomeProps) {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
+  const prophecyListRef = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [dimensions, setDimensions] = useState({ height: 800, width: 1200 }); // Default values for SSR
 
-    gsap.fromTo(
-      '.craftings-title span',
-      { opacity: 0, y: 40, filter: 'blur(6px)' },
-      {
-        opacity: 1,
-        y: 0,
-        filter: 'blur(0px)',
-        stagger: 0.05,
-        duration: 0.8,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: '#craftings',
-          start: 'top 70%',
-        },
-      }
-    );
+  useGSAP(() => {
+    const updateDimensions = () => {
+      setDimensions({
+        height: window.innerHeight,
+        width: window.innerWidth,
+      });
+    };
+
+    updateDimensions();
+    window.addEventListener("resize", updateDimensions);
+    return () => window.removeEventListener("resize", updateDimensions);
   }, []);
 
+  useGSAP(
+    () => {
+      if (!sectionRef.current || !gridRef.current || projects.length === 0) return;
+      gsap.from(".craftings-title span", {
+        opacity: 0,
+        y: 20,
+        filter: "blur(5px)",
+        stagger: 0.05,
+        duration: 0.8,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 60%",
+          toggleActions: "play none none reverse",
+        },
+      });
+
+      const items = sectionRef.current?.querySelectorAll(".sidebar-item");
+      if (items && projects.length > 0) {
+        const radius = dimensions.height * 0.55;
+        const startY = dimensions.height * 0.45;
+        const centerXOffset = -radius + 140;
+        const spacing = 32;
+        const totalProgress = 0;
+
+        items.forEach((item, i) => {
+          const diff = i - totalProgress;
+          const angleDeg = diff * spacing;
+          const angleRad = angleDeg * (Math.PI / 180);
+
+          const x = centerXOffset + Math.cos(angleRad) * radius - 48;
+          const y = startY + Math.sin(angleRad) * radius;
+
+          const dist = Math.abs(angleDeg);
+          const opacity = Math.max(0.5, 1 - dist / 80);
+
+          const blurAmount = Math.min(dist / 30, 1.5);
+          const brightness = Math.max(0.8, 1 - dist / 150);
+
+          gsap.set(item, {
+            x: x,
+            y: y,
+            yPercent: -50,
+            rotation: angleDeg,
+            opacity: opacity,
+            filter: `blur(${blurAmount}px) brightness(${brightness})`,
+            zIndex: 100 - Math.round(dist),
+          });
+        });
+      }
+
+      if (prophecyListRef.current && projects.length > 1) {
+        const progressObj = { value: 0 };
+
+        gsap.to(progressObj, {
+          value: 1,
+          ease: "none",
+          scrollTrigger: {
+            trigger: gridRef.current,
+            start: "top top",
+            end: "+=300%",
+            scrub: 0.5,
+            pin: true,
+            invalidateOnRefresh: true,
+          },
+          onUpdate: () => {
+            const p = progressObj.value;
+            const index = Math.min(Math.floor(p * projects.length), projects.length - 1);
+            setActiveIndex(index);
+            if (prophecyListRef.current && prophecyListRef.current.parentElement) {
+              const totalDist =
+                prophecyListRef.current.scrollHeight -
+                prophecyListRef.current.parentElement.clientHeight;
+              gsap.set(prophecyListRef.current, { y: -p * totalDist });
+            }
+
+            const items = sectionRef.current?.querySelectorAll(".sidebar-item");
+            if (items) {
+              const radius = dimensions.height * 0.55;
+              const startY = dimensions.height * 0.45;
+              const centerXOffset = -radius + 140;
+              const spacing = 32; // Balanced spacing for star tokens
+              const totalProgress = p * (projects.length - 1);
+
+              items.forEach((item, i) => {
+                const diff = i - totalProgress;
+                const angleDeg = diff * spacing;
+                const angleRad = angleDeg * (Math.PI / 180);
+
+                const x = centerXOffset + Math.cos(angleRad) * radius - 48;
+                const y = startY + Math.sin(angleRad) * radius;
+
+                const dist = Math.abs(angleDeg);
+                const opacity = Math.max(0.5, 1 - dist / 80);
+
+                const blurAmount = Math.min(dist / 30, 1.5);
+                const brightness = Math.max(0.8, 1 - dist / 150);
+
+                gsap.set(item, {
+                  x: x,
+                  y: y,
+                  yPercent: -50,
+                  rotation: angleDeg,
+                  opacity: opacity,
+                  filter: `blur(${blurAmount}px) brightness(${brightness})`,
+                  zIndex: 100 - Math.round(dist),
+                });
+              });
+            }
+          },
+        });
+      }
+    },
+    { scope: sectionRef, dependencies: [projects.length, dimensions] }
+  );
+
+  useGSAP(
+    () => {
+      const card = sectionRef.current?.querySelector(".center-card-container");
+      if (card) {
+        gsap.fromTo(
+          card,
+          { rotationY: 90, opacity: 0, scale: 0.9 },
+          {
+            rotationY: 0,
+            opacity: 1,
+            scale: 1,
+            duration: 3,
+            ease: "back.out(1.2)",
+            overwrite: "auto",
+          }
+        );
+      }
+    },
+    { scope: sectionRef, dependencies: [activeIndex] }
+  );
+
+  if (isLoading) {
+    return (
+      <section className="relative w-full h-screen bg-neutral-950 flex items-center justify-center">
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-12 h-12 border-2 border-amber-500/30 border-t-amber-500 rounded-full animate-spin" />
+          <p className="font-kings text-xl text-amber-500/80 animate-pulse tracking-widest">
+            Summoning Artifacts...
+          </p>
+        </div>
+      </section>
+    );
+  }
+
+  if (isError) {
+    return (
+      <section className="relative w-full h-screen bg-neutral-950 flex items-center justify-center">
+        <div className="text-center space-y-2">
+          <h3 className="font-kings text-3xl text-red-500/80">Flux Disruption</h3>
+          <p className="font-space-mono text-xs text-neutral-500 tracking-wider">
+            Failed to commune with the archives.
+          </p>
+        </div>
+      </section>
+    );
+  }
+
   return (
-    <section id="craftings" className="relative w-full py-20 overflow-hidden">
-      <Spotlight />
-      <div className="absolute top-0 left-0 w-40 h-40 md:w-60 md:h-60 z-20">
-        <Image
-          src="/assets/images/the-sun-left.svg"
-          alt="The Sun"
-          fill
-          className="object-contain brightness-0 invert drop-shadow-[0_0_15px_rgba(255,255,255,0.6)]"
-        />
-      </div>
+    <section
+      ref={sectionRef}
+      id="craftings"
+      className="relative w-full min-h-screen bg-neutral-950 text-white"
+    >
+      <BackgroundLayers projects={projects} activeIndex={activeIndex} />
 
-      <div className="absolute top-0 right-0 w-40 h-40 md:w-60 md:h-60 z-20">
-        <Image
-          src="/assets/images/the-moon-right.svg"
-          alt="The Moon"
-          fill
-          className="object-contain brightness-0 invert drop-shadow-[0_0_15px_rgba(255,255,255,0.6)]"
-        />
-      </div>
+      <div className="w-full relative z-20">
+        <div className="absolute top-0 left-0 w-40 h-40 md:w-60 md:h-60 z-20 pointer-events-none">
+          <Image
+            src="/assets/images/the-sun-left.svg"
+            alt="The Sun"
+            fill
+            className="object-contain brightness-0 invert drop-shadow-[0_0_15px_rgba(255,255,255,0.6)]"
+          />
+        </div>
 
-      <div className="absolute top-10 left-0 right-0 w-full z-10 cloud-parallax">
-        <Image
-          src="/assets/images/cloud.avif"
-          alt="Cloud"
-          width={1600}
-          height={500}
-          className="w-full object-contain opacity-70"
-        />
-      </div>
+        <div className="absolute top-0 right-0 w-40 h-40 md:w-60 md:h-60 z-20 pointer-events-none">
+          <Image
+            src="/assets/images/the-moon-right.svg"
+            alt="The Moon"
+            fill
+            className="object-contain brightness-0 invert drop-shadow-[0_0_15px_rgba(255,255,255,0.6)]"
+          />
+        </div>
 
-      <div className="relative text-white max-w-7xl mx-auto text-center px-6 z-30">
-        <h2 className="craftings-title text-5xl md:text-7xl font-kings tracking-wide drop-shadow-sm mb-4">
-          {'The Craftings'.split('').map((char, i) => (
-            <span key={i} className="inline-block">
-              {char === ' ' ? '\u00A0' : char}
-            </span>
-          ))}
-        </h2>
+        <div className="absolute top-10 left-0 right-0 w-full z-10 cloud-parallax pointer-events-none">
+          <Image
+            src="/assets/images/cloud.avif"
+            alt="Cloud"
+            width={1600}
+            height={500}
+            className="w-full object-contain opacity-70"
+          />
+        </div>
 
-        <p className="font-serif italic text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-12">
-          Forged in fire, each project is a testament to battles fought, lessons
-          learned, and dreams brought to life through code and will.
-        </p>
-        <div>
-          {isLoading ? (
-            <InfiniteMovingCardsSkeleton />
-          ) : isError ? (
-            <div className="text-red-400 text-sm italic text-center mt-4">
-              Failed to load projects.
+        <div className="relative z-30 text-center pt-20 pb-2 md:pt-24 md:pb-6 shrink-0">
+          <h2 className="craftings-title text-4xl md:text-6xl font-kings tracking-wide drop-shadow-sm mb-2">
+            {"The Craftings".split("").map((char, i) => (
+              <span key={i} className="inline-block">
+                {char === " " ? "\u00A0" : char}
+              </span>
+            ))}
+          </h2>
+          <p className="font-serif italic text-base md:text-lg max-w-2xl mx-auto leading-relaxed text-neutral-400 px-4">
+            Forged in fire, each project is a testament to battles fought, lessons learned, and
+            dreams brought to life.
+          </p>
+        </div>
+        <div ref={gridRef} className="h-screen w-full flex overflow-hidden relative z-20 min-h-0">
+          <OrbitalSystem projects={projects} activeIndex={activeIndex} dimensions={dimensions} />
+
+          <div className="flex-1 h-full relative overflow-hidden">
+            <div ref={prophecyListRef} className="w-full will-change-transform">
+              {projects.map((p, i) => (
+                <ProphecyCard key={p._id || i} project={p} index={i} activeIndex={activeIndex} />
+              ))}
             </div>
-          ) : projects.length === 0 ? (
-            <div className="text-zinc-400 text-sm italic text-center mt-4">
-              No projects found.
-            </div>
-          ) : (
-            <InfiniteMovingCards
-              items={projects}
-              direction="left"
-              speed="normal"
-            />
-          )}
+          </div>
         </div>
       </div>
     </section>
