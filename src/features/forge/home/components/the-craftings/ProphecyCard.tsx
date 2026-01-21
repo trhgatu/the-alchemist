@@ -11,15 +11,15 @@ export function ProphecyCard({ project: p, index: i, activeIndex }: ProphecyCard
   return (
     <div className="min-h-screen w-full flex flex-col justify-center">
       <div
-        className={`relative group/card bg-neutral-950/30 backdrop-blur-md p-10 md:p-12 rounded-3xl shadow-2xl transition-all duration-700 ease-out transform-gpu overflow-hidden min-h-[60vh] flex flex-col border
+        className={`relative group/card bg-neutral-950/90 p-10 md:p-12 rounded-3xl transition-all duration-700 ease-out transform-gpu overflow-hidden min-h-[60vh] flex flex-col border
                       ${
                         i === activeIndex
-                          ? "translate-x-0 opacity-100 border-white/30 shadow-[0_20px_50px_rgba(0,0,0,0.5),inset_0_0_1px_1px_rgba(255,255,255,0.1)]"
+                          ? "translate-x-0 opacity-100 border-white/30"
                           : "translate-x-20 opacity-30 grayscale border-white/10"
                       }`}
       >
         <div className="absolute inset-0 z-0 pointer-events-none">
-          <div className="absolute inset-0 opacity-[0.03] bg-[url('/assets/noise.png')] bg-repeat mix-blend-overlay" />
+          <div className="absolute inset-0 opacity-[0.03] mix-blend-overlay" />
           <div className="absolute inset-0 bg-gradient-to-tr from-white/5 via-transparent to-white/5 opacity-50" />
           <div className="absolute inset-0 border border-white/10 rounded-3xl opacity-50 mix-blend-overlay" />
         </div>
