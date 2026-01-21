@@ -20,6 +20,8 @@ interface ProjectHomeProps {
 
 export function TheCraftings({ projects, isLoading, isError }: ProjectHomeProps) {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const backgroundRef = useRef<HTMLDivElement>(null);
+  const orbitalRef = useRef<HTMLDivElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
   const prophecyListRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -37,6 +39,41 @@ export function TheCraftings({ projects, isLoading, isError }: ProjectHomeProps)
     window.addEventListener("resize", updateDimensions);
     return () => window.removeEventListener("resize", updateDimensions);
   }, []);
+
+  useGSAP(
+    () => {
+      if (!backgroundRef.current || !gridRef.current || projects.length === 0) return;
+
+      gsap.set(backgroundRef.current, {
+        backgroundColor: "#000000",
+      });
+
+      gsap.to(backgroundRef.current, {
+        backgroundColor: "#ffffff",
+        ease: "none",
+        scrollTrigger: {
+          trigger: gridRef.current,
+          start: "top top",
+          end: "+=300%",
+          scrub: 1,
+        },
+      });
+
+      if (orbitalRef.current) {
+        gsap.to(orbitalRef.current, {
+          filter: "invert(1)",
+          ease: "none",
+          scrollTrigger: {
+            trigger: gridRef.current,
+            start: "top top",
+            end: "+=150%",
+            scrub: 1,
+          },
+        });
+      }
+    },
+    { scope: sectionRef, dependencies: [projects.length] }
+  );
 
   useGSAP(
     () => {
@@ -119,7 +156,7 @@ export function TheCraftings({ projects, isLoading, isError }: ProjectHomeProps)
               const radius = dimensions.height * 0.55;
               const startY = dimensions.height * 0.45;
               const centerXOffset = -radius + 140;
-              const spacing = 32; // Balanced spacing for star tokens
+              const spacing = 32;
               const totalProgress = p * (projects.length - 1);
 
               items.forEach((item, i) => {
@@ -202,11 +239,9 @@ export function TheCraftings({ projects, isLoading, isError }: ProjectHomeProps)
   }
 
   return (
-    <section
-      ref={sectionRef}
-      id="craftings"
-      className="relative w-full min-h-screen bg-neutral-950 text-white"
-    >
+    <section ref={sectionRef} id="craftings" className="relative w-full min-h-screen text-white">
+      <div ref={backgroundRef} className="absolute inset-0 z-0" />
+
       <BackgroundLayers projects={projects} activeIndex={activeIndex} />
 
       <div className="w-full relative z-20">
@@ -252,7 +287,12 @@ export function TheCraftings({ projects, isLoading, isError }: ProjectHomeProps)
           </p>
         </div>
         <div ref={gridRef} className="h-screen w-full flex overflow-hidden relative z-20 min-h-0">
-          <OrbitalSystem projects={projects} activeIndex={activeIndex} dimensions={dimensions} />
+          <OrbitalSystem
+            ref={orbitalRef}
+            projects={projects}
+            activeIndex={activeIndex}
+            dimensions={dimensions}
+          />
 
           <div className="flex-1 h-full relative overflow-hidden">
             <div ref={prophecyListRef} className="w-full will-change-transform">
