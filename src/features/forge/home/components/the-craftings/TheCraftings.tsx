@@ -61,7 +61,7 @@ export function TheCraftings({ projects, isLoading, isError }: ProjectHomeProps)
 
       const atmosphereLayer = sectionRef.current?.querySelector(".absolute.inset-0.z-10");
       const reentryHeat = sectionRef.current?.querySelector(
-        ".bg-gradient-to-r.from-transparent.via-red-500\\/10"
+        ".bg-gradient-to-r.from-transparent.via-blue-500\\/10"
       );
       const groundApproach = sectionRef.current?.querySelector(".bg-gradient-to-t.from-white\\/10");
 
