@@ -25,7 +25,7 @@ export function TheCraftings({ projects, isLoading, isError }: ProjectHomeProps)
   const gridRef = useRef<HTMLDivElement>(null);
   const prophecyListRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [dimensions, setDimensions] = useState({ height: 800, width: 1200 }); // Default values for SSR
+  const [dimensions, setDimensions] = useState({ height: 800, width: 1200 });
 
   useGSAP(() => {
     const updateDimensions = () => {
@@ -79,17 +79,19 @@ export function TheCraftings({ projects, isLoading, isError }: ProjectHomeProps)
       }
 
       if (reentryHeat) {
-        gsap.to(reentryHeat, {
-          opacity: 0.8,
-          scale: 1.2,
-          ease: "power2.inOut",
+        const tl = gsap.timeline({
           scrollTrigger: {
             trigger: gridRef.current,
             start: "top top",
-            end: "+=150%",
+            end: "+=300%",
             scrub: 1,
           },
         });
+        tl.to(reentryHeat, { opacity: 0.8, scale: 1.2, duration: 0.3, ease: "power2.inOut" }).to(
+          reentryHeat,
+          { opacity: 0, duration: 0.3, ease: "power2.out" },
+          0.7
+        );
       }
 
       if (groundApproach) {
@@ -172,6 +174,7 @@ export function TheCraftings({ projects, isLoading, isError }: ProjectHomeProps)
             scrub: 0.5,
             pin: true,
             invalidateOnRefresh: true,
+            refreshPriority: 100,
           },
           onUpdate: () => {
             const p = progressObj.value;
