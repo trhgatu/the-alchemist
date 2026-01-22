@@ -1,7 +1,14 @@
 import type { Metadata } from "next";
-import { Share_Tech_Mono, Space_Mono, Kings, Beau_Rivage, Metamorphous, Cinzel_Decorative, Oldenburg } from "next/font/google";
+import {
+  Share_Tech_Mono,
+  Space_Mono,
+  Kings,
+  Beau_Rivage,
+  Metamorphous,
+  Cinzel_Decorative,
+  Oldenburg,
+} from "next/font/google";
 import "./globals.css";
-import ViewCanvas from "@/components/ViewCanvas";
 import LenisScroll from "@/components/common/LenisScroll";
 import { ThemeProvider } from "@/components/shared/ThemeProvider";
 import { ReduxProvider } from "@/store/provider";
@@ -34,14 +41,14 @@ const beauRivage = Beau_Rivage({
   weight: ["400"],
   variable: "--font-beau-rivage",
   display: "swap",
-})
+});
 
 const kings = Kings({
   subsets: ["latin"],
   weight: ["400"],
   variable: "--font-kings",
   display: "swap",
-})
+});
 
 const spaceMono = Space_Mono({
   subsets: ["latin"],
@@ -54,9 +61,8 @@ const shareTechMono = Share_Tech_Mono({
   subsets: ["latin"],
   weight: ["400"],
   variable: "--font-share-tech-mono",
-  display: "swap"
-
-})
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: {
@@ -73,7 +79,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${spaceMono.variable} ${oldenBurg.variable} ${cinzelDecorative.variable} ${shareTechMono.variable} ${kings.variable} ${metamorphous.variable} ${beauRivage.variable}`}>
+    <html
+      lang="en"
+      className={`${spaceMono.variable} ${oldenBurg.variable} ${cinzelDecorative.variable} ${shareTechMono.variable} ${kings.variable} ${metamorphous.variable} ${beauRivage.variable}`}
+    >
       <body suppressHydrationWarning={false}>
         <div id="page-wrapper">
           <div className="lenis-body">
@@ -89,7 +98,6 @@ export default function RootLayout({
                   >
                     <LenisScroll />
                     <main>{children}</main>
-                    <ViewCanvas />
                   </ThemeProvider>
                 </ReactQueryProvider>
               </ReduxProvider>
