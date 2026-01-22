@@ -25,8 +25,6 @@ export function TheCraftings({ projects, isLoading, isError }: ProjectHomeProps)
   const gridRef = useRef<HTMLDivElement>(null);
   const prophecyListRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isDayMode, setIsDayMode] = useState(false);
-  const isDayModeRef = useRef(false);
   const [dimensions, setDimensions] = useState({ height: 800, width: 1200 }); // Default values for SSR
 
   useGSAP(() => {
@@ -58,25 +56,50 @@ export function TheCraftings({ projects, isLoading, isError }: ProjectHomeProps)
           start: "top top",
           end: "+=300%",
           scrub: 1,
-          onUpdate: (self) => {
-            // Switch to Day Mode when progress > 0.6 (background is mostly white)
-            const shouldBeDay = self.progress > 0.6;
-            if (shouldBeDay !== isDayModeRef.current) {
-              isDayModeRef.current = shouldBeDay;
-              setIsDayMode(shouldBeDay);
-            }
-          },
         },
       });
 
-      if (orbitalRef.current) {
-        gsap.to(orbitalRef.current, {
-          filter: "invert(1)",
+      const atmosphereLayer = sectionRef.current?.querySelector(".absolute.inset-0.z-10");
+      const reentryHeat = sectionRef.current?.querySelector(
+        ".bg-gradient-to-r.from-transparent.via-red-500\\/10"
+      );
+      const groundApproach = sectionRef.current?.querySelector(".bg-gradient-to-t.from-white\\/10");
+
+      if (atmosphereLayer) {
+        gsap.to(atmosphereLayer, {
+          opacity: 1,
           ease: "none",
           scrollTrigger: {
             trigger: gridRef.current,
             start: "top top",
+            end: "+=300%",
+            scrub: 1,
+          },
+        });
+      }
+
+      if (reentryHeat) {
+        gsap.to(reentryHeat, {
+          opacity: 0.8,
+          scale: 1.2,
+          ease: "power2.inOut",
+          scrollTrigger: {
+            trigger: gridRef.current,
+            start: "top top",
             end: "+=150%",
+            scrub: 1,
+          },
+        });
+      }
+
+      if (groundApproach) {
+        gsap.to(groundApproach, {
+          opacity: 1,
+          ease: "none",
+          scrollTrigger: {
+            trigger: gridRef.current,
+            start: "+=150%",
+            end: "+=300%",
             scrub: 1,
           },
         });
@@ -251,6 +274,18 @@ export function TheCraftings({ projects, isLoading, isError }: ProjectHomeProps)
   return (
     <section ref={sectionRef} id="craftings" className="relative w-full min-h-screen text-white">
       <div ref={backgroundRef} className="absolute inset-0 z-0 bg-black" />
+      <div className="absolute inset-0 z-10 pointer-events-none">
+        <div className="absolute inset-0 bg-gradient-to-b from-black via-black/90 to-transparent opacity-100" />
+        <div
+          className="absolute inset-0 bg-gradient-to-b from-transparent via-blue-900/20 via-blue-700/30 to-transparent opacity-0"
+          style={{
+            background:
+              "radial-gradient(ellipse at center bottom, transparent 0%, rgba(59,130,246,0.1) 30%, rgba(29,78,216,0.2) 60%, transparent 100%)",
+          }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-white/10 via-transparent to-transparent opacity-0" />
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-500/10 to-cyan-500/10 opacity-0 blur-2xl" />
+      </div>
 
       <BackgroundLayers projects={projects} activeIndex={activeIndex} />
 
@@ -307,13 +342,7 @@ export function TheCraftings({ projects, isLoading, isError }: ProjectHomeProps)
           <div className="flex-1 h-full relative overflow-hidden">
             <div ref={prophecyListRef} className="w-full will-change-transform">
               {projects.map((p, i) => (
-                <ProphecyCard
-                  key={p._id || i}
-                  project={p}
-                  index={i}
-                  activeIndex={activeIndex}
-                  isDayMode={isDayMode}
-                />
+                <ProphecyCard key={p._id || i} project={p} index={i} activeIndex={activeIndex} />
               ))}
             </div>
           </div>

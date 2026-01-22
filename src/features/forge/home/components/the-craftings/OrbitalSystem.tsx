@@ -86,7 +86,7 @@ export const OrbitalSystem = forwardRef<HTMLDivElement, OrbitalSystemProps>(
               fill="none"
               stroke="#ffffff"
               strokeWidth="0.5"
-              opacity="0.1"
+              opacity="0.2"
             />
             <circle
               cx={centerX}
@@ -96,7 +96,7 @@ export const OrbitalSystem = forwardRef<HTMLDivElement, OrbitalSystemProps>(
               stroke="#ffffff"
               strokeWidth="4"
               strokeDasharray="0.5 15"
-              opacity="0.1"
+              opacity="0.2"
             />
 
             {/* 5. GEOMETRIC CROSSHAIRS (The 'Scope') */}
@@ -107,7 +107,7 @@ export const OrbitalSystem = forwardRef<HTMLDivElement, OrbitalSystemProps>(
               y2="45%"
               stroke="#ffffff"
               strokeWidth="0.5"
-              opacity="0.05"
+              opacity="0.15"
             />
             <line
               x1={centerX}
@@ -116,7 +116,7 @@ export const OrbitalSystem = forwardRef<HTMLDivElement, OrbitalSystemProps>(
               y2={dimensions.height * 0.45 + radius}
               stroke="#ffffff"
               strokeWidth="0.5"
-              opacity="0.05"
+              opacity="0.15"
             />
 
             {/* 6. DECORATIVE PLANETARY NODES */}
