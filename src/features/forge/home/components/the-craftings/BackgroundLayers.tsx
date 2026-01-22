@@ -1,5 +1,4 @@
 import { Project } from "@/types";
-// import Image from "next/image"; // Temporarily disabled with thumbnails
 
 interface BackgroundLayersProps {
   projects: Project[];
@@ -36,7 +35,6 @@ export function BackgroundLayers({ projects, activeIndex }: BackgroundLayersProp
                        ${i === activeIndex ? "opacity-100" : "opacity-0"}`}
           ></div>
         ))}
-        <div className="absolute inset-0 opacity-[0.05] mix-blend-overlay" />
       </div>
     </>
   );
