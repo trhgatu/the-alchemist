@@ -25,6 +25,8 @@ export function TheCraftings({ projects, isLoading, isError }: ProjectHomeProps)
   const gridRef = useRef<HTMLDivElement>(null);
   const prophecyListRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isDayMode, setIsDayMode] = useState(false);
+  const isDayModeRef = useRef(false);
   const [dimensions, setDimensions] = useState({ height: 800, width: 1200 }); // Default values for SSR
 
   useGSAP(() => {
@@ -56,6 +58,14 @@ export function TheCraftings({ projects, isLoading, isError }: ProjectHomeProps)
           start: "top top",
           end: "+=300%",
           scrub: 1,
+          onUpdate: (self) => {
+            // Switch to Day Mode when progress > 0.6 (background is mostly white)
+            const shouldBeDay = self.progress > 0.6;
+            if (shouldBeDay !== isDayModeRef.current) {
+              isDayModeRef.current = shouldBeDay;
+              setIsDayMode(shouldBeDay);
+            }
+          },
         },
       });
 
@@ -297,7 +307,13 @@ export function TheCraftings({ projects, isLoading, isError }: ProjectHomeProps)
           <div className="flex-1 h-full relative overflow-hidden">
             <div ref={prophecyListRef} className="w-full will-change-transform">
               {projects.map((p, i) => (
-                <ProphecyCard key={p._id || i} project={p} index={i} activeIndex={activeIndex} />
+                <ProphecyCard
+                  key={p._id || i}
+                  project={p}
+                  index={i}
+                  activeIndex={activeIndex}
+                  isDayMode={isDayMode}
+                />
               ))}
             </div>
           </div>

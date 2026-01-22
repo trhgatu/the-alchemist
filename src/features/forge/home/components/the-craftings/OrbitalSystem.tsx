@@ -15,103 +15,149 @@ export const OrbitalSystem = forwardRef<HTMLDivElement, OrbitalSystemProps>(
     return (
       <div ref={ref} className="w-1/3 h-full relative overflow-hidden">
         <svg className="absolute inset-0 w-full h-full pointer-events-none z-0">
+          {/* --- ASTROLABE / CELESTIAL CHART LAYERS --- */}
           <defs>
             <linearGradient id="orbitalGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="#ffffff" stopOpacity="0.05" />
-              <stop offset="50%" stopColor="#ffffff" stopOpacity="0.3" />
-              <stop offset="100%" stopColor="#ffffff" stopOpacity="0.05" />
+              <stop offset="0%" stopColor="#ffffff" stopOpacity="0.02" />
+              <stop offset="50%" stopColor="#ffffff" stopOpacity="0.2" />
+              <stop offset="100%" stopColor="#ffffff" stopOpacity="0.02" />
             </linearGradient>
+            <mask id="fadeMask">
+              <linearGradient id="maskGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="black" />
+                <stop offset="20%" stopColor="white" />
+                <stop offset="80%" stopColor="white" />
+                <stop offset="100%" stopColor="black" />
+              </linearGradient>
+              <rect x="0" y="0" width="100%" height="100%" fill="url(#maskGrad)" />
+            </mask>
           </defs>
 
-          <circle
-            cx={centerX}
-            cy="45%"
-            r={`${radius + 20}`}
-            fill="none"
-            stroke="#ffffff"
-            strokeWidth="1"
-            opacity="0.05"
-            strokeDasharray="4 4"
-          />
+          <g mask="url(#fadeMask)">
+            {/* 1. OUTER SCALE (Degree Ticks) */}
+            <circle
+              cx={centerX}
+              cy="45%"
+              r={`${radius + 40}`}
+              fill="none"
+              stroke="#ffffff"
+              strokeWidth="6"
+              strokeDasharray="1 8"
+              opacity="0.08"
+            />
+            <circle
+              cx={centerX}
+              cy="45%"
+              r={`${radius + 45}`}
+              fill="none"
+              stroke="#ffffff"
+              strokeWidth="0.5"
+              opacity="0.1"
+            />
 
-          <circle
-            cx={centerX}
-            cy="45%"
-            r={`${radius}`}
-            fill="none"
-            stroke="url(#orbitalGradient)"
-            strokeWidth="2"
-            opacity="0.4"
-          />
+            {/* 2. CONSTELLATION RING (Dashed) */}
+            <circle
+              cx={centerX}
+              cy="45%"
+              r={`${radius + 20}`}
+              fill="none"
+              stroke="#ffffff"
+              strokeWidth="1"
+              opacity="0.05"
+              strokeDasharray="4 4"
+            />
 
-          <circle
-            cx={centerX}
-            cy="45%"
-            r={`${radius - 15}`}
-            fill="none"
-            stroke="#ffffff"
-            strokeWidth="1"
-            opacity="0.1"
-          />
+            {/* 3. MAIN ORBIT PATH (Glowing) */}
+            <circle
+              cx={centerX}
+              cy="45%"
+              r={`${radius}`}
+              fill="none"
+              stroke="url(#orbitalGradient)"
+              strokeWidth="1.5"
+              opacity="0.5"
+            />
 
-          <circle
-            cx={centerX}
-            cy="45%"
-            r={`${radius - 40}`}
-            fill="none"
-            stroke="#ffffff"
-            strokeWidth="1"
-            opacity="0.1"
-            strokeDasharray="2 10"
-          />
+            {/* 4. INNER ALIGNMENT RINGS */}
+            <circle
+              cx={centerX}
+              cy="45%"
+              r={`${radius - 30}`}
+              fill="none"
+              stroke="#ffffff"
+              strokeWidth="0.5"
+              opacity="0.1"
+            />
+            <circle
+              cx={centerX}
+              cy="45%"
+              r={`${radius - 35}`}
+              fill="none"
+              stroke="#ffffff"
+              strokeWidth="4"
+              strokeDasharray="0.5 15"
+              opacity="0.1"
+            />
 
-          <circle
-            cx={centerX + Math.cos(-0.5) * radius}
-            cy={Math.sin(-0.5) * radius + dimensions.height * 0.45}
-            r="3"
-            fill="#ffffff"
-            opacity="0.6"
-          />
-          <circle
-            cx={centerX + Math.cos(1.2) * (radius - 15)}
-            cy={Math.sin(1.2) * (radius - 15) + dimensions.height * 0.45}
-            r="2"
-            fill="#ffffff"
-            opacity="0.4"
-          />
-          <circle
-            cx={centerX + Math.cos(2.5) * (radius + 20)}
-            cy={Math.sin(2.5) * (radius + 20) + dimensions.height * 0.45}
-            r="2"
-            fill="#ffffff"
-            opacity="0.3"
-          />
-          {Array.from({ length: 8 }).map((_, i) => {
-            const angle = i * 45 * (Math.PI / 180);
-            const rStart = radius - 40;
-            const rEnd = radius + 20;
-            const x1 = centerX + Math.cos(angle) * rStart;
-            const y1 = Math.sin(angle) * rStart + dimensions.height * 0.45;
-            const x2 = centerX + Math.cos(angle) * rEnd;
-            const y2 = Math.sin(angle) * rEnd + dimensions.height * 0.45;
-            return (
-              <line
-                key={i}
-                x1={x1}
-                y1={y1}
-                x2={x2}
-                y2={y2}
-                stroke="#ffffff"
-                strokeWidth="1"
-                opacity="0.08"
-              />
-            );
-          })}
+            {/* 5. GEOMETRIC CROSSHAIRS (The 'Scope') */}
+            <line
+              x1={centerX - radius * 1.2}
+              y1="45%"
+              x2={centerX + radius * 1.2}
+              y2="45%"
+              stroke="#ffffff"
+              strokeWidth="0.5"
+              opacity="0.05"
+            />
+            <line
+              x1={centerX}
+              y1={dimensions.height * 0.45 - radius}
+              x2={centerX}
+              y2={dimensions.height * 0.45 + radius}
+              stroke="#ffffff"
+              strokeWidth="0.5"
+              opacity="0.05"
+            />
+
+            {/* 6. DECORATIVE PLANETARY NODES */}
+            <circle
+              cx={centerX + Math.cos(-0.5) * radius}
+              cy={Math.sin(-0.5) * radius + dimensions.height * 0.45}
+              r="2"
+              fill="white"
+              opacity="0.4"
+            />
+            <circle
+              cx={centerX + Math.cos(2.0) * (radius - 30)}
+              cy={Math.sin(2.0) * (radius - 30) + dimensions.height * 0.45}
+              r="1.5"
+              fill="white"
+              opacity="0.3"
+            />
+
+            {/* 7. STAR CHART LINES (Connecting Nodes) */}
+            {Array.from({ length: 6 }).map((_, i) => {
+              const angle = i * 60 * (Math.PI / 180); // Hexagon
+              const r = radius - 30;
+              const x = centerX + Math.cos(angle) * r;
+              const y = Math.sin(angle) * r + dimensions.height * 0.45;
+              return (
+                <g key={i}>
+                  <line
+                    x1={centerX}
+                    y1="45%"
+                    x2={x}
+                    y2={y}
+                    stroke="#ffffff"
+                    strokeWidth="0.5"
+                    opacity="0.03"
+                  />
+                  <circle cx={x} cy={y} r="1" fill="white" opacity="0.2" />
+                </g>
+              );
+            })}
+          </g>
         </svg>
-
-        <div className="absolute top-1/2 left-20 w-1.5 h-1.5 bg-white rounded-full blur-[0.5px] opacity-40" />
-        <div className="absolute top-1/3 left-16 w-1 h-1 bg-neutral-400 rounded-full blur-[0.5px] opacity-30" />
-        <div className="absolute top-2/3 left-24 w-1 h-1 bg-white rounded-full blur-[0.5px] opacity-35" />
 
         <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
           {projects.map((p, i) => (
