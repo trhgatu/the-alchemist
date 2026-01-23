@@ -7,11 +7,11 @@ import {
   TheCraftings,
   TheLivingInk,
   TheAlchemist,
+  TheJourney,
 } from "@/features/forge/home/components";
 import { useAppStore, useLang } from "@/hooks";
 import { usePublicProjects } from "@/features/forge/craftings/hooks";
 import { ScenePhase } from "@/constants/ScenePhase";
-import { CraftingLegacies } from "@/features/forge/home/components/CraftingLegacies";
 import { useGSAP } from "@gsap/react";
 
 interface ForgeHomeProps {
@@ -35,10 +35,10 @@ export default function ForgeHome({ isVisited = false }: ForgeHomeProps) {
     <section>
       <HeroForgeEntry />
       <TheAlchemist />
-      <TheLivingInk />
       <TechArsenal />
+      <TheLivingInk />
       <TheCraftings projects={project} isLoading={false} isError={false} />
-      <CraftingLegacies />
+      <TheJourney />
     </section>
   );
 }
