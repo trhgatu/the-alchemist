@@ -51,6 +51,8 @@ export function StarField() {
       canvas.width = width * dpr;
       canvas.height = height * dpr;
 
+      // Reset transform before applying new scale to avoid compounding
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.scale(dpr, dpr);
 
       initStars();
@@ -93,6 +95,8 @@ export function StarField() {
         life: 1,
       });
     };
+
+    let animationId: number;
 
     const draw = () => {
       ctx.clearRect(0, 0, width, height);
@@ -165,13 +169,13 @@ export function StarField() {
         ctx.fill();
       }
 
-      requestAnimationFrame(draw);
+      animationId = requestAnimationFrame(draw);
     };
 
     handleResize();
     window.addEventListener("resize", handleResize);
     window.addEventListener("mousemove", handleMouseMove);
-    const animationId = requestAnimationFrame(draw);
+    animationId = requestAnimationFrame(draw);
 
     return () => {
       window.removeEventListener("resize", handleResize);
