@@ -214,19 +214,19 @@ export function TheJourney() {
       </div>
       <div className="relative z-50 w-full max-w-4xl px-6 h-full flex items-center justify-center pointer-events-none">
         <div className="narrative-entry absolute inset-0 flex items-center justify-center">
-          <p className="font-serif text-3xl md:text-5xl leading-tight italic text-neutral-800 drop-shadow-sm text-center">
+          <p className="font-playfair-display text-3xl md:text-5xl leading-tight italic text-neutral-800 drop-shadow-sm text-center">
             &quot;There is a language beyond words...&quot;
           </p>
         </div>
         <div className="narrative-entry absolute inset-0 flex items-center justify-center">
-          <p className="font-serif text-3xl md:text-5xl leading-tight italic text-neutral-800 font-medium drop-shadow-sm text-center">
+          <p className="font-playfair-display text-3xl md:text-5xl leading-tight italic text-neutral-800 drop-shadow-sm text-center">
             &quot;It speaks of the courage to follow
             <br />
             one&apos;s own Personal Legend.&quot;
           </p>
         </div>
         <div className="narrative-entry absolute inset-0 flex items-center justify-center">
-          <p className="font-kings text-4xl md:text-6xl text-neutral-900 tracking-wide drop-shadow-sm text-center">
+          <p className="font-playfair-display text-4xl md:text-6xl italic text-neutral-900 tracking-wide text-center">
             &quot;Until the hands build what the heart has always known.&quot;
           </p>
         </div>
@@ -236,7 +236,7 @@ export function TheJourney() {
         className="absolute inset-0 z-40 flex flex-col items-center justify-center text-center px-6 pointer-events-none"
       >
         <div className="crafting-content relative">
-          <h2 className="crafting-title text-3xl md:text-5xl lg:text-6xl font-kings tracking-wide mb-8 text-neutral-900 drop-shadow-sm">
+          <h2 className="crafting-title text-3xl md:text-5xl lg:text-6xl font-kings tracking-wide mb-8 text-neutral-900">
             {"Crafting Legacies".split("").map((char, i) => (
               <span key={i} className="inline-block">
                 {char === " " ? "\u00A0" : char}
@@ -244,8 +244,8 @@ export function TheJourney() {
             ))}
           </h2>
 
-          <p className="crafting-text text-xl md:text-2xl leading-relaxed max-w-3xl mx-auto text-neutral-600 font-serif">
-            {"Every line of code is not just a solution — it&apos;s a legacy, a trace left behind to inspire, empower, and endure."
+          <p className="crafting-text text-xl md:text-2xl leading-relaxed max-w-3xl mx-auto text-neutral-600 font-playfair-display">
+            {"Every line of code is not just a solution — it's a legacy, a trace left behind to inspire, empower, and endure."
               .split(" ")
               .map((word, i) => (
                 <span key={i} className="inline-block mr-2">
@@ -269,7 +269,7 @@ export function TheJourney() {
               height={80}
               className="absolute -bottom-10 -right-12 opacity-10 rotate-180 select-none pointer-events-none"
             />
-            <span className="relative z-10 block leading-relaxed text-3xl md:text-5xl font-kings">
+            <span className="relative z-10 block leading-relaxed text-3xl md:text-5xl font-playfair-display">
               “And, when you want something, all the universe conspires in helping you to achieve
               it.”
             </span>

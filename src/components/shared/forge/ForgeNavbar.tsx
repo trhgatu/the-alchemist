@@ -1,5 +1,5 @@
-'use client';
-import { ModeToggle } from '@/components/shared/ModeToggle';
+"use client";
+import { ModeToggle } from "@/components/shared/ModeToggle";
 import {
   Navbar,
   NavBody,
@@ -10,41 +10,63 @@ import {
   MobileNavHeader,
   MobileNavToggle,
   MobileNavMenu,
-} from '@/components/ui/resizable-navbar';
-import { useState } from 'react';
-import { ScrambleTextPlugin, ScrollTrigger } from 'gsap/all';
-import gsap from 'gsap';
-import { useGSAP } from '@gsap/react';
-import { useScrambleText } from '@/hooks/useScrambleText';
-import { LanguageSelector } from '@/components/shared/LanguageSelector';
-
-gsap.registerPlugin(useGSAP, ScrollTrigger, ScrambleTextPlugin)
+} from "@/components/ui/resizable-navbar";
+import { useState } from "react";
+import { useScroll, useMotionValueEvent } from "motion/react";
+import { useScrambleText } from "@/hooks/useScrambleText";
+import { LanguageSelector } from "@/components/shared/LanguageSelector";
 
 export function NavbarForge() {
   useScrambleText();
   const navItems = [
     {
-      name: 'Forge',
-      link: '/forge',
+      name: "Forge",
+      link: "/forge",
     },
     {
-      name: 'Craftings',
-      link: '/forge/craftings',
+      name: "Craftings",
+      link: "/forge/craftings",
     },
     {
-      name: 'Timeline',
-      link: '/forge/timeline',
+      name: "Timeline",
+      link: "/forge/timeline",
     },
     {
-      name: 'The Alchemist',
-      link: '/forge/the-alchemist',
+      name: "The Alchemist",
+      link: "/forge/the-alchemist",
     },
   ];
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  // Framer Motion Smart Scroll Logic
+  const { scrollY } = useScroll();
+  const [isVisible, setIsVisible] = useState(true);
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    const previous = scrollY.getPrevious() ?? 0;
+    // Hide if scrolling down AND past 100px
+    if (latest > previous && latest > 100) {
+      setIsVisible(false);
+    }
+    // Show if scrolling up OR at the top
+    else if (latest < previous || latest < 100) {
+      setIsVisible(true);
+    }
+  });
+
   return (
-    <Navbar className="fixed top-6">
+    <Navbar
+      className="fixed top-6 z-50 pointer-events-auto transition-none"
+      initial={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+      animate={{
+        opacity: isVisible ? 1 : 0,
+        filter: isVisible ? "blur(0px)" : "blur(10px)",
+        y: isVisible ? 0 : -20,
+        scale: isVisible ? 1 : 0.95,
+      }}
+      transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }} // Very slow, ethereal ease
+    >
       <NavBody>
         <NavbarLogo />
         <NavItems items={navItems} />
@@ -59,10 +81,7 @@ export function NavbarForge() {
           />
         </MobileNavHeader>
 
-        <MobileNavMenu
-          isOpen={isMobileMenuOpen}
-          onClose={() => setIsMobileMenuOpen(false)}
-        >
+        <MobileNavMenu isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)}>
           {navItems.map((item, idx) => (
             <a
               key={`mobile-link-${idx}`}
