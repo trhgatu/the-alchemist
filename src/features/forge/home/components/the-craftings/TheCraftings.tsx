@@ -9,6 +9,7 @@ import { Project } from "@/types";
 import { BackgroundLayers } from "./BackgroundLayers";
 import { OrbitalSystem } from "./OrbitalSystem";
 import { ProphecyCard } from "./ProphecyCard";
+import { StarField } from "./StarField";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -335,6 +336,9 @@ export function TheCraftings({ projects, isLoading, isError }: ProjectHomeProps)
           </p>
         </div>
         <div ref={gridRef} className="h-screen w-full flex overflow-hidden relative z-20 min-h-0">
+          <div className="absolute inset-0 z-0">
+            <StarField />
+          </div>
           <OrbitalSystem
             ref={orbitalRef}
             projects={projects}
