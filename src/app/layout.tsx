@@ -8,6 +8,7 @@ import {
   Cinzel_Decorative,
   Oldenburg,
   Texturina,
+  Playfair_Display,
 } from "next/font/google";
 import "./globals.css";
 import LenisScroll from "@/components/common/LenisScroll";
@@ -27,6 +28,13 @@ const cinzelDecorative = Cinzel_Decorative({
   subsets: ["latin"],
   weight: ["400", "700", "900"],
   variable: "--font-cinzel-decorative",
+  display: "swap",
+});
+
+const playfairDisplay = Playfair_Display({
+  subsets: ["latin"],
+  weight: ["400", "700", "900", "500", "600", "800"],
+  variable: "--font-playfair-display",
   display: "swap",
 });
 
@@ -89,7 +97,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${spaceMono.variable} ${oldenBurg.variable} ${cinzelDecorative.variable} ${shareTechMono.variable} ${kings.variable} ${metamorphous.variable} ${beauRivage.variable} ${texTurina.variable}`}
+      className={`${spaceMono.variable} ${playfairDisplay.variable} ${oldenBurg.variable} ${cinzelDecorative.variable} ${shareTechMono.variable} ${kings.variable} ${metamorphous.variable} ${beauRivage.variable} ${texTurina.variable}`}
     >
       <body suppressHydrationWarning={false}>
         <div id="page-wrapper">

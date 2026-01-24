@@ -8,6 +8,10 @@
     font-family: var(--font-space-mono);
   }
 
+  .font-playfair-display {
+    font-family: var(--font-playfair-display);
+  }
+
   .font-texturina {
     font-family: var(--font-texturina);
   }
