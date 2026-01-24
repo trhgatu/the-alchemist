@@ -27,7 +27,7 @@ export function BackgroundLayers({ projects, activeIndex }: BackgroundLayersProp
         }
       `}</style>
 
-      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+      <div className="absolute inset-0 z-[15] pointer-events-none">
         {projects.map((p, i) => (
           <div
             key={`bg-${i}`}
