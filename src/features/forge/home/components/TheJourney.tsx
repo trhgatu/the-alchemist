@@ -226,7 +226,7 @@ export function TheJourney() {
           </p>
         </div>
         <div className="narrative-entry absolute inset-0 flex items-center justify-center">
-          <p className="font-kings text-4xl md:text-6xl text-neutral-900 tracking-wide drop-shadow-sm text-center">
+          <p className="font-serif text-4xl md:text-6xl italic text-neutral-900 tracking-wide drop-shadow-sm text-center">
             &quot;Until the hands build what the heart has always known.&quot;
           </p>
         </div>
@@ -269,7 +269,7 @@ export function TheJourney() {
               height={80}
               className="absolute -bottom-10 -right-12 opacity-10 rotate-180 select-none pointer-events-none"
             />
-            <span className="relative z-10 block leading-relaxed text-3xl md:text-5xl font-kings">
+            <span className="relative z-10 block leading-relaxed text-3xl md:text-5xl font-serif">
               “And, when you want something, all the universe conspires in helping you to achieve
               it.”
             </span>

@@ -8,6 +8,10 @@
     font-family: var(--font-space-mono);
   }
 
+  .font-texturina {
+    font-family: var(--font-texturina);
+  }
+
   .font-share-tech-mono {
     font-family: var(--font-share-tech-mono);
   }
@@ -37,7 +41,8 @@
   will-change: transform;
 } */
 @theme inline {
-  --animate-scroll: scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite;
+  --animate-scroll: scroll var(--animation-duration, 40s) var(--animation-direction, forwards)
+    linear infinite;
 
   @keyframes scroll {
     to {

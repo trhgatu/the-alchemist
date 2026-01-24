@@ -7,6 +7,7 @@ import {
   Metamorphous,
   Cinzel_Decorative,
   Oldenburg,
+  Texturina,
 } from "next/font/google";
 import "./globals.css";
 import LenisScroll from "@/components/common/LenisScroll";
@@ -64,6 +65,13 @@ const shareTechMono = Share_Tech_Mono({
   display: "swap",
 });
 
+const texTurina = Texturina({
+  subsets: ["latin"],
+  weight: ["400", "100", "200", "300", "500", "700", "600", "800", "900"],
+  variable: "--font-texturina",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: {
     default: siteConfig.name,
@@ -81,7 +89,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${spaceMono.variable} ${oldenBurg.variable} ${cinzelDecorative.variable} ${shareTechMono.variable} ${kings.variable} ${metamorphous.variable} ${beauRivage.variable}`}
+      className={`${spaceMono.variable} ${oldenBurg.variable} ${cinzelDecorative.variable} ${shareTechMono.variable} ${kings.variable} ${metamorphous.variable} ${beauRivage.variable} ${texTurina.variable}`}
     >
       <body suppressHydrationWarning={false}>
         <div id="page-wrapper">
