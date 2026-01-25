@@ -1,96 +1,67 @@
-# 🌌 trhgatu-3d-portfolio
+# 🌌 The Alchemist's Forge
 
-> **"Forged in pixels, powered by code."**
-> A personal 3D-coded forge that blends creativity, technology, and identity.
+> _"In the alchemical dance of existence, nothing new can be born until the old is surrendered."_
 
-## 🔥 About
+This is not a portfolio.
+This is a **grimoire**—a living scroll where code becomes poetry, and logic dances with imagination.
 
-**`trhgatu-3d-portfolio`** is not just a portfolio — it’s a **forge**.
-This project represents a journey of a software engineer who forges solutions with passion, tempers logic with imagination, and builds legacies through code.
+Inspired by **The Alchemist** by Paulo Coelho, this is a journey through fire, transformation, and the eternal pursuit of one's Personal Legend.
 
-Developed with cutting-edge tools like **React Three Fiber**, **GSAP**, **Next.js**, and **TailwindCSS**, the site is a multi-section, multi-layered experience that combines 3D interactivity, scroll animations, and personal storytelling.
-
----
-
-## 🌐 Live Demo
-
-🔗 [https://thatu.is-a.dev](https://thatu.is-a.dev)
-
-> **Note**: Cold start time may occur due to backend hosted on Render.
+🔗 **[Enter the Forge](https://thatu.is-a.dev)**
 
 ---
 
-## 🧰 Tech Stack
+## 🔥 The Journey
 
-| Frontend     | Animation / 3D         | Tooling & Others      |
-|--------------|------------------------|------------------------|
-| Next.js (App Router) | React Three Fiber (r3f) | TailwindCSS |
-| ReactJS      | GSAP (ScrollTrigger)   | Zustand, React Query   |
-| TypeScript   | Drei, Leva             | i18n, Zod              |
-| Framer Motion | PostCSS               | Custom theme provider  |
+**The Awakening**
+Your name materializes from the void. Letter by letter. The first breath of identity in an infinite expanse.
 
----
+**The Manifesto**
+_"Standing at the intersection of raw engineering and digital art."_
+A declaration. A promise. A way of being.
 
-## 🧪 Features
+**The Transmutation**
+The heart of the forge. Particles swirl through three sacred phases:
 
-- ⚙️ **Preload with cinematic overlay**
-- 🌐 **Internationalization (English / Vietnamese)**
-- 🎞️ **Hero section with GSAP + 3D animation**
-- 🪶 **Falling leaves, floating objects, dynamic text effects**
-- 🧱 **Tech stack showcase with custom icons and animated entry**
-- 🧠 **Personal quotes and philosophies throughout the scroll**
-- 📂 **Project gallery with filters, list/grid toggle, skeleton loading**
-- 📜 **Timeline visualization for developer journey**
-- 📸 **Personalized visuals and identity (photo, typography, environment)**
+- **Chaos** — _"The fixed shell must shatter"_
+- **Fire** — _"Burning away the false"_
+- **Rebirth** — _"We rise. Not just better, but truer."_
 
----
+Watch as formless matter becomes the infinity symbol—the eternal cycle made visible.
 
-## 📂 Folder Structure (Simplified)
+**The Arsenal**
+Every tool is a rune. Every language, a spell learned through trial and tempered by failure. This is the sacred collection of what has been mastered.
 
-```
-trhgatu-3d-portfolio/
-├── public/                # Static assets (images, HDRI, etc.)
-├── src/
-│   ├── app/               # App router pages (Next.js)
-│   ├── components/        # UI, shared and layout components
-│   ├── features/forge/    # Feature-based modules (home, craftings, timeline)
-│   ├── hooks/             # Custom hooks (lenis scroll, scramble text, etc.)
-│   ├── lib/               # Axios + utilities
-│   ├── store/             # Zustand slices
-│   ├── constants/         # Scene phases, skills map
-│   ├── config/            # Site config
-│   └── types/             # Global TypeScript types
-```
+**The Prophecies**
+Projects are not tasks. They are visions made real. Each one a battle fought in the crucible of creation, each one a testament to what was once impossible.
 
-> 💡 **3D scenes, preload, animations, and scroll logic** are all modularized inside `features/forge/home/` and `components/shared/`.
+**The Bridge**
+_"There is a language beyond words... It speaks of the courage to follow one's own Personal Legend."_
+
+The final truth: Every line of code is a legacy. Every creation, a footprint in the sand.
 
 ---
 
-## 🎨 Inspirations
+## 🗝️ The Vow
 
-- **The Alchemist** by Paulo Coelho — a recurring theme throughout the site.
-- Anime-inspired visual metaphors (fire, forge, moon, mountains, blade).
-- Portfolio pioneers like [fizzi-demo.vercel.app](https://fizzi-demo.vercel.app/), [codium.dev](https://www.codium.dev/), and [juno](https://junocollege.com/).
+> _"Life is a sacred furnace. To die a thousand small deaths is not destruction, but a necessary tempering of the soul."_
 
----
+This work is open. Not because it is perfect, but because it is honest.
 
-## 🛠️ Todo / Ideas
+You may study it. You may borrow from it. You may forge your own path.
 
-- [ ] Custom loading animation with dynamic splash
-- [ ] Sound layer integration (subtle forge ambiance)
-- [ ] More scroll-based narrative scenes (e.g. “Trial by Fire”)
-- [ ] Adaptive 3D scenes for mobile
-- [ ] GitHub Contributions Heatmap (3D style)
+But remember: **Copying the form is easy. Capturing the spirit requires your own transmutation.**
 
 ---
 
-## 🧙 Author
+## 🧙 The Alchemist
 
-> **Anh Tú** – _The alchemist of code._
-> trhgatu | [GitHub](https://github.com/trhgatu) | [Portfolio](https://thatu.is-a.dev)
+**trhgatu**
+_The one who forges in the digital fire_
+
+[GitHub](https://github.com/trhgatu) • [The Forge](https://thatu.is-a.dev)
 
 ---
 
-## 📜 License
-
-MIT © 2025 – crafted with pixels, powered by code.
+_Where the soul meets the cipher_
+**Born from fire and starlight**
