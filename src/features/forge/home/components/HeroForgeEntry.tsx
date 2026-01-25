@@ -150,7 +150,6 @@ export const HeroForgeEntry = () => {
       onMouseMove={handleMouseMove}
       className="hero relative opacity-0 min-h-screen flex items-center justify-center text-center text-white overflow-hidden"
     >
-      {/* --- LAYER 1: CLOUD (Background) --- */}
       <Image
         ref={bgRef}
         src="/assets/images/cloud.avif"

@@ -4,7 +4,6 @@ import { Canvas } from "@react-three/fiber";
 import { Preload, View } from "@react-three/drei";
 import { Suspense } from "react";
 
-
 export default function ViewCanvas() {
   return (
     <>
@@ -12,11 +11,9 @@ export default function ViewCanvas() {
         style={{
           position: "fixed",
           top: 0,
-          left: "50%",
-          transform: "translateX(-50%)",
           overflow: "hidden",
           pointerEvents: "none",
-          zIndex: 20
+          zIndex: 20,
         }}
         shadows
         dpr={[1, 1.5]}

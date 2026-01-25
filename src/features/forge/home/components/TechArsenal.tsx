@@ -163,14 +163,16 @@ export const TechArsenal = () => {
     <section
       ref={containerRef}
       id="tech-arsenal"
-      className="relative bg-[#f0f0f0] w-full min-h-screen flex items-center justify-center overflow-hidden"
+      className="relative w-full bg-[#f4f2ef] min-h-screen flex items-center justify-center overflow-hidden"
     >
-      <div
-        className="absolute inset-0 z-0 pointer-events-none opacity-40 mix-blend-multiply"
-        style={{
-          backgroundImage: `url("/assets/images/craftings/texture_washi.png")`,
-        }}
-      />
+      <div className="absolute inset-0 opacity-40 pointer-events-none mix-blend-multiply z-0">
+        <Image
+          src="/assets/images/craftings/texture_washi.png"
+          alt="Washi Texture"
+          fill
+          className="object-cover"
+        />
+      </div>
 
       <div className="absolute top-10 left-10 md:top-20 md:left-20 z-0 pointer-events-none mix-blend-multiply opacity-20 select-none">
         <Image
@@ -181,17 +183,6 @@ export const TechArsenal = () => {
           className="w-32 md:w-64"
         />
       </div>
-
-      <div className="absolute right-0 bottom-0 z-0 pointer-events-none opacity-20 select-none">
-        <Image
-          src="/assets/images/knight_state.svg"
-          alt="Knight"
-          width={300}
-          height={300}
-          className="w-48 md:w-80"
-        />
-      </div>
-
       <div className="dragon-layer z-10 absolute inset-0 flex items-center justify-center pointer-events-none opacity-60 select-none">
         <Image
           src="/assets/images/medieval_dragon.png"
@@ -201,10 +192,7 @@ export const TechArsenal = () => {
           className="object-contain w-[80%] h-[80%]"
         />
       </div>
-
-      {/* --- CONTENT --- */}
       <div className="relative z-20 w-full py-20 max-w-7xl px-6 text-center">
-        {/* Title Group */}
         <div className="mb-10">
           <h2
             ref={titleRef}
@@ -237,26 +225,18 @@ export const TechArsenal = () => {
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <div className="relative isolate">
-                      {/* HOLY GLOW (Ambient behind) */}
                       <div className="absolute inset-0 bg-amber-200/40 blur-xl rounded-full scale-0 group-hover:scale-150 transition-transform duration-500 -z-10" />
 
-                      {/*
-                                                CARD:
-                                                - Logic: Rotated 45deg container, Inner -45deg content
-                                            */}
                       <div
                         className="tech-icon-item w-24 h-24 bg-gradient-to-br from-white to-neutral-50 rotate-45 rounded-2xl shadow-[0_10px_20px_rgba(0,0,0,0.05)] border border-white flex items-center justify-center cursor-pointer transition-shadow duration-300 hover:shadow-[0_20px_40px_rgba(200,180,150,0.4)] hover:border-amber-200/50 relative overflow-hidden"
                         onMouseMove={handleMouseMove}
                         onMouseLeave={handleMouseLeave}
                         style={{ transformStyle: "preserve-3d" }}
                       >
-                        {/* Glossy Sheen */}
                         <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-20 mix-blend-overlay" />
 
-                        {/* Molten/Holy Inner Glow (Moves with mouse) */}
                         <div className="glow-effect absolute w-full h-full bg-gradient-to-br from-amber-100/0 via-amber-200/30 to-amber-500/0 rounded-full blur-md opacity-0 pointer-events-none z-10" />
 
-                        {/* Icon Content - NOTE: Added CSS grayscale to prevent FOUC */}
                         <div className="-rotate-45 w-full h-full flex items-center justify-center p-5 z-20 transform-gpu translate-z-10">
                           <Image
                             src={skill.iconPath}
@@ -273,9 +253,7 @@ export const TechArsenal = () => {
                     side="bottom"
                     className="bg-white/90 text-neutral-800 border-amber-100 backdrop-blur-md shadow-xl font-space-mono text-xs px-3 py-1.5 translate-y-4"
                   >
-                    <p className="font-semibold tracking-wider font-kings text-lg text-amber-600">
-                      {skill.name}
-                    </p>
+                    <p className="font-semibold tracking-wider font-kings text-lg">{skill.name}</p>
                     <p className="text-[10px] text-neutral-400 capitalize">{skill.category} Rune</p>
                   </TooltipContent>
                 </Tooltip>
