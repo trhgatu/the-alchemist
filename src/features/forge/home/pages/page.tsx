@@ -5,10 +5,11 @@ import {
   HeroForgeEntry,
   TechArsenal,
   TheCraftings,
-  TheLivingInk,
+  TheTransmutation,
   TheAlchemist,
   TheJourney,
 } from "@/features/forge/home/components";
+
 import { useAppStore, useLang } from "@/hooks";
 import { usePublicProjects } from "@/features/forge/craftings/hooks";
 import { ScenePhase } from "@/constants/ScenePhase";
@@ -35,8 +36,8 @@ export default function ForgeHome({ isVisited = false }: ForgeHomeProps) {
     <section>
       <HeroForgeEntry />
       <TheAlchemist />
+      <TheTransmutation />
       <TechArsenal />
-      <TheLivingInk />
       <TheCraftings projects={project} isLoading={false} isError={false} />
       <TheJourney />
     </section>
