@@ -12,7 +12,7 @@ type AlchemistBookProps = {
 };
 
 export const AlchemistBook = forwardRef<Group, AlchemistBookProps>(
-  ({ scale = 0, onLoaded, visible, ...props }, ref) => {
+  ({ scale = 1, onLoaded, visible, ...props }, ref) => {
     const { scene, animations } = useGLTF("/models/book_of_alchemy.glb");
     const { actions, mixer } = useAnimations(animations, scene);
 
