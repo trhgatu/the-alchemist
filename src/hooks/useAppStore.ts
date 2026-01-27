@@ -8,6 +8,9 @@ interface AppState {
 
   emptySlotRef: HTMLDivElement | null;
   setEmptySlotRef: (ref: HTMLDivElement | null) => void;
+
+  loadingProgress: number;
+  setLoadingProgress: (progress: number) => void;
 }
 
 export const useAppStore = create<AppState>((set) => ({
@@ -18,4 +21,6 @@ export const useAppStore = create<AppState>((set) => ({
   },
   emptySlotRef: null,
   setEmptySlotRef: (ref) => set({ emptySlotRef: ref }),
+  loadingProgress: 0,
+  setLoadingProgress: (progress) => set({ loadingProgress: progress }),
 }));

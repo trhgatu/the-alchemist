@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { useAppStore } from "@/hooks";
@@ -10,11 +10,42 @@ import Image from "next/image";
 gsap.registerPlugin(useGSAP);
 
 export const HeroForgeEntry = () => {
-  const { scenePhase, setScenePhase } = useAppStore();
+  const { scenePhase, setScenePhase, loadingProgress } = useAppStore();
   const scope = useRef<HTMLDivElement>(null);
   const animated = useRef(false);
   const bgRef = useRef<HTMLImageElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+
+  const [introFinished, setIntroFinished] = useState(false);
+  const [forceProceed, setForceProceed] = useState(false);
+
+  // Safety Timeout: Force proceed after 7 seconds if assets hang
+  useEffect(() => {
+    if (!introFinished) return;
+
+    // If intro finishes but resources take too long, force entry
+    const timer = setTimeout(() => {
+      console.warn("⚠️ Resource loading timed out. Forcing entry.");
+      setForceProceed(true);
+    }, 7000);
+
+    return () => clearTimeout(timer);
+  }, [introFinished]);
+
+  const triggerExit = useCallback(() => {
+    sessionStorage.setItem("forge_visited", "true");
+    setScenePhase(ScenePhase.HERO_ANIMATION);
+  }, [setScenePhase]);
+
+  // Main Logic: Wait for Intro AND (Resources OR Timeout)
+  useEffect(() => {
+    if (introFinished) {
+      // console.log("⏳ Waiting for resources...", loadingProgress);
+      if (loadingProgress >= 100 || forceProceed) {
+        triggerExit();
+      }
+    }
+  }, [introFinished, loadingProgress, forceProceed, triggerExit]);
 
   useGSAP(() => {
     if (
@@ -96,8 +127,7 @@ export const HeroForgeEntry = () => {
     });
 
     tl.call(() => {
-      sessionStorage.setItem("forge_visited", "true");
-      setScenePhase(ScenePhase.HERO_ANIMATION);
+      setIntroFinished(true);
     });
 
     // Ambient Breathing (Cloud)
