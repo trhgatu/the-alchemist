@@ -3,7 +3,7 @@
 
 import {
   HeroForgeEntry,
-  TechArsenal,
+  TechGrimoire,
   TheCraftings,
   TheTransmutation,
   TheAlchemist,
@@ -37,7 +37,7 @@ export default function ForgeHome({ isVisited = false }: ForgeHomeProps) {
       <HeroForgeEntry />
       <TheAlchemist />
       <TheTransmutation />
-      <TechArsenal />
+      <TechGrimoire />
       <TheCraftings projects={project} isLoading={false} isError={false} />
       <TheJourney />
     </section>

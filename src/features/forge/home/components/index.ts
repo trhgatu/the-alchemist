@@ -1,5 +1,5 @@
 export * from "./HeroForgeEntry";
-export * from "./TechArsenal";
+export * from "./TechGrimoire";
 export * from "./TheTransmutation";
 export * from "./the-craftings";
 export * from "./TheAlchemist";

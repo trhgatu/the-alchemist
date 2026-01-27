@@ -77,17 +77,13 @@ export function TheTransmutation() {
   return (
     <section
       ref={containerRef}
-      className="relative w-full h-screen bg-neutral-950 flex items-center justify-center overflow-hidden z-40"
+      className="relative w-full h-screen bg-neutral-950 flex items-center justify-center overflow-hidden z-10"
     >
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#0a0a0a_100%)] pointer-events-none z-0" />
       <div className="absolute inset-0 z-10">
         <Canvas camera={{ position: [0, 4, 10], fov: 45 }} gl={{ antialias: false, alpha: true }}>
           <TransmutationParticles scrollProgress={scrollProgress} />
-          {/*  <Float speed={2} rotationIntensity={1} floatIntensity={0.5}>
-                        <Center>
-                            <AlchemistBook scale={[1.6, 1.6, 1.6]} />
-                        </Center>
-                    </Float> */}
+
           {/* <Environment files="/hdr/qwantani_night_puresky_2k.hdr" environmentIntensity={0.5} /> */}
         </Canvas>
       </div>
