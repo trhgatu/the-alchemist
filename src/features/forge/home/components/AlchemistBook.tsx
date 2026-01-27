@@ -5,8 +5,6 @@ import { useEffect, forwardRef } from "react";
 import { Group } from "three";
 import * as THREE from "three";
 
-useGLTF.preload("/models/book_of_alchemy.glb");
-
 type AlchemistBookProps = {
   scale?: number[];
   onLoaded?: () => void;

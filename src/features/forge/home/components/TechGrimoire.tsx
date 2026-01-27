@@ -212,7 +212,7 @@ function BookScene({ scrollProgress }: { scrollProgress: React.MutableRefObject<
       const ease = 1 - Math.pow(1 - entranceProgress, 3);
 
       // Dòng này chỉnh vị trí Y: bay từ 10 xuống 0
-      bookRef.current.position.y = THREE.MathUtils.lerp(10, 0, ease);
+      bookRef.current.position.y = THREE.MathUtils.lerp(15, 0, ease);
       // Dòng này chỉnh góc X: từ 180 độ (Math.PI) giảm dần xuống 0.3
       bookRef.current.rotation.x = THREE.MathUtils.lerp(Math.PI, 0.3, ease);
       // Dòng này chỉnh góc Y: từ -180 độ (-Math.PI) giảm dần xuống 0

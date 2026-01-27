@@ -8,6 +8,7 @@ import {
   TheTransmutation,
   TheAlchemist,
   TheJourney,
+  ForgeAssetTracker,
 } from "@/features/forge/home/components";
 
 import { useAppStore, useLang } from "@/hooks";
@@ -34,6 +35,7 @@ export default function ForgeHome({ isVisited = false }: ForgeHomeProps) {
 
   return (
     <section>
+      <ForgeAssetTracker />
       <HeroForgeEntry />
       <TheAlchemist />
       <TheTransmutation />
