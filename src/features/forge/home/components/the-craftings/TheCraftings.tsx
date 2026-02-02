@@ -45,6 +45,16 @@ export function TheCraftings({ projects, isLoading, isError }: ProjectHomeProps)
     () => {
       if (!backgroundRef.current || !gridRef.current || projects.length === 0) return;
 
+      // ⚙️ CONFIG: BACKGROUND COLOR TRANSITION (Chuyển màu nền)
+      // ═══════════════════════════════════════════════════════════
+      // Start: #000000 (Đen - Space)
+      // End: #ffffff (Trắng - Desert)
+      // Timeline: 300% (3 màn hình scroll)
+      //
+      // ĐIỀU CHỈNH:
+      // - Đổi #ffffff để thay đổi màu cuối (vd: #f5f5dc = Beige)
+      // - Tăng end để transition chậm hơn (vd: 300% → 500%)
+      // - Đổi scrub để thay đổi độ mượt (vd: 1 → 1.5)
       gsap.set(backgroundRef.current, {
         backgroundColor: "#000000",
       });
@@ -60,6 +70,13 @@ export function TheCraftings({ projects, isLoading, isError }: ProjectHomeProps)
         },
       });
 
+      // ⚙️ CONFIG: ATMOSPHERE LAYER (Lớp khí quyển)
+      // ═══════════════════════════════════════════════════════════
+      // Opacity: 0 → 1 (Từ trong suốt đến hiện rõ)
+      // Timeline: 300%
+      //
+      // ĐIỀU CHỈNH:
+      // - Đổi opacity để lớp khí quyển mờ hơn/đậm hơn (vd: 1 → 0.7)
       const atmosphereLayer = sectionRef.current?.querySelector(".absolute.inset-0.z-10");
       const reentryHeat = sectionRef.current?.querySelector(
         ".bg-gradient-to-r.from-transparent.via-blue-500\\/10"
@@ -79,6 +96,15 @@ export function TheCraftings({ projects, isLoading, isError }: ProjectHomeProps)
         });
       }
 
+      // ⚙️ CONFIG: REENTRY HEAT EFFECT (Hiệu ứng nhiệt khi vào khí quyển)
+      // ═══════════════════════════════════════════════════════════
+      // Phase 1: Fade in + Scale (0 → 0.3)
+      // Phase 2: Fade out (0.7 → 1.0)
+      //
+      // ĐIỀU CHỈNH:
+      // - Đổi opacity để hiệu ứng rõ hơn (vd: 0.8 → 1.0)
+      // - Đổi scale để phóng to hơn (vd: 1.2 → 1.5)
+      // - Đổi duration để hiệu ứng dài hơn (vd: 0.3 → 0.5)
       if (reentryHeat) {
         const tl = gsap.timeline({
           scrollTrigger: {

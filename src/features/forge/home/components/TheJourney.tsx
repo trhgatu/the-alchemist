@@ -18,6 +18,15 @@ export function TheJourney() {
   useGSAP(
     () => {
       if (!containerRef.current) return;
+      // ⚙️ CONFIG: SAND ANIMATION (Hiệu ứng cát chạy)
+      // ═══════════════════════════════════════════════════════════
+      // Layer 1: Chậm nhất (40s)
+      // Layer 2: Trung bình (25s)
+      // Layer 3: Nhanh nhất (15s)
+      //
+      // ĐIỀU CHỈNH:
+      // - Giảm duration để cát chạy nhanh hơn (vd: 40 → 30)
+      // - Tăng duration để cát chạy chậm hơn (vd: 40 → 50)
       gsap.to(".sand-layer-1", {
         backgroundPosition: "20% 100%",
         duration: 40,
@@ -41,6 +50,15 @@ export function TheJourney() {
         ease: "linear",
       });
 
+      // ⚙️ CONFIG: TIMELINE SETTINGS (Cài đặt timeline)
+      // ═══════════════════════════════════════════════════════════
+      // end: "+=500%" - Độ dài timeline (500% = 5 màn hình scroll)
+      // scrub: 1.5 - Độ mượt của scroll
+      //
+      // ĐIỀU CHỈNH:
+      // - Tăng end để scroll dài hơn (vd: 500% → 700%)
+      // - Giảm end để scroll ngắn hơn (vd: 500% → 400%)
+      // - Tăng scrub để mượt hơn (vd: 1.5 → 2.0)
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
@@ -57,6 +75,14 @@ export function TheJourney() {
       gsap.set(mistLeftRef.current, { xPercent: 0, opacity: 1 });
       gsap.set(mistRightRef.current, { xPercent: 0, opacity: 1 });
 
+      // ⚙️ CONFIG: NARRATIVE ENTRY TIMING (Thời gian các đoạn narrative)
+      // ═══════════════════════════════════════════════════════════
+      // fadeDuration: 0.5 - Thời gian fade in/out
+      // holdDuration: 1 - Thời gian giữ text (hold)
+      //
+      // ĐIỀU CHỈNH:
+      // - Tăng fadeDuration để fade chậm hơn (vd: 0.5 → 0.8)
+      // - Tăng holdDuration để giữ text lâu hơn (vd: 1 → 1.5)
       const fadeDuration = 0.5;
       const holdDuration = 1;
 

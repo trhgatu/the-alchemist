@@ -22,6 +22,15 @@ export function TheTransmutation() {
 
   useGSAP(
     () => {
+      // CONFIG: TIMELINE SETTINGS (Cài đặt timeline)
+      // ═══════════════════════════════════════════════════════════
+      // end: "+=600%" - Độ dài timeline (600% = 6 màn hình scroll)
+      // scrub: 1 - Độ mượt của scroll (1 = mượt, 2 = rất mượt nhưng trễ hơn)
+      //
+      // ĐIỀU CHỈNH:
+      // - Tăng end để scroll dài hơn (vd: 600% → 800%)
+      // - Giảm end để scroll ngắn hơn (vd: 600% → 400%)
+      // - Tăng scrub để mượt hơn (vd: 1 → 1.5)
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
@@ -36,10 +45,30 @@ export function TheTransmutation() {
         },
       });
 
+      // CONFIG: TEXT PHASE TIMING (Thời gian các đoạn text)
+      // ═══════════════════════════════════════════════════════════
+      // fadeDuration: 0.5 - Thời gian fade in/out
+      // holdDuration: 1.0 - Thời gian giữ text (hold)
+      // exitDuration: 0.5 - Thời gian biến mất
+      //
+      // ĐIỀU CHỈNH:
+      // - Tăng fadeDuration để fade chậm hơn (vd: 0.5 → 0.8)
+      // - Tăng holdDuration để giữ text lâu hơn (vd: 1.0 → 1.5)
+      // - Tăng exitDuration để exit chậm hơn (vd: 0.5 → 0.8)
       const fadeDuration = 0.5;
       const holdDuration = 1.0;
       const exitDuration = 0.5;
 
+      // CONFIG: PHASE 1 - TEXT 1 ("In the Alchemist's forge...")
+      // ═══════════════════════════════════════════════════════════
+      // Start: 0 (Bắt đầu ngay)
+      // Fade In: 0 → 0.5
+      // Hold: 0.5 → 1.5
+      // Fade Out: 1.5 → 2.0
+      //
+      // ĐIỀU CHỈNH:
+      // - Đổi x value để text di chuyển nhiều hơn (vd: 0 → -50)
+      // - Đổi blur để mờ hơn (vd: blur(0px) → blur(20px))
       tl.to(
         textRef1.current,
         { opacity: 1, x: 0, filter: "blur(0px)", duration: fadeDuration, ease: "power2.out" },
@@ -52,6 +81,16 @@ export function TheTransmutation() {
           fadeDuration + holdDuration
         );
 
+      // CONFIG: PHASE 2 - TEXT 2 ("Each project...")
+      // ═══════════════════════════════════════════════════════════
+      // Start: 2.0 (Sau khi text 1 kết thúc)
+      // Fade In: 2.0 → 2.5
+      // Hold: 2.5 → 3.5
+      // Fade Out: 3.5 → 4.0
+      //
+      // ĐIỀU CHỈNH:
+      // - Đổi phase2Start để text 2 xuất hiện sớm/muộn hơn (vd: 2.0 → 2.5)
+      // - Đổi x value để text di chuyển nhiều hơn (vd: 30 → 50)
       const phase2Start = 2.0;
       tl.to(
         textRef2.current,
@@ -65,6 +104,16 @@ export function TheTransmutation() {
           phase2Start + fadeDuration + holdDuration
         );
 
+      // CONFIG: PHASE 3 - TEXT 3 ("The Transmutation")
+      // ═══════════════════════════════════════════════════════════
+      // Start: 4.0 (Sau khi text 2 kết thúc)
+      // Fade In: 4.0 → 5.0 (1.0 duration - Chậm hơn vì đây là title)
+      // Hold: 5.0 → 6.0
+      //
+      // ĐIỀU CHỈNH:
+      // - Đổi 4.0 để title xuất hiện sớm/muộn hơn
+      // - Tăng duration để fade chậm hơn (vd: 1.0 → 1.5)
+      // - Đổi scale để text lớn hơn (vd: 1 → 1.2)
       tl.to(
         textRef3.current,
         { opacity: 1, scale: 1, filter: "blur(0px)", duration: 1.0, ease: "power4.out" },

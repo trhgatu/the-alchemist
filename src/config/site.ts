@@ -1,6 +1,6 @@
 // src/config/site.ts
 export const siteConfig = {
-  name: 'TAO',
-  description: 'Nơi phản ánh bản thể của chính bạn.',
-  url: 'https://tao.vercel.app',
+  name: "The Alchemist - trhgatu",
+  description: "The Alchemist",
+  url: "https://thatu.is-a.dev",
 };
