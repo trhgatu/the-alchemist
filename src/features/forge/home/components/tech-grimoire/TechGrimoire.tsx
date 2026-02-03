@@ -9,7 +9,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { BookScene } from "./components/scene/BookScene";
 import { StarField } from "../the-craftings/StarField";
 import { useGrimoireTimeline } from "./hooks";
-/* import { TechParticles } from "./TechParticles"; */
+import { TechParticles } from "./components/scene/TechParticles";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -93,6 +93,7 @@ export const TechGrimoire = () => {
             color="#fffbf0"
           />
           <BookScene scrollProgress={scrollProgress} />
+          <TechParticles scrollProgress={scrollProgress} />
           <Environment files="/hdr/qwantani_night_puresky_2k.hdr" environmentIntensity={0.8} />
         </Canvas>
       </div>

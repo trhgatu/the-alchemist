@@ -163,3 +163,141 @@ export function getMagicCircleState(progress: number) {
 
   return { opacity, circleGrow, rayGrow };
 }
+
+/**
+ * Constellation Layout Configuration
+ * ĐIỀU CHỈNH BỐ CỤC CHÒM SAO:
+ */
+export const CONSTELLATION_LAYOUT = {
+  /** Core tech (TS/JS) horizontal spacing from center
+   * Khoảng cách ngang của TS/JS từ tâm (0.4 = gần tâm)
+   */
+  CORE_TECH_SPACING: 0.4,
+
+  /** Minimum orbit radius for other techs
+   * Bán kính quỹ đạo tối thiểu cho các tech khác (1.2)
+   */
+  ORBIT_RADIUS_MIN: 1.2,
+
+  /** Maximum orbit radius multiplier
+   * Hệ số bán kính quỹ đạo tối đa (2.8)
+   */
+  ORBIT_RADIUS_MAX: 2.8,
+
+  /** Horizontal spread multiplier
+   * Hệ số mở rộng ngang (1.1 = rộng hơn một chút)
+   */
+  HORIZONTAL_MULTIPLIER: 1.1,
+
+  /** Vertical compression multiplier
+   * Hệ số nén dọc (0.5 = nén xuống một nửa)
+   */
+  VERTICAL_MULTIPLIER: 0.5,
+
+  /** Random offset range for organic look
+   * Độ lệch ngẫu nhiên để trông tự nhiên (0.6)
+   */
+  RANDOM_OFFSET: 0.6,
+
+  /** Golden angle for spiral distribution
+   * Góc vàng cho phân bố xoáy ốc (2.4 radians)
+   */
+  GOLDEN_ANGLE: 2.4,
+} as const;
+
+/**
+ * Constellation Edge Configuration
+ * ĐIỀU CHỈNH ĐƯỜNG NỐI CHÒM SAO:
+ */
+export const CONSTELLATION_EDGES = {
+  /** Maximum length for extra edges (beyond MST)
+   * Độ dài tối đa cho đường nối thêm (2.0)
+   */
+  MAX_EXTRA_EDGE_LENGTH: 2.0,
+
+  /** Number of extra edges to add for visual interest
+   * Số lượng đường nối thêm (2)
+   */
+  EXTRA_EDGE_COUNT: 2,
+} as const;
+
+/**
+ * Scattered Positions Configuration
+ * ĐIỀU CHỈNH VỊ TRÍ PHÂN TÁN (Orbital Phase):
+ */
+export const SCATTERED_POSITIONS = {
+  /** Vertical range
+   * Phạm vi dọc (-2.2 đến +2.2)
+   */
+  VERTICAL_RANGE: {
+    min: -2.2,
+    max: 4.4,
+  },
+
+  /** Cylinder radius
+   * Bán kính hình trụ (4.0)
+   */
+  CYLINDER_RADIUS: 4.0,
+
+  /** Horizontal multiplier
+   * Hệ số ngang (1.5 = rộng hơn)
+   */
+  HORIZONTAL_MULTIPLIER: 1.5,
+
+  /** Vertical compression
+   * Nén dọc (0.6)
+   */
+  VERTICAL_MULTIPLIER: 0.6,
+
+  /** Depth multiplier
+   * Hệ số độ sâu (0.8)
+   */
+  DEPTH_MULTIPLIER: 0.8,
+} as const;
+
+/**
+ * Initial Spawn Configuration
+ * ĐIỀU CHỈNH VỊ TRÍ SPAWN BAN ĐẦU:
+ */
+export const INITIAL_SPAWN = {
+  /** Y position (Magic Circle center)
+   * Vị trí Y (tâm vòng tròn ma thuật = 0.7)
+   */
+  Y_POSITION: 0.7,
+
+  /** Random spread range
+   * Phạm vi phân tán ngẫu nhiên (0.2)
+   */
+  RANDOM_SPREAD: 0.2,
+} as const;
+
+/**
+ * Book Exit Animation Configuration
+ * ĐIỀU CHỈNH ANIMATION BAY RA CỦA SÁCH:
+ */
+export const BOOK_EXIT_CONFIG = {
+  /** Ascent height for dignified exit
+   * Độ cao bay lên (20 = bay cao)
+   */
+  ASCENT_HEIGHT: 20,
+
+  /** Final rotation angles (dignified pose)
+   * Góc xoay cuối cùng (tư thế trang trọng)
+   */
+  FINAL_ROTATION: {
+    x: -1.6,
+    y: 1.7,
+    z: -4.1,
+  },
+
+  /** Minimum scale during fade out
+   * Tỉ lệ thu nhỏ tối thiểu (0.3 = giữ lại 30%)
+   */
+  SCALE_MIN: 0.3,
+
+  /** Exit timing */
+  TIMING: {
+    START: 0.8,
+    END: 0.9,
+  },
+} as const;

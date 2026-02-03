@@ -14,6 +14,7 @@ import { Center, Float } from "@react-three/drei";
 import * as THREE from "three";
 import { AlchemistBook } from "../../AlchemistBook";
 import { GodRays } from "../effects/GodRays";
+import { BOOK_EXIT_CONFIG } from "../../constants/visual";
 
 export interface BookSceneProps {
   scrollProgress: React.MutableRefObject<number>;
@@ -77,26 +78,27 @@ export function BookScene({ scrollProgress }: BookSceneProps) {
       bookRef.current.position.x = 0;
       bookRef.current.position.z = 0;
     }
-    // Phase 4: Exit (0.8 - 0.9)
+    // Phase 4: Exit (dignified ascent)
     else {
-      const exitProgress = (p - 0.8) / 0.1;
+      const exitProgress =
+        (p - BOOK_EXIT_CONFIG.TIMING.START) /
+        (BOOK_EXIT_CONFIG.TIMING.END - BOOK_EXIT_CONFIG.TIMING.START);
 
       if (exitProgress < 1) {
         bookRef.current.visible = true;
         const ease = exitProgress * exitProgress;
 
-        // ĐIỀU CHỈNH ANIMATION BAY RA:
-        // y: Bay lên cao (0→15), tăng số 15 để bay cao hơn
-        bookRef.current.position.y = THREE.MathUtils.lerp(0, 15, ease);
-        // z: Bay ra xa về phía sau (0→-10), tăng số -10 để bay xa hơn
-        bookRef.current.position.z = THREE.MathUtils.lerp(0, -10, ease);
+        // Dignified upward ascent
+        bookRef.current.position.y = THREE.MathUtils.lerp(0, BOOK_EXIT_CONFIG.ASCENT_HEIGHT, ease);
+        bookRef.current.position.z = 0;
 
-        // ĐIỀU CHỈNH SPIN KHI BAY RA: Sách quay 4 vòng (Math.PI * 4)
-        // Tăng/giảm số 4 để thay đổi số vòng quay
-        bookRef.current.rotation.y = THREE.MathUtils.lerp(1.7, 1.7 + Math.PI * 4, ease);
+        // Maintain dignified pose (no spinning)
+        bookRef.current.rotation.x = BOOK_EXIT_CONFIG.FINAL_ROTATION.x;
+        bookRef.current.rotation.y = BOOK_EXIT_CONFIG.FINAL_ROTATION.y;
+        bookRef.current.rotation.z = BOOK_EXIT_CONFIG.FINAL_ROTATION.z;
 
-        // ĐIỀU CHỈNH THU NHỎ: Sách thu nhỏ dần về 0 (biến mất)
-        bookRef.current.scale.setScalar(THREE.MathUtils.lerp(1, 0, ease));
+        // Gentle fade out
+        bookRef.current.scale.setScalar(THREE.MathUtils.lerp(1, BOOK_EXIT_CONFIG.SCALE_MIN, ease));
       } else {
         // Completely hidden
         bookRef.current.visible = false;
