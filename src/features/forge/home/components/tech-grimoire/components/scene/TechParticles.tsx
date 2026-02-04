@@ -38,8 +38,8 @@ export interface TechParticlesProps {
 
 // 🎨 Helper: Generate High-Fidelity Star Texture with Tapered Spikes
 const createStarTexture = () => {
-  if (typeof document === 'undefined') return null; // SSR safety
-  const canvas = document.createElement('canvas');
+  if (typeof document === "undefined") return null; // SSR safety
+  const canvas = document.createElement("canvas");
   const size = 256;
   canvas.width = size;
   canvas.height = size;
@@ -133,9 +133,7 @@ function TechIcon({ url }: { url: string }) {
   );
 }
 
-export function TechParticles({
-  scrollProgress,
-}: TechParticlesProps) {
+export function TechParticles({ scrollProgress }: TechParticlesProps) {
   const groupRef = useRef<THREE.Group>(null);
 
   // State for texture to ensure it's client-side only and disposable
@@ -354,13 +352,20 @@ export function TechParticles({
         easeExplosion
       );
 
-      if (particleExplosionFactor >= 0.9 && convergeFactor < 0.1) {
-        scale +=
-          Math.sin(state.clock.elapsedTime * PARTICLE_ANIMATION.PULSE.FREQUENCY + i) *
-          PARTICLE_ANIMATION.PULSE.AMPLITUDE;
-      }
+      // Pulse Animation logic (Enhanced Breathing)
+      // Allow pulsing during final phase (convergeFactor > 0.5)
+      if (convergeFactor > 0.5) {
+        // Create a slow, deep "breathing" effect
+        // Frequency: 2.0 (Slow breath), Amplitude: 0.15 (Noticeable but gentle)
+        const breath = Math.sin(state.clock.elapsedTime * 2.0 + i * 1.5) * 0.15;
 
-      if (convergeFactor > 0) {
+        // Apply to the base FINAL scale
+        scale = THREE.MathUtils.lerp(
+          scale,
+          PARTICLE_ANIMATION.SCALE.FINAL * (1 + breath),
+          convergeFactor
+        );
+      } else if (convergeFactor > 0) {
         scale = THREE.MathUtils.lerp(scale, PARTICLE_ANIMATION.SCALE.FINAL, convergeFactor);
       }
 
@@ -427,11 +432,13 @@ export function TechParticles({
 
     // Stop rotation before convergence
     // Logic: We want full rotation (1.0) initially, then fade to 0.0 as we lock in
-    const rotationStopFactor = 1 - THREE.MathUtils.smoothstep(
-      progress,
-      PARTICLE_TIMING.ROTATION_STOP.START,
-      PARTICLE_TIMING.ROTATION_STOP.END
-    );
+    const rotationStopFactor =
+      1 -
+      THREE.MathUtils.smoothstep(
+        progress,
+        PARTICLE_TIMING.ROTATION_STOP.START,
+        PARTICLE_TIMING.ROTATION_STOP.END
+      );
 
     // Cinematic Sway (Tilt & Pan)
     const swayAngle = Math.PI / 12;
