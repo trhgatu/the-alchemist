@@ -317,9 +317,9 @@ export const BOOK_EXIT_CONFIG = {
  */
 export const STAR_GLOW_CONFIG = {
   /** When star glow activates (after flash)
-   * Thời điểm sao bắt đầu sáng (sync with line reveal = 0.925)
+   * Thời điểm sao bắt đầu sáng (sync with line reveal = 0.865)
    */
-  ACTIVATION_PROGRESS: 0.925,
+  ACTIVATION_PROGRESS: 0.865,
 
   /** Point light intensity
    * Cường độ ánh sáng (2.0 = sáng vừa phải)

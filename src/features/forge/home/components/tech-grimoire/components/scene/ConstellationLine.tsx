@@ -37,9 +37,16 @@ export function ConstellationLine({
 
     const p = scrollProgress.current;
 
-    const revealThreshold = 0.925;
+    // "BOOM" Reveal Threshold
+    // 0.865 coincides with the new compressed Flash PEAK
+    const revealThreshold = 0.865;
 
-    const shouldBeVisible = p >= revealThreshold;
+    // Hide lines when DISPERSE starts (0.93)
+    // Hold phase: 0.865 -> 0.93 (6.5% scroll - Solid)
+    const isDispersing = p > 0.93;
+
+    // Toggle visibility based on threshold & not dispersing
+    const shouldBeVisible = p >= revealThreshold && !isDispersing;
 
     if (lineRef.current.visible !== shouldBeVisible) {
       lineRef.current.visible = shouldBeVisible;
