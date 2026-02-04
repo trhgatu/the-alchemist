@@ -426,7 +426,8 @@ export function TechParticles({
     }
 
     // Stop rotation before convergence
-    const rotationStopFactor = THREE.MathUtils.smoothstep(
+    // Logic: We want full rotation (1.0) initially, then fade to 0.0 as we lock in
+    const rotationStopFactor = 1 - THREE.MathUtils.smoothstep(
       progress,
       PARTICLE_TIMING.ROTATION_STOP.START,
       PARTICLE_TIMING.ROTATION_STOP.END
