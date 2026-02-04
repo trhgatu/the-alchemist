@@ -1,6 +1,7 @@
 import React, { useRef, useLayoutEffect } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
+import { PARTICLE_TIMING } from "../../constants/timeline";
 
 export interface ConstellationLineProps {
   startIdx: number;
@@ -37,9 +38,16 @@ export function ConstellationLine({
 
     const p = scrollProgress.current;
 
-    const revealThreshold = 0.925;
+    // "BOOM" Reveal Threshold
+    // 0.865 coincides with the new compressed Flash PEAK
+    const revealThreshold = 0.865;
 
-    const shouldBeVisible = p >= revealThreshold;
+    // Hide lines when DISPERSE starts
+    // Hold phase: 0.865 -> DISPERSE.START where lines are fully visible
+    const isDispersing = p > PARTICLE_TIMING.DISPERSE.START;
+
+    // Toggle visibility based on threshold & not dispersing
+    const shouldBeVisible = p >= revealThreshold && !isDispersing;
 
     if (lineRef.current.visible !== shouldBeVisible) {
       lineRef.current.visible = shouldBeVisible;

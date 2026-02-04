@@ -47,13 +47,13 @@ export const ZOOM_TIMING = {
 
 export const FLASH_TIMING = {
   FADE_IN: {
-    start: 0.92,
+    start: 0.86, // Flash earlier
     duration: 0.01,
     ease: "power2.in" as const,
   },
 
   FADE_OUT: {
-    start: 0.93,
+    start: 0.87, // End flash
     duration: 0.01,
     ease: "power2.out" as const,
   },
@@ -62,31 +62,46 @@ export const FLASH_TIMING = {
 export const PARTICLE_TIMING = {
   /** Explosion phase timing */
   EXPLOSION: {
-    START: 0.4, // Start when GodRay appears (MAGIC_CIRCLE_PHASES.RAY_END)
-    /**
-     * Thời điểm kết thúc giai đoạn bắn ra (Explosion Phase End)
-     * - Giá trị: 0.60 (Kết thúc tại 60% scroll)
-     * - Cách chỉnh tốc độ bắn ra:
-     *   - Muốn bắn NHANH hơn: GIẢM giá trị này (VD: 0.55, 0.50) -> khoảng cách START-END nhỏ hơn -> tốc độ nhanh hơn
-     *   - Muốn bắn CHẬM hơn: TĂNG giá trị này (VD: 0.70, 0.80) -> khoảng cách START-END lớn hơn -> tốc độ chậm hơn
-     */
-    END: 0.6,
+    START: 0.4,
+    END: 0.55, // Compressed (was 0.6)
   },
 
-  /** Convergence phase timing (particles move to final constellation positions) */
+  /**
+   * Convergence phase timing
+   * DONE VERY EARLY (0.85) to allow long Hold
+   */
   CONVERGENCE: {
-    START: 0.85,
-    END: 0.95,
+    START: 0.75, // Start earlier
+    END: 0.85, // Finish earlier
   },
 
-  /** Rotation stop timing (group rotation stops before convergence) */
+  /** Rotation stop timing */
   ROTATION_STOP: {
-    START: 0.75,
-    END: 0.85,
+    START: 0.7,
+    END: 0.8,
   },
 
   /** Maximum stagger delay for particle animations */
   MAX_STAGGER_DELAY: 0.15,
+
+  /**
+   * Disperse Phase
+   * Start 0.93 -> 0.99 (6% scroll duration - very long)
+   */
+  DISPERSE: {
+    START: 0.93,
+    END: 0.99,
+  },
+
+  /**
+   * Fall Phase
+   * Happens at very end
+   * Duration kept short (0.01) to stay within 0-1 timeline range
+   */
+  FALL: {
+    START: 0.99,
+    DURATION: 0.01, // Was 0.5, which would exceed timeline (0.99 + 0.5 = 1.49)
+  },
 } as const;
 
 export const PARTICLE_ANIMATION = {
