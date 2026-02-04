@@ -62,8 +62,15 @@ export const FLASH_TIMING = {
 export const PARTICLE_TIMING = {
   /** Explosion phase timing */
   EXPLOSION: {
-    START: 0.35,
-    END: 0.75,
+    START: 0.4, // Start when GodRay appears (MAGIC_CIRCLE_PHASES.RAY_END)
+    /**
+     * Thời điểm kết thúc giai đoạn bắn ra (Explosion Phase End)
+     * - Giá trị: 0.60 (Kết thúc tại 60% scroll)
+     * - Cách chỉnh tốc độ bắn ra:
+     *   - Muốn bắn NHANH hơn: GIẢM giá trị này (VD: 0.55, 0.50) -> khoảng cách START-END nhỏ hơn -> tốc độ nhanh hơn
+     *   - Muốn bắn CHẬM hơn: TĂNG giá trị này (VD: 0.70, 0.80) -> khoảng cách START-END lớn hơn -> tốc độ chậm hơn
+     */
+    END: 0.6,
   },
 
   /** Convergence phase timing (particles move to final constellation positions) */
@@ -87,7 +94,7 @@ export const PARTICLE_ANIMATION = {
   SCALE: {
     MIN: 0,
     SCATTERED: 0.6,
-    FINAL: 0.35,
+    FINAL: 0.45, // Adjusted from 0.35 for larger icons
   },
 
   /** Pulse animation */

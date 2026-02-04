@@ -261,14 +261,23 @@ export const SCATTERED_POSITIONS = {
  */
 export const INITIAL_SPAWN = {
   /** Y position (Magic Circle center)
-   * Vị trí Y (tâm vòng tròn ma thuật = 0.7)
+   * Vị trí Y (tâm vòng tròn ma thuật = 0.6)
    */
-  Y_POSITION: 0.7,
+  Y_POSITION: 0.6,
 
   /** Random spread range
    * Phạm vi phân tán ngẫu nhiên (0.2)
    */
   RANDOM_SPREAD: 0.2,
+
+  /**
+   * Floating Drift Configuration
+   * Cấu hình chuyển động trôi nổi (floating)
+   */
+  DRIFT: {
+    SPEED: 0.2, // Tốc độ trôi
+    AMPLITUDE: 0.1, // Biên độ trôi (khoảng cách)
+  },
 } as const;
 
 /**
@@ -300,4 +309,43 @@ export const BOOK_EXIT_CONFIG = {
     START: 0.8,
     END: 0.9,
   },
+} as const;
+
+/**
+ * Star Glow Effect Configuration
+ * ĐIỀU CHỈNH HIỆU ỨNG SÁNG NGÔI SAO:
+ */
+export const STAR_GLOW_CONFIG = {
+  /** When star glow activates (after flash)
+   * Thời điểm sao bắt đầu sáng (sync with line reveal = 0.925)
+   */
+  ACTIVATION_PROGRESS: 0.925,
+
+  /** Point light intensity
+   * Cường độ ánh sáng (2.0 = sáng vừa phải)
+   */
+  LIGHT_INTENSITY: 2.0,
+
+  /** Light distance/range
+   * Phạm vi ánh sáng (3.0)
+   */
+  LIGHT_DISTANCE: 3.0,
+
+  /** Light color (warm white)
+   * Màu ánh sáng (Cyan - #00E5FF)
+   */
+  LIGHT_COLOR: "#00E5FF",
+
+  /** Pulse animation
+   * Animation nhấp nháy
+   */
+  PULSE: {
+    SPEED: 1.5,
+    AMPLITUDE: 0.3,
+  },
+
+  /** Fade in duration
+   * Thời gian fade in (0.05 = 5% scroll)
+   */
+  FADE_IN_DURATION: 0.05,
 } as const;
