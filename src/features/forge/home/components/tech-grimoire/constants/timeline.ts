@@ -96,10 +96,11 @@ export const PARTICLE_TIMING = {
   /**
    * Fall Phase
    * Happens at very end
+   * Duration kept short (0.01) to stay within 0-1 timeline range
    */
   FALL: {
     START: 0.99,
-    DURATION: 0.5,
+    DURATION: 0.01, // Was 0.5, which would exceed timeline (0.99 + 0.5 = 1.49)
   },
 } as const;
 
