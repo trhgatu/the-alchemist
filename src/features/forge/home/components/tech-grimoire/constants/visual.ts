@@ -211,14 +211,14 @@ export const CONSTELLATION_LAYOUT = {
  */
 export const CONSTELLATION_EDGES = {
   /** Maximum length for extra edges (beyond MST)
-   * Độ dài tối đa cho đường nối thêm (2.0)
+   * Độ dài tối đa cho đường nối thêm (1.5 = ngắn hơn)
    */
-  MAX_EXTRA_EDGE_LENGTH: 2.0,
+  MAX_EXTRA_EDGE_LENGTH: 1.5,
 
   /** Number of extra edges to add for visual interest
-   * Số lượng đường nối thêm (2)
+   * Số lượng đường nối thêm (0 = chỉ giữ khung xương chính)
    */
-  EXTRA_EDGE_COUNT: 2,
+  EXTRA_EDGE_COUNT: 0,
 } as const;
 
 /**
