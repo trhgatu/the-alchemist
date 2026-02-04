@@ -38,7 +38,8 @@ export interface TechParticlesProps {
 
 // 🎨 Helper: Generate High-Fidelity Star Texture with Tapered Spikes
 const createStarTexture = () => {
-  const canvas = document.createElement("canvas");
+  if (typeof document === 'undefined') return null; // SSR safety
+  const canvas = document.createElement('canvas');
   const size = 256;
   canvas.width = size;
   canvas.height = size;
@@ -132,11 +133,26 @@ function TechIcon({ url }: { url: string }) {
   );
 }
 
-export function TechParticles({ scrollProgress }: TechParticlesProps) {
+export function TechParticles({
+  scrollProgress,
+}: TechParticlesProps) {
   const groupRef = useRef<THREE.Group>(null);
 
-  // Memoize the star texture so we don't recreate it
-  const starTexture = useMemo(() => createStarTexture(), []);
+  // State for texture to ensure it's client-side only and disposable
+  const [starTexture, setStarTexture] = React.useState<THREE.Texture | null>(null);
+
+  React.useEffect(() => {
+    // Generate texture only on client mount
+    const texture = createStarTexture();
+    if (texture) {
+      setStarTexture(texture);
+    }
+
+    // Cleanup: Dispose texture to prevent memory leaks
+    return () => {
+      if (texture) texture.dispose();
+    };
+  }, []);
 
   const sortedSkills = useMemo(() => {
     const centerTechs = SKILLS.filter((s) => ["TypeScript", "JavaScript"].includes(s.name));

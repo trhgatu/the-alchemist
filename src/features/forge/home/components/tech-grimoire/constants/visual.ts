@@ -261,7 +261,7 @@ export const SCATTERED_POSITIONS = {
  */
 export const INITIAL_SPAWN = {
   /** Y position (Magic Circle center)
-   * Vị trí Y (tâm vòng tròn ma thuật = 0.7)
+   * Vị trí Y (tâm vòng tròn ma thuật = 0.6)
    */
   Y_POSITION: 0.6,
 
@@ -332,7 +332,7 @@ export const STAR_GLOW_CONFIG = {
   LIGHT_DISTANCE: 3.0,
 
   /** Light color (warm white)
-   * Màu ánh sáng (cyan sáng)
+   * Màu ánh sáng (Cyan - #00E5FF)
    */
   LIGHT_COLOR: "#00E5FF",
 
