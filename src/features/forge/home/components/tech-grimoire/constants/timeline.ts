@@ -68,11 +68,11 @@ export const PARTICLE_TIMING = {
 
   /**
    * Convergence phase timing
-   * DONE VERY EARLY (0.85) to allow long Hold
+   * Start AFTER book entrance completes (0.5) with breathing room
    */
   CONVERGENCE: {
-    START: 0.75, // Start earlier
-    END: 0.85, // Finish earlier
+    START: 0.8, // Delayed from 0.75 to give book animation more presence
+    END: 0.85,
   },
 
   /** Rotation stop timing */

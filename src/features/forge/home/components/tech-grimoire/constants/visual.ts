@@ -340,8 +340,18 @@ export const STAR_GLOW_CONFIG = {
    * Animation nhấp nháy
    */
   PULSE: {
-    SPEED: 1.5,
-    AMPLITUDE: 0.3,
+    AMPLITUDE: 0.2,
+    FREQUENCY: 3,
+  },
+
+  /** Scale configuration
+   * Kích thước sprite và glow
+   */
+  SCALE: {
+    /** Base scale for star sprite during animation */
+    BASE: 3.8,
+    /** Sprite scale in render (larger to frame icon) */
+    SPRITE: 4.2,
   },
 
   /** Fade in duration
