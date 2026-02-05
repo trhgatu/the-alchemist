@@ -22,6 +22,7 @@ import {
   CONSTELLATION_EDGES,
   SCATTERED_POSITIONS,
   INITIAL_SPAWN,
+  STAR_GLOW_CONFIG,
 } from "../../constants";
 import { PARTICLE_TIMING, PARTICLE_ANIMATION } from "../../constants";
 
@@ -420,7 +421,7 @@ export function TechParticles({ scrollProgress }: TechParticlesProps) {
 
           const pulse = Math.sin(state.clock.elapsedTime * 2 + i * 5) * 0.1 + 1.0;
           // Apply pulse to scale
-          starSprite.scale.setScalar(3.8 * pulse); // Base size 3.8
+          starSprite.scale.setScalar(STAR_GLOW_CONFIG.SCALE.BASE * pulse);
         }
       }
     });
@@ -453,78 +454,8 @@ export function TechParticles({ scrollProgress }: TechParticlesProps) {
     const swayAngle = Math.PI / 12;
     groupRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.5) * 0.05;
 
-    /* TEMPORARILY DISABLED: Disperse & Fall Animations
-    if (progress > PARTICLE_TIMING.DISPERSE.START) {
-      const disperseProgress = THREE.MathUtils.smoothstep(
-        progress,
-        PARTICLE_TIMING.DISPERSE.START,
-        PARTICLE_TIMING.DISPERSE.END
-      );
-
-      // Slower swirl rotation
-      groupRef.current.rotation.y += 0.02 * disperseProgress;
-
-      groupRef.current.children.forEach((child, i) => {
-        if (child.type !== 'Group') return;
-
-        // Interpolate BACK to scattered position (Reverse Convergence)
-        // We essentially mix the current position (Final) with the Scattered position
-        // creating a "Breaking apart" effect back to the golden spiral
-        const scattered = scatteredPositions[i];
-
-        // Use lerp to move from current (Final) towards Scattered
-        // We do this by calculating the target deviation
-        const currentX = child.position.x;
-        const currentY = child.position.y;
-        const currentZ = child.position.z;
-
-        // Stronger lerp (0.4) to force visible separation quickly
-        const targetX = THREE.MathUtils.lerp(currentX, scattered.x, disperseProgress * 0.4);
-        const targetY = THREE.MathUtils.lerp(currentY, scattered.y, disperseProgress * 0.4);
-        const targetZ = THREE.MathUtils.lerp(currentZ, scattered.z, disperseProgress * 0.4);
-
-        // Add chaotic jitter to simulate breaking energy
-        const jitter = 0.5 * disperseProgress;
-        const randomX = (Math.random() - 0.5) * jitter;
-        const randomY = (Math.random() - 0.5) * jitter;
-        const randomZ = (Math.random() - 0.5) * jitter;
-
-        child.position.set(targetX + randomX, targetY + randomY, targetZ + randomZ);
-
-        // Also start rotating individual particles randomly
-        child.rotation.z += 0.2 * disperseProgress; // Faster spin
-        child.rotation.x += 0.1 * disperseProgress;
-      });
-    }
-
-    // 2. FALL PHASE: Gravity & Warp
-    if (progress > PARTICLE_TIMING.FALL.START) {
-      const fallProgress = (progress - PARTICLE_TIMING.FALL.START) / 0.05;
-
-      groupRef.current.children.forEach((child, i) => {
-        if (child.type !== 'Group') return;
-
-        // Randomize fall speed
-        const speed = 20.0 + Math.random() * 10.0;
-
-        // Accelerate down
-        child.position.y -= speed * fallProgress * 0.1;
-
-        // Warp Stretch (Shooting Star mode)
-        const stretch = 1 + fallProgress * 3.0;
-        child.scale.set(
-          child.scale.x * (1 / stretch),
-          child.scale.y * stretch,
-          child.scale.z
-        );
-
-        // Max Brightness
-        const starSprite = child.children.find(c => c.type === 'Sprite') as THREE.Sprite;
-        if (starSprite) starSprite.material.opacity = 1.0;
-      });\n    }\n    // Normal Rotation Logic (Before Exit)\n    else */ if (
-      progress <= PARTICLE_TIMING.DISPERSE.START
-    ) {
-      // Normal rotation logic
+    // Normal Rotation Logic
+    if (progress <= PARTICLE_TIMING.DISPERSE.START) {
       if (progress > PARTICLE_TIMING.EXPLOSION.START) {
         const swayProgress =
           (progress - PARTICLE_TIMING.EXPLOSION.START) / (1 - PARTICLE_TIMING.EXPLOSION.START);
@@ -547,7 +478,11 @@ export function TechParticles({ scrollProgress }: TechParticlesProps) {
           */}
           {starTexture && (
             <sprite
-              scale={[4.2, 4.2, 4.2]} // Larger to frame the icon
+              scale={[
+                STAR_GLOW_CONFIG.SCALE.SPRITE,
+                STAR_GLOW_CONFIG.SCALE.SPRITE,
+                STAR_GLOW_CONFIG.SCALE.SPRITE,
+              ]}
               renderOrder={-1} // Ensure it renders BEHIND the icon
               position={[0, 0, -0.1]} // Physical Z-push back
             >
