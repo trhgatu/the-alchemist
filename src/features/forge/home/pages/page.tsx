@@ -3,16 +3,16 @@
 
 import {
   HeroForgeEntry,
-  TechGrimoire,
-  TheCraftings,
-  TheTransmutation,
-  TheAlchemist,
-  TheJourney,
+  // TechGrimoire,
+  // TheCraftings,
+  // TheTransmutation,
+  // TheAlchemist,
+  // TheJourney,
   ForgeAssetTracker,
 } from "@/features/forge/home/components";
 
-import { useAppStore, useLang } from "@/hooks";
-import { usePublicProjects } from "@/features/forge/craftings/hooks";
+import { useAppStore } from "@/hooks"; // Removed unused useLang
+// import { usePublicProjects } from "@/features/forge/craftings/hooks"; // Unused
 import { ScenePhase } from "@/constants/ScenePhase";
 import { useGSAP } from "@gsap/react";
 
@@ -22,8 +22,8 @@ interface ForgeHomeProps {
 
 export default function ForgeHome({ isVisited = false }: ForgeHomeProps) {
   const { scenePhase, setScenePhase } = useAppStore();
-  const lang = useLang();
-  const { data: project = [] } = usePublicProjects(lang);
+  // const lang = useLang(); // Unused
+  // const { data: project = [] } = usePublicProjects(lang); // Unused
 
   useGSAP(() => {
     if (typeof window !== "undefined" && (isVisited || sessionStorage.getItem("forge_visited"))) {
@@ -37,11 +37,16 @@ export default function ForgeHome({ isVisited = false }: ForgeHomeProps) {
     <section>
       <ForgeAssetTracker />
       <HeroForgeEntry />
+      {/*
+        Single Page Mode Disabled.
+        Now using Multi-Page "Chapters":
+        /forge (Hero Portal) -> /forge/transmutation (Chap 1) -> ...
+      */}
+      {/* <TheTransmutation />
       <TheAlchemist />
-      <TheTransmutation />
       <TechGrimoire />
       <TheCraftings projects={project} isLoading={false} isError={false} />
-      <TheJourney />
+      <TheJourney /> */}
     </section>
   );
 }

@@ -125,6 +125,7 @@ export function TheTransmutation() {
 
   return (
     <section
+      id="transmutation-section"
       ref={containerRef}
       className="relative w-full h-screen bg-neutral-950 flex items-center justify-center overflow-hidden z-10"
     >
