@@ -1,22 +1,10 @@
-﻿/**
- * ⚙️ TECH PARTICLES COMPONENT
- * ═══════════════════════════════════════════════════════════
- *
- * Manages the tech stack icon particles animation through three phases:
- * 1. Initial spawn from magic circle center
- * 2. Scattered orbital phase (cylindrical golden spiral)
- * 3. Final constellation formation with MST connections
- *
- * @module tech-grimoire/components/scene/TechParticles
- */
-
 import React, { useRef, useMemo } from "react";
 import { useFrame } from "@react-three/fiber";
-import { useTexture } from "@react-three/drei";
 import * as THREE from "three";
 import { SKILLS } from "@/constants/Skills";
 
 import { ConstellationLine } from "./ConstellationLine";
+import { TechIcon } from "./TechIcon";
 import {
   CONSTELLATION_LAYOUT,
   CONSTELLATION_EDGES,
@@ -25,129 +13,30 @@ import {
   STAR_GLOW_CONFIG,
 } from "../../constants";
 import { PARTICLE_TIMING, PARTICLE_ANIMATION } from "../../constants";
-
-const distance = (
-  p1: { x: number; y: number; z: number },
-  p2: { x: number; y: number; z: number }
-) => {
-  return Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2) + Math.pow(p2.z - p1.z, 2));
-};
+import { distance } from "../../utils/math";
+import { createStarTexture } from "../../utils/starTexture";
 
 export interface TechParticlesProps {
   scrollProgress: React.MutableRefObject<number>;
 }
 
-// 🎨 Helper: Generate High-Fidelity Star Texture with Tapered Spikes
-const createStarTexture = () => {
-  if (typeof document === "undefined") return null; // SSR safety
-  const canvas = document.createElement("canvas");
-  const size = 256;
-  canvas.width = size;
-  canvas.height = size;
-  const ctx = canvas.getContext("2d");
-  if (!ctx) return null;
-
-  // Clear buffer explicitely
-  ctx.clearRect(0, 0, size, size);
-
-  const cx = size / 2;
-  const cy = size / 2;
-
-  // 1. Core Glow (Soft Halo)
-  // Interpolate to White-Transparent instead of Black-Transparent to avoid dark fringes
-  const gradient = ctx.createRadialGradient(cx, cy, 0, cx, cy, size * 0.4);
-  gradient.addColorStop(0, "rgba(255, 255, 255, 1)");
-  gradient.addColorStop(0.1, "rgba(0, 255, 255, 0.8)");
-  gradient.addColorStop(0.5, "rgba(0, 200, 255, 0.1)");
-  gradient.addColorStop(1, "rgba(0, 200, 255, 0)"); // Clean fade
-
-  ctx.fillStyle = gradient;
-  ctx.fillRect(0, 0, size, size);
-
-  // 2. Cross Flares
-  const drawSoftRay = (isHorizontal: boolean) => {
-    const grd = ctx.createLinearGradient(
-      isHorizontal ? 0 : cx,
-      isHorizontal ? cy : 0,
-      isHorizontal ? size : cx,
-      isHorizontal ? cy : size
-    );
-    // Use White-Transparent for clean ends
-    grd.addColorStop(0, "rgba(255, 255, 255, 0)");
-    grd.addColorStop(0.3, "rgba(255, 255, 255, 0.1)");
-    grd.addColorStop(0.5, "rgba(255, 255, 255, 1.0)");
-    grd.addColorStop(0.7, "rgba(255, 255, 255, 0.1)");
-    grd.addColorStop(1, "rgba(255, 255, 255, 0)");
-
-    ctx.fillStyle = grd;
-
-    if (isHorizontal) {
-      ctx.globalAlpha = 0.3;
-      ctx.fillRect(0, cy - 3, size, 6);
-      ctx.globalAlpha = 0.6;
-      ctx.fillRect(10, cy - 1, size - 20, 2);
-      ctx.globalAlpha = 1.0;
-      ctx.fillRect(20, cy - 0.5, size - 40, 1);
-    } else {
-      ctx.globalAlpha = 0.3;
-      ctx.fillRect(cx - 3, 0, 6, size);
-      ctx.globalAlpha = 0.6;
-      ctx.fillRect(cx - 1, 10, 2, size - 20);
-      ctx.globalAlpha = 1.0;
-      ctx.fillRect(cx - 0.5, 20, 1, size - 40);
-    }
-    ctx.globalAlpha = 1.0;
-  };
-
-  drawSoftRay(true);
-  drawSoftRay(false);
-
-  // 3. Central Hotspot
-  // Reduced intensity/size slightly to not overpower the icon sitting on top
-  const coreGlow = ctx.createRadialGradient(cx, cy, 0, cx, cy, size * 0.05); // Smaller hot core
-  coreGlow.addColorStop(0, "rgba(255, 255, 255, 0.9)"); // Not full 1.0 opacity
-  coreGlow.addColorStop(0.5, "rgba(220, 240, 255, 0.4)");
-  coreGlow.addColorStop(1, "rgba(255, 255, 255, 0)");
-  ctx.fillStyle = coreGlow;
-  ctx.beginPath();
-  ctx.arc(cx, cy, size * 0.05, 0, Math.PI * 2);
-  ctx.fill();
-
-  const texture = new THREE.CanvasTexture(canvas);
-  return texture;
-};
-
-// Custom Icon Component to handle Material properties cleanly
-function TechIcon({ url }: { url: string }) {
-  const texture = useTexture(url);
-  return (
-    <mesh>
-      <planeGeometry args={[1, 1]} />
-      <meshBasicMaterial
-        map={texture}
-        transparent
-        opacity={0}
-        depthWrite={false} // CRITICAL: Prevents "Black Box" occlusion artifacts
-        toneMapped={false}
-      />
-    </mesh>
-  );
-}
-
+/**
+ * Render an animated constellation of technology icons that explodes, scatters, and converges based on scroll progress.
+ *
+ * @param scrollProgress - Mutable ref whose current numeric value (typically 0–1) drives the particle animation timeline
+ * @returns The React element containing the particle group, icon sprites, and connecting constellation lines
+ */
 export function TechParticles({ scrollProgress }: TechParticlesProps) {
   const groupRef = useRef<THREE.Group>(null);
 
-  // State for texture to ensure it's client-side only and disposable
   const [starTexture, setStarTexture] = React.useState<THREE.Texture | null>(null);
 
   React.useEffect(() => {
-    // Generate texture only on client mount
     const texture = createStarTexture();
     if (texture) {
       setStarTexture(texture);
     }
 
-    // Cleanup: Dispose texture to prevent memory leaks
     return () => {
       if (texture) texture.dispose();
     };
@@ -191,7 +80,6 @@ export function TechParticles({ scrollProgress }: TechParticlesProps) {
 
   const finalPositions = useMemo(() => {
     return sortedSkills.map((_, i) => {
-      // TypeScript and JavaScript at the heart
       if (i === 0) {
         return { x: -CONSTELLATION_LAYOUT.CORE_TECH_SPACING, y: 0, z: 0 };
       }
@@ -199,37 +87,29 @@ export function TechParticles({ scrollProgress }: TechParticlesProps) {
         return { x: CONSTELLATION_LAYOUT.CORE_TECH_SPACING, y: 0, z: 0 };
       }
 
-      // Others orbit around the core
       const idx = i - 2;
 
-      // Removed random angle increment to ensure proper spiral distribution without overlap
       const angle = idx * CONSTELLATION_LAYOUT.GOLDEN_ANGLE;
 
       const radius =
         CONSTELLATION_LAYOUT.ORBIT_RADIUS_MIN +
         Math.sqrt(idx / (sortedSkills.length - 2)) * CONSTELLATION_LAYOUT.ORBIT_RADIUS_MAX;
 
-      // Reduced random offset significantly to prevent overlap
-      // Just a tiny bit of jitter for organic feel, but safe enough
       const seed = idx * 1337;
       const pseudoRandomX = Math.sin(seed) * 0.5 + 0.5;
       const pseudoRandomY = Math.cos(seed * 0.7) * 0.5 + 0.5;
 
-      // Reduced from 1.5 to 0.3 of the config value
       const offsetX = (pseudoRandomX - 0.5) * CONSTELLATION_LAYOUT.RANDOM_OFFSET * 0.3;
       const offsetY = (pseudoRandomY - 0.5) * CONSTELLATION_LAYOUT.RANDOM_OFFSET * 0.3;
 
       return {
         x: radius * Math.cos(angle) * CONSTELLATION_LAYOUT.HORIZONTAL_MULTIPLIER + offsetX,
         y: radius * Math.sin(angle) * CONSTELLATION_LAYOUT.VERTICAL_MULTIPLIER + offsetY,
-        z: 0, // Keep 2D
+        z: 0,
       };
     });
   }, [sortedSkills]);
 
-  /**
-   * Generate constellation edges using MST + selective k-NN
-   */
   const edges = useMemo(() => {
     const connections: [number, number][] = [];
     const n = sortedSkills.length;
@@ -237,7 +117,6 @@ export function TechParticles({ scrollProgress }: TechParticlesProps) {
 
     const positions = finalPositions;
 
-    // Build MST
     const visited = new Array(n).fill(false);
     const minDist = new Array(n).fill(Infinity);
     const parent = new Array(n).fill(-1);
@@ -268,7 +147,6 @@ export function TechParticles({ scrollProgress }: TechParticlesProps) {
       }
     }
 
-    // Convert MST to edges
     const mstEdges = new Set<string>();
     for (let i = 1; i < n; i++) {
       if (parent[i] !== -1) {
@@ -280,7 +158,6 @@ export function TechParticles({ scrollProgress }: TechParticlesProps) {
       }
     }
 
-    // Add extra short edges
     const extraEdges: { u: number; v: number; d: number }[] = [];
     for (let i = 0; i < n; i++) {
       for (let j = i + 1; j < n; j++) {
@@ -336,7 +213,6 @@ export function TechParticles({ scrollProgress }: TechParticlesProps) {
       const easeExplosion = 1 - Math.pow(1 - particleExplosionFactor, 3);
       const easeConverge = convergeFactor * convergeFactor * (3 - 2 * convergeFactor);
 
-      // Orbital movement logic
       let x = THREE.MathUtils.lerp(initial.x, scattered.x, easeExplosion);
       let y = THREE.MathUtils.lerp(initial.y, scattered.y, easeExplosion);
       let z = THREE.MathUtils.lerp(initial.z, scattered.z, easeExplosion);
@@ -353,14 +229,9 @@ export function TechParticles({ scrollProgress }: TechParticlesProps) {
         easeExplosion
       );
 
-      // Pulse Animation logic (Enhanced Breathing)
-      // Allow pulsing during final phase (convergeFactor > 0.5)
       if (convergeFactor > 0.5) {
-        // Create a slow, deep "breathing" effect
-        // Frequency: 2.0 (Slow breath), Amplitude: 0.15 (Noticeable but gentle)
         const breath = Math.sin(state.clock.elapsedTime * 2.0 + i * 1.5) * 0.15;
 
-        // Apply to the base FINAL scale
         scale = THREE.MathUtils.lerp(
           scale,
           PARTICLE_ANIMATION.SCALE.FINAL * (1 + breath),
@@ -378,32 +249,26 @@ export function TechParticles({ scrollProgress }: TechParticlesProps) {
       child.lookAt(state.camera.position);
       child.visible = progress >= PARTICLE_TIMING.EXPLOSION.START;
 
-      // Control particle opacity - fade in during explosion
       const combinedGroup = child;
 
-      // 1. Tech Icon Image (Mesh)
       const iconMesh = combinedGroup.children.find((c) => c.type === "Mesh") as THREE.Mesh;
       if (iconMesh && iconMesh.material) {
         const iconMaterial = iconMesh.material as THREE.MeshBasicMaterial;
 
-        // Standard fade in logic
         let opacityFactor = THREE.MathUtils.smoothstep(
           progress,
           explosionStart,
           explosionStart + 0.05
         );
 
-        // TRANSFORMATION: Fade out icon during DISPERSE phase (> 0.95)
-        // Turn into pure star
         if (progress > PARTICLE_TIMING.DISPERSE.START) {
-          const fadeOut = 1 - (progress - PARTICLE_TIMING.DISPERSE.START) / 0.02; // Quick fade out
+          const fadeOut = 1 - (progress - PARTICLE_TIMING.DISPERSE.START) / 0.02;
           opacityFactor *= THREE.MathUtils.clamp(fadeOut, 0, 1);
         }
 
         iconMaterial.opacity = opacityFactor;
       }
 
-      // 2. Star Glow Sprite
       const starSprite = combinedGroup.children.find((c) => c.type === "Sprite") as THREE.Sprite;
       if (starSprite && starSprite.material) {
         const opacityFactor = THREE.MathUtils.smoothstep(
@@ -411,22 +276,17 @@ export function TechParticles({ scrollProgress }: TechParticlesProps) {
           explosionStart,
           explosionStart + 0.05
         );
-        // Higher opacity for visibility
         starSprite.material.opacity = opacityFactor * 1.0;
 
-        // Twinkle & Pulse
         if (progress > PARTICLE_TIMING.EXPLOSION.START) {
           const flicker = Math.sin(state.clock.elapsedTime * 3 + i * 10) * 0.2 + 0.8;
           starSprite.material.opacity *= flicker;
 
           const pulse = Math.sin(state.clock.elapsedTime * 2 + i * 5) * 0.1 + 1.0;
-          // Apply pulse to scale
           starSprite.scale.setScalar(STAR_GLOW_CONFIG.SCALE.BASE * pulse);
         }
       }
     });
-
-    // 2D Drift Logic (Organic Movement)
     if (progress > PARTICLE_TIMING.EXPLOSION.START) {
       const time = state.clock.elapsedTime;
       groupRef.current.children.forEach((child, i) => {
@@ -441,8 +301,6 @@ export function TechParticles({ scrollProgress }: TechParticlesProps) {
       });
     }
 
-    // Stop rotation before convergence
-    // Logic: We want full rotation (1.0) initially, then fade to 0.0 as we lock in
     const rotationStopFactor =
       1 -
       THREE.MathUtils.smoothstep(
@@ -450,11 +308,9 @@ export function TechParticles({ scrollProgress }: TechParticlesProps) {
         PARTICLE_TIMING.ROTATION_STOP.START,
         PARTICLE_TIMING.ROTATION_STOP.END
       );
-    // Cinematic Sway (Tilt & Pan)
     const swayAngle = Math.PI / 12;
     groupRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.5) * 0.05;
 
-    // Normal Rotation Logic
     if (progress <= PARTICLE_TIMING.DISPERSE.START) {
       if (progress > PARTICLE_TIMING.EXPLOSION.START) {
         const swayProgress =
@@ -472,10 +328,6 @@ export function TechParticles({ scrollProgress }: TechParticlesProps) {
     <group ref={groupRef}>
       {sortedSkills.map((skill) => (
         <group key={skill.name}>
-          {/* Star Glow Sprite
-              - MOVED BEHIND ICON (z=-0.1) so it backgrounds the icon vs washing it out
-              - Scale increased slightly vs previous to ensure visibility
-          */}
           {starTexture && (
             <sprite
               scale={[
@@ -483,8 +335,8 @@ export function TechParticles({ scrollProgress }: TechParticlesProps) {
                 STAR_GLOW_CONFIG.SCALE.SPRITE,
                 STAR_GLOW_CONFIG.SCALE.SPRITE,
               ]}
-              renderOrder={-1} // Ensure it renders BEHIND the icon
-              position={[0, 0, -0.1]} // Physical Z-push back
+              renderOrder={-1}
+              position={[0, 0, -0.1]}
             >
               <spriteMaterial
                 map={starTexture}
@@ -495,8 +347,6 @@ export function TechParticles({ scrollProgress }: TechParticlesProps) {
               />
             </sprite>
           )}
-
-          {/* Tech Icon Overlay - Maintained at Z=0 */}
           <TechIcon url={skill.iconPath} />
         </group>
       ))}
