@@ -16,7 +16,6 @@ export default function GrimoirePage() {
   const lang = useLang();
   const { data: project = [] } = usePublicProjects(lang);
 
-  // Ensure start at top
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);

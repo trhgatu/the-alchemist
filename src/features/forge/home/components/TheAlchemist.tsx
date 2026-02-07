@@ -6,103 +6,123 @@ import gsap from "gsap";
 import Image from "next/image";
 import { TheAlchemistCard } from "@/features/forge/home/components/the-alchemist";
 import { FallingLeaves } from "@/features/forge/home/components/FallingLeaves";
+import { useRef } from "react";
+import { useScrollController } from "@/contexts/ScrollControllerContext";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 export function TheAlchemist() {
-  useGSAP(() => {
-    const tl = gsap.timeline({
-      defaults: { ease: "power3.out" },
-      scrollTrigger: {
-        trigger: "#about",
-        start: "top 80%",
-        toggleActions: "play none none none",
-      },
-    });
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { isControlled, triggerElement, registerTimeline, unregisterTimeline } =
+    useScrollController();
 
-    tl.fromTo(
-      ".about-title.line-1 span",
-      { opacity: 0, y: 40, filter: "blur(6px)" },
-      { opacity: 1, y: 0, filter: "blur(0px)", stagger: 0.05, duration: 0.8 }
-    )
-      .fromTo(
+  useGSAP(
+    () => {
+      // Animations start at 50% of master timeline (when Transmutation fades)
+
+      const tl = gsap.timeline(
+        isControlled
+          ? { paused: true } // Paused in controlled mode - parent will control playback
+          : {
+              scrollTrigger: {
+                trigger: triggerElement || "#scene-wrapper",
+                start: "top top",
+                end: "bottom bottom",
+                scrub: 1,
+              },
+            }
+      );
+
+      // We use a conceptual 10-unit duration for the timeline
+      // 0-5: Hidden (Transmutation visible)
+      // 5-10: Reveal & Focus (Transmutation fading, Alchemist appearing)
+      tl.set({}, {}, 10); // Pad timeline to 10 units
+      const startProgress = 5.0; // Start at 50% of timeline
+
+      // Background is always visible (no animation needed)
+      // The master timeline will handle showing/hiding via Transmutation opacity
+
+      // 2. Title Reveals
+      tl.fromTo(
+        ".about-title.line-1 span",
+        { opacity: 0, y: 40, filter: "blur(6px)" },
+        { opacity: 1, y: 0, filter: "blur(0px)", stagger: 0.05, duration: 0.5 },
+        startProgress
+      ).fromTo(
         ".about-title.line-2 span",
         { opacity: 0, scale: 0.8, yPercent: 50 },
+        { opacity: 1, scale: 1, yPercent: 0, stagger: 0.05, duration: 0.5, ease: "back.out(1.7)" },
+        startProgress + 0.3
+      );
+
+      // 3. Description text (Word by word reveal)
+      tl.fromTo(
+        ".about-desc-1 .char, .about-desc-2 .char",
+        { opacity: 0.3, color: "#a3a3a3" },
+        { opacity: 1, color: "#171717", stagger: 0.01, duration: 1.0 },
+        startProgress + 0.5
+      );
+
+      // 4. Card Reveal
+      tl.fromTo(
+        ".alchemist-card-container",
+        { yPercent: 20, opacity: 0 },
+        { yPercent: 0, opacity: 1, duration: 0.8 },
+        startProgress + 0.6
+      );
+
+      // 5. Parallax for the frame
+      tl.to(
+        ".frame-layer",
         {
-          opacity: 1,
-          scale: 1,
-          yPercent: 0,
-          stagger: 0.05,
-          duration: 1,
-          ease: "elastic.out(1,0.6)",
+          scale: 1.25,
+          yPercent: 10,
+          duration: 2.0,
         },
-        "-=0.4"
-      )
-      .to(".about-title span", {
-        duration: 0.6,
-        repeat: 1,
-        yoyo: true,
-      });
+        startProgress
+      );
 
-    gsap.to(".about-desc-1 span, .about-desc-2 span", {
-      opacity: 1,
-      color: "#171717", // Neutral-900
-      stagger: 0.3,
-      scrollTrigger: {
-        trigger: ".about-content-container",
-        start: "top 70%",
-        end: "bottom 50%",
-        scrub: true,
-      },
-    });
+      // ENTERPRISE: Register timeline with parent in controlled mode
+      if (isControlled && registerTimeline) {
+        registerTimeline("alchemist", tl);
+      }
 
-    // Unified Card Parallax (Moves the whole card together)
-    gsap.to(".alchemist-card-container", {
-      yPercent: -10,
-      ease: "none",
-      scrollTrigger: {
-        trigger: "#about",
-        start: "top bottom",
-        end: "bottom top",
-        scrub: 1,
-      },
-    });
-
-    // Background Frame Subtle Parallax/Breath
-    gsap.to(".frame-layer", {
-      scale: 1.15,
-      yPercent: 5,
-      ease: "none",
-      scrollTrigger: {
-        trigger: "#about",
-        start: "top bottom",
-        end: "bottom top",
-        scrub: 1.5,
-      },
-    });
-  }, []);
+      return () => {
+        if (isControlled && unregisterTimeline) {
+          unregisterTimeline("alchemist");
+        }
+      };
+    },
+    { scope: containerRef }
+  );
 
   return (
-    <section id="about" className="about min-h-screen relative z-0 bg-[#f4f2ef] overflow-hidden">
-      <div className="absolute inset-0 opacity-40 pointer-events-none mix-blend-multiply z-0">
-        <Image
-          src="/assets/images/craftings/texture_washi.png"
-          alt="Washi Texture"
-          fill
-          className="object-cover"
-        />
+    <section
+      id="about"
+      ref={containerRef}
+      className="about min-h-screen relative z-0 bg-[#f4f2ef] overflow-hidden"
+    >
+      {/* Background Layers controlled by the main reveal timeline */}
+      <div className="about-bg-layer absolute inset-0 pointer-events-none z-0">
+        <div className="absolute inset-0 opacity-40 mix-blend-multiply">
+          <Image
+            src="/assets/images/craftings/texture_washi.png"
+            alt="Washi Texture"
+            fill
+            className="object-cover"
+          />
+        </div>
+        <div className="absolute inset-0 opacity-30 mix-blend-multiply frame-layer">
+          <Image
+            src="/assets/images/frame.svg"
+            alt="Background Frame"
+            fill
+            className="object-cover invert scale-110"
+          />
+        </div>
       </div>
 
-      <div className="absolute inset-0 -z-10 opacity-30 mix-blend-multiply pointer-events-none frame-layer">
-        <Image
-          src="/assets/images/frame.svg"
-          alt="Background Frame"
-          fill
-          className="object-cover invert scale-110"
-        />
-      </div>
-
-      <div className="about-wrapper max-w-7xl mx-auto py-20 relative z-10">
+      <div className="about-wrapper max-w-7xl mx-auto py-20 relative z-10 flex flex-col justify-center min-h-screen">
         <FallingLeaves />
         <div className="about-title-container text-center text-neutral-900 md:mb-16">
           <div className="about-title line-1 text-4xl md:text-7xl font-kings tracking-wide">
@@ -113,25 +133,7 @@ export function TheAlchemist() {
             ))}
           </div>
 
-          <div
-            className="flex items-center justify-center gap-4 my-6 opacity-0 animate-fade-in-up"
-            ref={(el) => {
-              if (el) {
-                gsap.fromTo(
-                  el,
-                  { opacity: 0, scaleX: 0 },
-                  {
-                    opacity: 1,
-                    scaleX: 1,
-                    duration: 1,
-                    delay: 0.2,
-                    ease: "expo.out",
-                    scrollTrigger: { trigger: el, start: "top 85%" },
-                  }
-                );
-              }
-            }}
-          >
+          <div className="flex items-center justify-center gap-4 my-6">
             <div className="w-16 h-[1px] bg-neutral-400" />
             <div className="w-2 h-2 rotate-45 border border-neutral-600" />
             <div className="w-16 h-[1px] bg-neutral-400" />
@@ -155,7 +157,7 @@ export function TheAlchemist() {
                   .map((word, wi) => (
                     <span key={wi} className="word inline-block mr-2">
                       {word.split("").map((char, ci) => (
-                        <span key={ci} className="char inline-block opacity-30 text-neutral-400">
+                        <span key={ci} className="char inline-block text-neutral-400">
                           {char}
                         </span>
                       ))}
@@ -169,7 +171,7 @@ export function TheAlchemist() {
                   .map((word, wi) => (
                     <span key={wi} className="word inline-block mr-2">
                       {word.split("").map((char, ci) => (
-                        <span key={ci} className="char inline-block opacity-30 text-neutral-400">
+                        <span key={ci} className="char inline-block text-neutral-400">
                           {char}
                         </span>
                       ))}
@@ -177,7 +179,7 @@ export function TheAlchemist() {
                   ))}
               </p>
             </div>
-            <div className="flex justify-center alchemist-card-container">
+            <div className="flex justify-center alchemist-card-container opacity-0">
               <TheAlchemistCard />
             </div>
           </div>

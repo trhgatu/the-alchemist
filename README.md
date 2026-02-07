@@ -30,6 +30,7 @@ The heart of the forge. Particles swirl through three sacred phases:
 Watch as formless matter becomes the infinity symbol—the eternal cycle made visible.
 
 ### The Runes
+
 - **Soul:** TypeScript, Node.js (The logic of the universe)
 - **Form:** React, Next.js, R3F (The vessel of light)
 - **Motion:** GSAP, Framer Motion (The dance of existence)
