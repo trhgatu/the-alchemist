@@ -21,7 +21,7 @@ export function TheAlchemist() {
       // This timeline responds to the same #scene-wrapper as Transmutation
       // Animations start at 50% of master timeline (when Transmutation fades)
 
-      console.log("[TheAlchemist] Controlled mode:", isControlled);
+      // Animations start at 50% of master timeline (when Transmutation fades)
 
       const tl = gsap.timeline(
         isControlled
@@ -88,7 +88,6 @@ export function TheAlchemist() {
       // ENTERPRISE: Register timeline with parent in controlled mode
       if (isControlled && registerTimeline) {
         registerTimeline("alchemist", tl);
-        console.log("[TheAlchemist] ✅ Timeline registered with parent");
       }
     },
     { scope: containerRef }
