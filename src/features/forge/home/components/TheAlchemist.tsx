@@ -11,6 +11,16 @@ import { useScrollController } from "@/contexts/ScrollControllerContext";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
+/**
+ * Render the "The Alchemist" section with layered backgrounds, animated title/description reveals,
+ * a parallax frame, and an alchemist card — coordinated with the app's scroll-driven timeline system.
+ *
+ * The component creates a GSAP timeline scoped to the section: in standalone mode the timeline
+ * is driven by a ScrollTrigger; in controlled mode the timeline is paused and, if available,
+ * registered with the parent controller under the key "alchemist".
+ *
+ * @returns The React element for the "About / The Alchemist" section.
+ */
 export function TheAlchemist() {
   const containerRef = useRef<HTMLDivElement>(null);
   const { isControlled, triggerElement, registerTimeline } = useScrollController();

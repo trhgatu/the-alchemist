@@ -11,6 +11,13 @@ import { useGSAP } from "@gsap/react";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
+/**
+ * Renders the Transmutation page: a pinned, scroll-driven scene that coordinates two layered components (TheTransmutation on top, TheAlchemist beneath) via a master GSAP timeline.
+ *
+ * The component creates and exposes a master scroll progress ref and accepts child timeline registrations (expected names: "transmutation" and "alchemist") through the ScrollControllerProvider so each child timeline can be driven by the master timeline. On mount it scrolls the window to the top.
+ *
+ * @returns The page's React element containing the pinned scene, the ScrollControllerProvider, layered components, and the follow-up call-to-action section.
+ */
 export default function TransmutationPage() {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const transmutationRef = useRef<HTMLDivElement>(null);

@@ -13,6 +13,16 @@ import { useScrollController } from "@/contexts/ScrollControllerContext";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
+/**
+ * Render the Transmutation section: a layered 3D scene with staged, scroll-driven text animations.
+ *
+ * Renders a full-screen section containing a WebGL canvas (particle system), ambient embers, and three
+ * animated text phases that run either under a parent-controlled timeline (via ScrollController context)
+ * or using an internal ScrollTrigger timeline in standalone mode. When running controlled, the component
+ * registers its paused timeline with the parent under the name "transmutation".
+ *
+ * @returns The React element for the Transmutation section.
+ */
 export function TheTransmutation() {
   const containerRef = useRef<HTMLDivElement>(null);
   const textRef1 = useRef<HTMLDivElement>(null);

@@ -15,6 +15,18 @@ interface CinematicRevealProps {
   className?: string;
 }
 
+/**
+ * Create a two-layer scroll-driven reveal where the top layer fades to transparent over a configurable scroll range.
+ *
+ * The component expects two children: the first is the top layer (visible initially) and the second is the underlying layer.
+ *
+ * @param children - A tuple [Layer A, Layer B] where the first child is the top layer that will fade out and the second is the underlying content.
+ * @param start - ScrollTrigger `start` position (e.g., "70% top"). Defaults to "70% top".
+ * @param end - ScrollTrigger `end` position (e.g., "bottom bottom"). Defaults to "bottom bottom".
+ * @param trigger - CSS selector or HTMLElement used as the ScrollTrigger `trigger`. Defaults to "#scene-wrapper".
+ * @param className - Additional CSS classes applied to the outer container.
+ * @returns The rendered container element that layers the two children and applies the scroll-driven reveal effect to the top layer.
+ */
 export function CinematicReveal({
   children,
   start = "70% top",
