@@ -6,6 +6,13 @@ import { useEffect } from "react";
 
 import Link from "next/link";
 
+/**
+ * Render the Transmutation page and its call-to-action.
+ *
+ * Renders TheTransmutation and TheAlchemist components and a centered CTA section linking to /forge/chronicles. When mounted, the component scrolls the window to the top.
+ *
+ * @returns The page's JSX element containing the layout and CTA.
+ */
 export default function TransmutationPage() {
   useEffect(() => {
     window.scrollTo(0, 0);

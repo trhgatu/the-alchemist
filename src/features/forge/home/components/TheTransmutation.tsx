@@ -12,6 +12,11 @@ import { TransmutationParticles } from "@/features/forge/home/components/Transmu
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
+/**
+ * Render the transmutation scroll-driven hero section with layered 3D scene, animated text phases, and visual overlays.
+ *
+ * @returns The component's JSX element representing the transmutation section, including the Canvas-based particle scene, falling embers overlay, and three staged text phases driven by a scroll-linked GSAP timeline.
+ */
 export function TheTransmutation() {
   const containerRef = useRef<HTMLDivElement>(null);
   const textRef1 = useRef<HTMLDivElement>(null);

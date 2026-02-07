@@ -1,4 +1,4 @@
-﻿import React, { useRef, useMemo } from "react";
+import React, { useRef, useMemo } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { SKILLS } from "@/constants/Skills";
@@ -20,6 +20,12 @@ export interface TechParticlesProps {
   scrollProgress: React.MutableRefObject<number>;
 }
 
+/**
+ * Render an animated constellation of technology icons that explodes, scatters, and converges based on scroll progress.
+ *
+ * @param scrollProgress - Mutable ref whose current numeric value (typically 0–1) drives the particle animation timeline
+ * @returns The React element containing the particle group, icon sprites, and connecting constellation lines
+ */
 export function TechParticles({ scrollProgress }: TechParticlesProps) {
   const groupRef = useRef<THREE.Group>(null);
 
