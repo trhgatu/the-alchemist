@@ -7,6 +7,7 @@ interface ScrollControllerContextType {
   isControlled: boolean;
   triggerElement: HTMLElement | null;
   registerTimeline?: (name: string, timeline: gsap.core.Timeline) => void;
+  unregisterTimeline?: (name: string) => void;
   scrollProgress?: React.MutableRefObject<number>;
 }
 
@@ -24,6 +25,7 @@ interface ScrollControllerProviderProps {
   controlled?: boolean;
   triggerElement?: HTMLElement | null;
   onTimelineRegister?: (name: string, timeline: gsap.core.Timeline) => void;
+  onTimelineUnregister?: (name: string) => void;
   scrollProgress?: React.MutableRefObject<number>;
 }
 
@@ -32,6 +34,7 @@ export function ScrollControllerProvider({
   controlled = false,
   triggerElement = null,
   onTimelineRegister,
+  onTimelineUnregister,
   scrollProgress,
 }: ScrollControllerProviderProps) {
   return (
@@ -40,6 +43,7 @@ export function ScrollControllerProvider({
         isControlled: controlled,
         triggerElement,
         registerTimeline: onTimelineRegister,
+        unregisterTimeline: onTimelineUnregister,
         scrollProgress,
       }}
     >

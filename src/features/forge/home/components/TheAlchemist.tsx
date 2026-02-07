@@ -13,14 +13,11 @@ gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 export function TheAlchemist() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const { isControlled, triggerElement, registerTimeline } = useScrollController();
+  const { isControlled, triggerElement, registerTimeline, unregisterTimeline } =
+    useScrollController();
 
   useGSAP(
     () => {
-      // PASSIVE CONSUMER PATTERN
-      // This timeline responds to the same #scene-wrapper as Transmutation
-      // Animations start at 50% of master timeline (when Transmutation fades)
-
       // Animations start at 50% of master timeline (when Transmutation fades)
 
       const tl = gsap.timeline(
@@ -89,6 +86,12 @@ export function TheAlchemist() {
       if (isControlled && registerTimeline) {
         registerTimeline("alchemist", tl);
       }
+
+      return () => {
+        if (isControlled && unregisterTimeline) {
+          unregisterTimeline("alchemist");
+        }
+      };
     },
     { scope: containerRef }
   );

@@ -33,6 +33,10 @@ export default function TransmutationPage() {
     childTimelinesRef.current.set(name, timeline);
   };
 
+  const handleTimelineUnregister = (name: string) => {
+    childTimelinesRef.current.delete(name);
+  };
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -99,6 +103,7 @@ export default function TransmutationPage() {
           controlled={true}
           triggerElement={wrapperRef.current}
           onTimelineRegister={handleTimelineRegister}
+          onTimelineUnregister={handleTimelineUnregister}
           scrollProgress={masterScrollProgressRef}
         >
           {/* Layer B: TheAlchemist (Always underneath) */}
