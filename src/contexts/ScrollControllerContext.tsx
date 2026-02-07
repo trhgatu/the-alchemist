@@ -14,6 +14,15 @@ const ScrollControllerContext = createContext<ScrollControllerContextType>({
   triggerElement: null,
 });
 
+/**
+ * Accesses the current scroll controller context value.
+ *
+ * @returns The current ScrollControllerContext value containing:
+ * - `isControlled`: whether scrolling is controlled,
+ * - `triggerElement`: the HTMLElement used as the scroll trigger or `null`,
+ * - `registerTimeline?`: optional function to register a timeline by name,
+ * - `scrollProgress?`: optional `MutableRefObject<number>` tracking progress
+ */
 export function useScrollController() {
   return useContext(ScrollControllerContext);
 }
@@ -26,6 +35,16 @@ interface ScrollControllerProviderProps {
   scrollProgress?: React.MutableRefObject<number>;
 }
 
+/**
+ * Supplies scroll controller state and callbacks to descendant components via context.
+ *
+ * @param children - React nodes that will receive the context value
+ * @param controlled - When true, marks the scroll controller as controlled by an external owner
+ * @param triggerElement - The HTMLElement used as the scroll trigger, or `null` when none
+ * @param onTimelineRegister - Optional callback to register a named GSAP timeline
+ * @param scrollProgress - Optional mutable ref to track scroll progress (0 to 1)
+ * @returns The provider element that injects the scroll controller context into its children
+ */
 export function ScrollControllerProvider({
   children,
   controlled = false,
