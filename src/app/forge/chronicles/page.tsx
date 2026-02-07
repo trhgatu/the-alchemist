@@ -5,6 +5,13 @@ import { usePublicProjects } from "@/features/forge/craftings/hooks";
 import { useLang } from "@/hooks";
 import { useEffect } from "react";
 
+/**
+ * Render the Grimoire page composed of tech, craftings, and journey sections.
+ *
+ * Scrolls the window to the top on mount and passes fetched public projects to TheCraftings component.
+ *
+ * @returns A main element containing TechGrimoire, TheCraftings (with fetched `project` data), and TheJourney.
+ */
 export default function GrimoirePage() {
   const lang = useLang();
   const { data: project = [] } = usePublicProjects(lang);

@@ -29,7 +29,12 @@ The heart of the forge. Particles swirl through three sacred phases:
 
 Watch as formless matter becomes the infinity symbol—the eternal cycle made visible.
 
-**The Arsenal**
+### The Runes
+
+- **Soul:** TypeScript, Node.js (The logic of the universe)
+- **Form:** React, Next.js, R3F (The vessel of light)
+- **Motion:** GSAP, Framer Motion (The dance of existence)
+
 Every tool is a rune. Every language, a spell learned through trial and tempered by failure. This is the sacred collection of what has been mastered.
 
 **The Prophecies**
@@ -56,8 +61,7 @@ But remember: **Copying the form is easy. Capturing the spirit requires your own
 
 ## 🧙 The Alchemist
 
-**trhgatu**
-_The one who forges in the digital fire_
+**trhgatu** - <code>The one who forges in the digital fire</code>
 
 [GitHub](https://github.com/trhgatu) • [The Forge](https://thatu.is-a.dev)
 

@@ -13,7 +13,13 @@ interface GoldenSparksProps {
   isIgnited?: boolean;
 }
 
-// 🎥 Camera Rig for "Focus Zoom"
+/**
+ * Smoothly adjusts the scene camera's z-position to create a focus zoom when ignited.
+ *
+ * Moves the camera toward z = 5 when `isIgnited` is true and toward z = 8 when false, blending the position over time for a gradual zoom effect.
+ *
+ * @param isIgnited - When true, camera zooms closer to the scene; when false, camera retreats to the default distance.
+ */
 function CameraRig({ isIgnited = false }: { isIgnited?: boolean }) {
   useFrame((state, delta) => {
     // Zoom Effect: Move camera closer when ignited
@@ -24,7 +30,14 @@ function CameraRig({ isIgnited = false }: { isIgnited?: boolean }) {
   return null;
 }
 
-// 🔮 Magic Circle Component
+/**
+ * Render an animated magic circle visual that responds to an ignition state.
+ *
+ * Animates rotation, scale, color, and opacity and applies a custom shader material with a texture.
+ *
+ * @param isIgnited - When true, switch visual targets to the intensified (ignited) state
+ * @returns A JSX element containing the animated magic-circle mesh
+ */
 function MagicCircle({ isIgnited = false }: { isIgnited?: boolean }) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const materialRef = useRef<any>(null); // Use any to bypass strict shader type checks for now
@@ -101,7 +114,16 @@ function MagicCircle({ isIgnited = false }: { isIgnited?: boolean }) {
   );
 }
 
-// ✨ Golden Sparks Component
+/**
+ * Renders a particle-based golden sparks effect that responds to an ignition state.
+ *
+ * When `isIgnited` is true the particles accelerate, grow, and transition color toward the active (orange) tone;
+ * when false they slow, shrink, and revert toward the idle (blue) tone. The system also rotates slowly and respawns
+ * particles that move beyond the vertical threshold.
+ *
+ * @param isIgnited - If true, use the ignited visual state (faster, larger, orange sparks); defaults to `false`.
+ * @returns A React element containing a Three.js Points particle system with buffer geometry and a textured PointsMaterial.
+ */
 function GoldenSparks({ isIgnited = false }: GoldenSparksProps) {
   const pointsRef = useRef<THREE.Points>(null);
   const particleCount = 150;
@@ -226,6 +248,12 @@ interface ForgeEmbersProps {
   isIgnited?: boolean;
 }
 
+/**
+ * Renders a full-bleed, non-interactive 3D embers overlay that visualizes an idle or ignited state.
+ *
+ * @param isIgnited - When true, switches the scene to the "ignited" visual state (closer camera, intensified magic circle, and more active sparks); when false, uses the idle visuals.
+ * @returns A React element containing a Canvas with the camera rig, animated magic circle, and particle sparks composited as an overlay.
+ */
 export function ForgeEmbers({ isIgnited = false }: ForgeEmbersProps) {
   return (
     <div className="absolute inset-0 z-10 pointer-events-none transition-opacity duration-1000">

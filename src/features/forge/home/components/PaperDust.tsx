@@ -13,6 +13,14 @@ interface Particle {
   twinkleSpeed: number;
 }
 
+/**
+ * Renders a full-screen animated dust-like particle effect on a canvas.
+ *
+ * The canvas is non-interactive and uses a screen blend mode. The visual consists of many small particles
+ * that gently drift and twinkle; the animation starts on mount, adapts to window resizes, and is cleaned up on unmount.
+ *
+ * @returns A canvas element covering the viewport that renders the animated dust effect.
+ */
 export function PaperDust() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const particlesRef = useRef<Particle[]>([]);
