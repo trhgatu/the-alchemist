@@ -60,8 +60,13 @@ export const TransmutationParticles = ({ scrollProgress }: TransmutationParticle
       const r2 = randoms[iy];
       const r3 = randoms[iz];
 
-      if (progress < 0.33) {
-        const p = progress / 0.33;
+      // Phase breakpoints adjusted to match text timing:
+      // Phase 1 (Text 1): 0-34.5% (2.0s / 5.8s)
+      // Phase 2 (Text 2): 34.5-69% (2.0s / 5.8s)
+      // Phase 3 (Text 3): 69-100% (1.8s / 5.8s)
+
+      if (progress < 0.345) {
+        const p = progress / 0.345;
 
         const jitter = 0.5 + p * 2;
         const size = 3;
@@ -72,8 +77,8 @@ export const TransmutationParticles = ({ scrollProgress }: TransmutationParticle
         );
 
         tempColor.setHSL(0, 0, 0.3);
-      } else if (progress < 0.66) {
-        const p = (progress - 0.33) / 0.33;
+      } else if (progress < 0.69) {
+        const p = (progress - 0.345) / 0.345;
 
         const angle = t * 0.5 + r3 * Math.PI * 2 + p * 10;
         const radius = 2 + Math.sin(t * 0.5 + r1 * 10) * 1 + p * 2;
@@ -87,7 +92,7 @@ export const TransmutationParticles = ({ scrollProgress }: TransmutationParticle
         if (r1 > 0.8) tempColor.setHSL(0.08, 1, 0.6);
         else tempColor.setHSL(0.05, 0.9, 0.5);
       } else {
-        const p = (progress - 0.66) / 0.34;
+        const p = (progress - 0.69) / 0.31;
 
         const scale = 5;
         const speed = 0.5;
@@ -128,8 +133,8 @@ export const TransmutationParticles = ({ scrollProgress }: TransmutationParticle
 
     if (pointsRef.current) {
       let targetX = 1.5;
-      if (progress > 0.33 && progress < 0.66) targetX = -1.5;
-      if (progress > 0.66) targetX = 0;
+      if (progress > 0.345 && progress < 0.69) targetX = -1.5;
+      if (progress > 0.69) targetX = 0;
 
       pointsRef.current.position.x += (targetX - pointsRef.current.position.x) * 0.05;
 

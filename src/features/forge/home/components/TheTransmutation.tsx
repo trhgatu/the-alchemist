@@ -8,6 +8,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { FallingEmbers } from "@/features/forge/home/components/FallingEmbers";
 import { TransmutationParticles } from "@/features/forge/home/components/TransmutationParticles";
+import { useScrollController } from "@/contexts/ScrollControllerContext";
 // import { AlchemistBook } from "@/features/forge/home/components/AlchemistBook";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
@@ -19,31 +20,58 @@ export function TheTransmutation() {
   const textRef3 = useRef<HTMLDivElement>(null);
 
   const scrollProgress = useRef(0);
+  const {
+    isControlled,
+    triggerElement,
+    registerTimeline,
+    scrollProgress: contextScrollProgress,
+  } = useScrollController();
+
+  // Use context scroll progress in controlled mode, local ref in standalone
+  const activeScrollProgress =
+    isControlled && contextScrollProgress ? contextScrollProgress : scrollProgress;
 
   useGSAP(
     () => {
-      // CONFIG: TIMELINE SETTINGS (Cài đặt timeline)
-      // ═══════════════════════════════════════════════════════════
-      // end: "+=600%" - Độ dài timeline (600% = 6 màn hình scroll)
-      // scrub: 1 - Độ mượt của scroll (1 = mượt, 2 = rất mượt nhưng trễ hơn)
-      //
-      // ĐIỀU CHỈNH:
-      // - Tăng end để scroll dài hơn (vd: 600% → 800%)
-      // - Giảm end để scroll ngắn hơn (vd: 600% → 400%)
-      // - Tăng scrub để mượt hơn (vd: 1 → 1.5)
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top top",
-          end: "+=600%",
-          pin: true,
-          scrub: 1,
-          refreshPriority: 1000,
-          onUpdate: (self) => {
-            scrollProgress.current = self.progress;
-          },
-        },
-      });
+      // If in controlled mode, skip creating ScrollTrigger
+      // The parent will control scroll, we just run animations
+      if (isControlled) {
+        console.log("[TheTransmutation] Running in CONTROLLED mode - animations managed by parent");
+        // Animations will be added to parent's master timeline
+        // For now, just run them without ScrollTrigger
+      }
+
+      // STANDALONE MODE - Create own ScrollTrigger
+      const sceneWrapper =
+        triggerElement || containerRef.current?.closest("#scene-wrapper") || containerRef.current;
+
+      console.log("[TheTransmutation] Scene wrapper:", sceneWrapper);
+      console.log("[TheTransmutation] Controlled mode:", isControlled);
+
+      if (!sceneWrapper) {
+        console.error("[TheTransmutation] No scene wrapper found!");
+        return;
+      }
+
+      const tl = gsap.timeline(
+        isControlled
+          ? { paused: true } // Paused in controlled mode - parent will control playback
+          : {
+              scrollTrigger: {
+                trigger: sceneWrapper,
+                start: "top top",
+                end: "top+750%", // 50% of 1500% master timeline
+                scrub: 1,
+                markers: !isControlled, // Only show markers in standalone mode
+                onUpdate: (self) => {
+                  scrollProgress.current = self.progress;
+                  console.log("[TheTransmutation] Progress:", self.progress);
+                },
+              },
+            }
+      );
+
+      console.log("[TheTransmutation] Timeline created, textRef1:", textRef1.current);
 
       // CONFIG: TEXT PHASE TIMING (Thời gian các đoạn text)
       // ═══════════════════════════════════════════════════════════
@@ -107,18 +135,39 @@ export function TheTransmutation() {
       // CONFIG: PHASE 3 - TEXT 3 ("The Transmutation")
       // ═══════════════════════════════════════════════════════════
       // Start: 4.0 (Sau khi text 2 kết thúc)
-      // Fade In: 4.0 → 5.0 (1.0 duration - Chậm hơn vì đây là title)
-      // Hold: 5.0 → 6.0
+      // Fade In: 4.0 → 4.8 (0.8 duration)
+      // Hold: 4.8 → 5.3 (0.5 duration - Rút ngắn)
+      // Fade Out: 5.3 → 5.8 (0.5 duration)
       //
       // ĐIỀU CHỈNH:
       // - Đổi 4.0 để title xuất hiện sớm/muộn hơn
-      // - Tăng duration để fade chậm hơn (vd: 1.0 → 1.5)
-      // - Đổi scale để text lớn hơn (vd: 1 → 1.2)
+      // - Tăng duration để fade chậm hơn
+      const phase3FadeIn = 0.8;
+      const phase3Hold = 0.5;
+      const phase3FadeOut = 0.5;
+
       tl.to(
         textRef3.current,
-        { opacity: 1, scale: 1, filter: "blur(0px)", duration: 1.0, ease: "power4.out" },
+        { opacity: 1, scale: 1, filter: "blur(0px)", duration: phase3FadeIn, ease: "power4.out" },
         4.0
-      ).to(textRef3.current, { opacity: 1, duration: 1.0 }, 4.0 + 1.0);
+      )
+        .to(textRef3.current, { opacity: 1, duration: phase3Hold }, 4.0 + phase3FadeIn)
+        .to(
+          textRef3.current,
+          {
+            opacity: 0,
+            scale: 0.95,
+            filter: "blur(8px)",
+            duration: phase3FadeOut,
+            ease: "power2.in",
+          },
+          4.0 + phase3FadeIn + phase3Hold
+        );
+
+      if (isControlled && registerTimeline) {
+        registerTimeline("transmutation", tl);
+        console.log("[TheTransmutation] ✅ Timeline registered with parent");
+      }
     },
     { scope: containerRef }
   );
@@ -130,14 +179,12 @@ export function TheTransmutation() {
       className="relative w-full h-screen bg-neutral-950 flex items-center justify-center overflow-hidden z-10"
     >
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#0a0a0a_100%)] pointer-events-none z-0" />
-      <div className="absolute inset-0 z-10">
+      <div className="absolute inset-0 z-10 pointer-events-none">
         <Canvas camera={{ position: [0, 4, 10], fov: 45 }} gl={{ antialias: false, alpha: true }}>
-          <TransmutationParticles scrollProgress={scrollProgress} />
-
-          {/* <Environment files="/hdr/qwantani_night_puresky_2k.hdr" environmentIntensity={0.5} /> */}
+          <TransmutationParticles scrollProgress={activeScrollProgress} />
         </Canvas>
       </div>
-      <div className="absolute inset-0 z-0 opacity-50">
+      <div className="absolute inset-0 z-0 opacity-50 pointer-events-none">
         <FallingEmbers />
       </div>
 
@@ -155,8 +202,6 @@ export function TheTransmutation() {
           The fixed shell must shatter
         </p>
       </div>
-
-      {/* PHASE 2: Text RIGHT */}
       <div
         ref={textRef2}
         className="absolute top-1/2 -translate-y-4  right-8 md:right-24 lg:right-32 z-20 w-full md:w-1/2 lg:w-2/5 text-right opacity-0 pointer-events-none pl-12"
@@ -171,8 +216,6 @@ export function TheTransmutation() {
           Burning away the false
         </p>
       </div>
-
-      {/* PHASE 3: Center */}
       <div
         ref={textRef3}
         className="absolute z-20 text-center opacity-0 scale-90 pointer-events-none px-8 max-w-4xl"
