@@ -49,6 +49,7 @@ export default function TransmutationPage() {
           end: "+=1500%",
           pin: true,
           scrub: 0.5,
+          markers: process.env.NODE_ENV !== "production",
           onUpdate: (self) => {
             const transmutationTL = childTimelinesRef.current.get("transmutation");
             const alchemistTL = childTimelinesRef.current.get("alchemist");
@@ -72,6 +73,9 @@ export default function TransmutationPage() {
       // Set initial states
       gsap.set(transmutationRef.current, { opacity: 1, zIndex: 20 });
       gsap.set(alchemistRef.current, { opacity: 1, zIndex: 10 });
+
+      // Force timeline to be 10 units long so 5.0 is exactly 50%
+      masterTimeline.set({}, {}, 10);
 
       // Fade out Transmutation at 50% mark
       masterTimeline.to(

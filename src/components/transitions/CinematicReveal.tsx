@@ -41,7 +41,7 @@ export function CinematicReveal({
         },
       });
     },
-    { scope: containerRef, dependencies: [start, end, trigger] }
+    { scope: containerRef, dependencies: [start, end, trigger], revertOnUpdate: true }
   );
 
   return (

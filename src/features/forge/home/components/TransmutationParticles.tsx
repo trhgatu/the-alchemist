@@ -133,8 +133,8 @@ export const TransmutationParticles = ({ scrollProgress }: TransmutationParticle
 
     if (pointsRef.current) {
       let targetX = 1.5;
-      if (progress > 0.345 && progress < 0.69) targetX = -1.5;
-      if (progress > 0.69) targetX = 0;
+      if (progress >= 0.345 && progress < 0.69) targetX = -1.5;
+      if (progress >= 0.69) targetX = 0;
 
       pointsRef.current.position.x += (targetX - pointsRef.current.position.x) * 0.05;
 

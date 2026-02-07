@@ -1,6 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, ReactNode } from "react";
+import type gsap from "gsap";
 
 interface ScrollControllerContextType {
   isControlled: boolean;

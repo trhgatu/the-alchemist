@@ -39,6 +39,7 @@ export function TheAlchemist() {
       // We use a conceptual 10-unit duration for the timeline
       // 0-5: Hidden (Transmutation visible)
       // 5-10: Reveal & Focus (Transmutation fading, Alchemist appearing)
+      tl.set({}, {}, 10); // Pad timeline to 10 units
       const startProgress = 5.0; // Start at 50% of timeline
 
       // Background is always visible (no animation needed)
