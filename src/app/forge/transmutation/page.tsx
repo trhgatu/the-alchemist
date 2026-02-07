@@ -23,7 +23,6 @@ export default function TransmutationPage() {
   const masterScrollProgressRef = useRef<number>(0);
 
   const handleTimelineRegister = (name: string, timeline: gsap.core.Timeline) => {
-    console.log(`[Page] Registered timeline: ${name}`);
     childTimelinesRef.current.set(name, timeline);
   };
 
@@ -43,30 +42,20 @@ export default function TransmutationPage() {
           end: "+=1500%",
           pin: true,
           scrub: 0.5,
-          markers: true, // DEBUG
           onUpdate: (self) => {
-            // Canvas and text animations run simultaneously (both 0-50% of master)
-            // This syncs 3 text phases with 3 canvas phases:
-            // Text 1 → Canvas Phase 1 (Jittering)
-            // Text 2 → Canvas Phase 2 (Spiral)
-            // Text 3 → Canvas Phase 3 (Lemniscate)
-
-            // Enterprise: Control child timelines based on master progress
             const transmutationTL = childTimelinesRef.current.get("transmutation");
             const alchemistTL = childTimelinesRef.current.get("alchemist");
 
-            // Transmutation plays from 0% to 50% of master timeline
+            // Transmutation: 0-50% of master timeline
             if (transmutationTL) {
-              const transmutationProgress = Math.min(self.progress * 2, 1); // 0-50% maps to 0-100%
+              const transmutationProgress = Math.min(self.progress * 2, 1);
               transmutationTL.progress(transmutationProgress);
-
-              // Canvas syncs with text timeline
               masterScrollProgressRef.current = transmutationProgress;
             }
 
-            // Alchemist plays from 70% to 100% of master timeline (delayed for clean transition)
+            // Alchemist: 70-100% of master timeline
             if (alchemistTL) {
-              const alchemistProgress = Math.max((self.progress - 0.7) / 0.3, 0); // 70-100% maps to 0-100%
+              const alchemistProgress = Math.max((self.progress - 0.7) / 0.3, 0);
               alchemistTL.progress(alchemistProgress);
             }
           },

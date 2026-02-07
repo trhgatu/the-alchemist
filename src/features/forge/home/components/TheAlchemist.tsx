@@ -32,7 +32,6 @@ export function TheAlchemist() {
                 start: "top top",
                 end: "bottom bottom",
                 scrub: 1,
-                markers: !isControlled, // Only show markers in standalone mode
               },
             }
       );
