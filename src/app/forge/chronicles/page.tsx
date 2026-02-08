@@ -23,7 +23,6 @@ export default function ChroniclesPage() {
   const contentRef = useRef<HTMLDivElement>(null);
 
   const lang = useLang();
-  // Fetch projects for TheCraftings
   const { data: projects = [] } = usePublicProjects(lang);
 
   useEffect(() => {
