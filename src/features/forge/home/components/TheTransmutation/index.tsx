@@ -13,18 +13,25 @@ import { useTransmutationCanvas } from "./hooks/useTransmutationCanvas";
 import { TransmutationCanvas } from "./components/TransmutationCanvas";
 import { TransmutationText } from "./components/TransmutationText";
 
-export function TheTransmutation() {
+interface TheTransmutationProps {
+  triggerRef?: React.RefObject<HTMLDivElement | null>;
+  triggerId?: string;
+}
+
+export function TheTransmutation({ triggerRef, triggerId }: TheTransmutationProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const textRef1 = useRef<HTMLDivElement>(null);
   const textRef2 = useRef<HTMLDivElement>(null);
   const textRef3 = useRef<HTMLDivElement>(null);
 
-  const { scrollProgress } = useTransmutationCanvas();
-
-  useTransmutationAnimation({
+  const { scrollProgress: animationScrollProgress } = useTransmutationAnimation({
     textRefs: { text1: textRef1, text2: textRef2, text3: textRef3 },
     containerRef,
+    triggerRef,
+    triggerSelector: triggerId,
   });
+
+  const { scrollProgress } = useTransmutationCanvas(animationScrollProgress);
 
   return (
     <section

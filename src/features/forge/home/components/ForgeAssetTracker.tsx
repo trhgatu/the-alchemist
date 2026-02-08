@@ -9,7 +9,6 @@ export const ForgeAssetTracker = () => {
   const { setLoadingProgress } = useAppStore();
 
   useEffect(() => {
-    // console.log("📦 Asset Progress:", progress);
     setLoadingProgress(progress);
   }, [progress, setLoadingProgress]);
 

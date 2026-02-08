@@ -8,13 +8,16 @@
 import { useRef } from "react";
 import { useScrollController } from "@/contexts/ScrollControllerContext";
 
-export function useTransmutationCanvas() {
+export function useTransmutationCanvas(externalScrollProgress?: React.MutableRefObject<number>) {
   const localScrollProgress = useRef(0);
   const { isControlled, scrollProgress: contextScrollProgress } = useScrollController();
 
-  // Use context scroll progress in controlled mode, local ref in standalone
-  const activeScrollProgress =
-    isControlled && contextScrollProgress ? contextScrollProgress : localScrollProgress;
+  // Priority: External Prop > Context > Local
+  const activeScrollProgress = externalScrollProgress
+    ? externalScrollProgress
+    : isControlled && contextScrollProgress
+      ? contextScrollProgress
+      : localScrollProgress;
 
   return {
     scrollProgress: activeScrollProgress,

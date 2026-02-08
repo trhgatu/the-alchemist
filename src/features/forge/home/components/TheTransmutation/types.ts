@@ -19,6 +19,7 @@ export interface TransmutationTextRefs {
  */
 export interface UseTransmutationAnimationReturn {
   timeline: gsap.core.Timeline | null;
+  scrollProgress: React.MutableRefObject<number>;
 }
 
 /**

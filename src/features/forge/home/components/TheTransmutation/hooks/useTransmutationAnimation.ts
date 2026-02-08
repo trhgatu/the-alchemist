@@ -18,11 +18,15 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
 interface UseTransmutationAnimationOptions {
   textRefs: TransmutationTextRefs;
   containerRef: React.RefObject<HTMLDivElement | null>;
+  triggerRef?: React.RefObject<HTMLDivElement | null>;
+  triggerSelector?: string;
 }
 
 export function useTransmutationAnimation({
   textRefs,
   containerRef,
+  triggerRef,
+  triggerSelector,
 }: UseTransmutationAnimationOptions): UseTransmutationAnimationReturn {
   const timelineRef = useRef<gsap.core.Timeline | null>(null);
   const scrollProgressRef = useRef(0);
@@ -32,7 +36,11 @@ export function useTransmutationAnimation({
   useGSAP(
     () => {
       const sceneWrapper =
-        triggerElement || containerRef.current?.closest("#scene-wrapper") || containerRef.current;
+        triggerRef?.current ||
+        (triggerSelector ? document.querySelector(triggerSelector) : null) ||
+        triggerElement ||
+        containerRef.current?.closest("#scene-wrapper") ||
+        containerRef.current;
 
       if (!sceneWrapper && !isControlled) {
         return;
@@ -48,7 +56,7 @@ export function useTransmutationAnimation({
         ScrollTrigger.create({
           trigger: sceneWrapper,
           start: "top top",
-          end: "+=1500%",
+          end: "bottom bottom",
           scrub: 1,
           animation: tl,
           onUpdate: (self) => {
@@ -161,5 +169,6 @@ export function useTransmutationAnimation({
 
   return {
     timeline: timelineRef.current,
+    scrollProgress: scrollProgressRef,
   };
 }

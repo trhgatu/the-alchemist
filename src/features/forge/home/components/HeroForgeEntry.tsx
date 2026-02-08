@@ -295,7 +295,7 @@ export const HeroForgeEntry = () => {
             className="interaction-trigger cursor-pointer group select-none w-fit mx-auto"
             onMouseEnter={handleIgniteStart}
             onMouseLeave={handleIgniteEnd}
-            onClick={() => router.push("/forge/transmutation")} // Failsafe Click
+            onClick={() => router.push("/forge/chronicles")} // Failsafe Click
           >
             {/* Shake Wrapper (Inner) */}
             <div ref={shakeRef}>

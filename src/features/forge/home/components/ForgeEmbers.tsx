@@ -4,7 +4,7 @@ import { useRef, useMemo } from "react";
 import { Canvas, useFrame, useLoader, extend } from "@react-three/fiber";
 import * as THREE from "three";
 import { AdditiveBlending, TextureLoader, Color } from "three";
-import { MagicCircleMaterial } from "./tech-grimoire/shaders";
+import { MagicCircleMaterial } from "@/shared/shaders";
 
 // Register custom shader
 extend({ MagicCircleMaterial });
@@ -124,7 +124,7 @@ function MagicCircle({ isIgnited = false }: { isIgnited?: boolean }) {
  * @param isIgnited - If true, use the ignited visual state (faster, larger, orange sparks); defaults to `false`.
  * @returns A React element containing a Three.js Points particle system with buffer geometry and a textured PointsMaterial.
  */
-function GoldenSparks({ isIgnited = false }: GoldenSparksProps) {
+export function GoldenSparks({ isIgnited = false }: GoldenSparksProps) {
   const pointsRef = useRef<THREE.Points>(null);
   const particleCount = 150;
 
@@ -248,12 +248,6 @@ interface ForgeEmbersProps {
   isIgnited?: boolean;
 }
 
-/**
- * Renders a full-bleed, non-interactive 3D embers overlay that visualizes an idle or ignited state.
- *
- * @param isIgnited - When true, switches the scene to the "ignited" visual state (closer camera, intensified magic circle, and more active sparks); when false, uses the idle visuals.
- * @returns A React element containing a Canvas with the camera rig, animated magic circle, and particle sparks composited as an overlay.
- */
 export function ForgeEmbers({ isIgnited = false }: ForgeEmbersProps) {
   return (
     <div className="absolute inset-0 z-10 pointer-events-none transition-opacity duration-1000">
