@@ -9,6 +9,7 @@ import {
   Oldenburg,
   Texturina,
   Playfair_Display,
+  Bilbo,
 } from "next/font/google";
 import "./globals.css";
 import LenisScroll from "@/components/common/LenisScroll";
@@ -17,6 +18,12 @@ import { ReduxProvider } from "@/store/provider";
 import { ReactQueryProvider } from "@/app/providers/react-query-provider";
 import { siteConfig } from "@/config/site";
 
+const bilbo = Bilbo({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-bilbo",
+  display: "swap",
+});
 const oldenBurg = Oldenburg({
   subsets: ["latin"],
   weight: ["400"],
@@ -128,7 +135,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${spaceMono.variable} ${playfairDisplay.variable} ${oldenBurg.variable} ${cinzelDecorative.variable} ${shareTechMono.variable} ${kings.variable} ${metamorphous.variable} ${beauRivage.variable} ${texTurina.variable}`}
+      className={`${spaceMono.variable} ${bilbo.variable} ${playfairDisplay.variable} ${oldenBurg.variable} ${cinzelDecorative.variable} ${shareTechMono.variable} ${kings.variable} ${metamorphous.variable} ${beauRivage.variable} ${texTurina.variable}`}
     >
       <body suppressHydrationWarning={false}>
         <div id="page-wrapper">

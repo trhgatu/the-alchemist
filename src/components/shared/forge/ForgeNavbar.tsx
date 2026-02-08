@@ -14,7 +14,6 @@ import {
 import { useState } from "react";
 import { useScroll, useMotionValueEvent } from "motion/react";
 import { useScrambleText } from "@/hooks/useScrambleText";
-import { LanguageSelector } from "@/components/shared/LanguageSelector";
 
 export function NavbarForge() {
   useScrambleText();
@@ -70,7 +69,6 @@ export function NavbarForge() {
       <NavBody>
         <NavbarLogo />
         <NavItems items={navItems} />
-        <LanguageSelector />
       </NavBody>
       <MobileNav>
         <MobileNavHeader>

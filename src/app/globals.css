@@ -8,6 +8,10 @@
     font-family: var(--font-space-mono);
   }
 
+  .font-bilbo {
+    font-family: var(--font-bilbo);
+  }
+
   .font-playfair-display {
     font-family: var(--font-playfair-display);
   }
