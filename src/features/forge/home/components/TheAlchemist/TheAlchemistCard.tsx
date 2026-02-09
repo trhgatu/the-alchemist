@@ -63,7 +63,7 @@ export function TheAlchemistCard() {
             y="-50%"
             width="200%"
             height="200%"
-            color-interpolation-filters="sRGB"
+            colorInterpolationFilters="sRGB"
           >
             <feTurbulence
               ref={turbulenceRef}
