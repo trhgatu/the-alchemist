@@ -176,8 +176,8 @@ export function TheAlchemist() {
           {/* Book-style Alternating Layout */}
           <div className="mt-12 space-y-12 max-w-5xl mx-auto px-4">
             {/* Row 1: Text 70% | Avatar 30% */}
-            <div className="grid grid-cols-[7fr_3fr] gap-8 items-center relative overflow-visible">
-              <div className="text-left space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-[7fr_3fr] gap-8 items-center relative overflow-visible group">
+              <div className="text-left space-y-4 order-2 md:order-1">
                 <h3 className="text-3xl font-kings text-neutral-800 tracking-wide border-b border-neutral-400/30 pb-2 inline-block">
                   Prima Materia
                 </h3>
@@ -186,11 +186,13 @@ export function TheAlchemist() {
                     F
                   </span>
                   rom raw concepts to refined solutions, I transmute ideas through the alchemical
-                  process of development. Each project begins as Prima Materia—unformed potential
-                  waiting to be shaped by skill and vision.
+                  process of development. Each project begins as{" "}
+                  <span className="italic text-neutral-800">Prima Materia</span>—unformed potential
+                  waiting to be shaped by skill and vision. It is here in the chaos of creation that
+                  the true structure begins to emerge.
                 </p>
               </div>
-              <div className="relative h-64 overflow-visible">
+              <div className="relative h-64 overflow-visible order-1 md:order-2 flex justify-center">
                 {/* Avatar with absolute positioning for larger size */}
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 scale-125 overflow-visible w-64 md:w-80">
                   <TheAlchemistCard />
@@ -206,8 +208,8 @@ export function TheAlchemist() {
             </div>
 
             {/* Row 2: Symbol 30% | Text 70% */}
-            <div className="grid grid-cols-[3fr_7fr] gap-8 items-center">
-              <div className="flex justify-center opacity-20 mix-blend-multiply">
+            <div className="grid grid-cols-1 md:grid-cols-[3fr_7fr] gap-8 items-center group">
+              <div className="flex justify-center opacity-20 mix-blend-multiply order-1">
                 <div className="relative w-48 h-48">
                   <Image
                     src="/assets/images/craftings/ouroboros.png"
@@ -217,7 +219,7 @@ export function TheAlchemist() {
                   />
                 </div>
               </div>
-              <div className="text-left space-y-4">
+              <div className="text-left space-y-4 order-2">
                 <h3 className="text-3xl font-kings text-neutral-800 tracking-wide border-b border-neutral-400/30 pb-2 inline-block">
                   The Great Work
                 </h3>
@@ -225,10 +227,11 @@ export function TheAlchemist() {
                   <span className="float-left text-6xl font-kings text-neutral-800 mr-2 mt-[-8px] leading-none drop-shadow-sm">
                     T
                   </span>
-                  hrough countless iterations and refinements, I pursue the Magnum Opus: software
-                  that doesn&apos;t just function, but transforms. My mission is to craft solutions
-                  that endure, to learn from every challenge, and to push the boundaries of
-                  what&apos;s possible.
+                  hrough countless iterations and refinements, I pursue the{" "}
+                  <span className="italic text-neutral-800">Magnum Opus</span>: software that
+                  doesn&apos;t just function, but transforms. My mission is to craft solutions that
+                  endure, to learn from every challenge, and to push the boundaries of what&apos;s
+                  possible.
                 </p>
               </div>
             </div>
@@ -241,8 +244,8 @@ export function TheAlchemist() {
             </div>
 
             {/* Row 3: Text 70% | Symbol 30% */}
-            <div className="grid grid-cols-[7fr_3fr] gap-8 items-center">
-              <div className="text-left space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-[7fr_3fr] gap-8 items-center group">
+              <div className="text-left space-y-4 order-2 md:order-1">
                 <h3 className="text-3xl font-kings text-neutral-800 tracking-wide border-b border-neutral-400/30 pb-2 inline-block">
                   Philosopher&apos;s Stone
                 </h3>
@@ -250,18 +253,18 @@ export function TheAlchemist() {
                   <span className="float-left text-6xl font-kings text-neutral-800 mr-2 mt-[-8px] leading-none drop-shadow-sm">
                     T
                   </span>
-                  he true Philosopher&apos;s Stone isn&apos;t gold—it&apos;s knowledge. Every bug
-                  solved, every pattern mastered, every user delighted adds to the eternal quest for
-                  mastery in the digital arts.
+                  he true <span className="italic text-neutral-800">Philosopher&apos;s Stone</span>{" "}
+                  isn&apos;t gold—it&apos;s knowledge. Every bug solved, every pattern mastered,
+                  every user delighted adds to the eternal quest for mastery in the digital arts.
                 </p>
               </div>
-              <div className="flex justify-center opacity-15 mix-blend-multiply">
+              <div className="flex justify-center order-1 md:order-2 opacity-60 mix-blend-multiply">
                 <div className="relative w-48 h-48">
                   <Image
-                    src="/assets/images/craftings/symbols/squared_circle.svg"
-                    alt="Squared Circle"
+                    src="/assets/images/craftings/symbols/sol_symbol.svg"
+                    alt="Wisdom"
                     fill
-                    className="object-contain animate-[spin_180s_linear_infinite_reverse]"
+                    className="object-contain p-4"
                   />
                 </div>
               </div>
