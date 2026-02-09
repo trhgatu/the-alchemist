@@ -164,7 +164,7 @@ export function GoldenSparks({
     const targetColor = isIgnited ? activeColorObj : idleColorObj;
     const targetSize = isIgnited ? 0.4 : 0.2;
 
-    const lerpFactor = delta * 2;
+    const lerpFactor = Math.min(delta * 2, 1); // Clamp to [0, 1]
     currentState.current.speedMultiplier = THREE.MathUtils.lerp(
       currentState.current.speedMultiplier,
       targetSpeed,

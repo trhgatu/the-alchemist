@@ -56,7 +56,15 @@ export function TheAlchemistCard() {
     >
       <svg className="absolute w-0 h-0 pointer-events-none">
         <defs>
-          <filter id="alchemist-ink-distortion">
+          <filter
+            id="alchemist-ink-distortion"
+            filterUnits="objectBoundingBox"
+            x="-50%"
+            y="-50%"
+            width="200%"
+            height="200%"
+            color-interpolation-filters="sRGB"
+          >
             <feTurbulence
               ref={turbulenceRef}
               type="fractalNoise"
