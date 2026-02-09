@@ -23,7 +23,7 @@ export default function ChroniclesPage() {
   const contentRef = useRef<HTMLDivElement>(null);
 
   const lang = useLang();
-  const { data: projects = [] } = usePublicProjects(lang);
+  const { data: projects = [], isLoading, isError } = usePublicProjects(lang);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -62,7 +62,7 @@ export default function ChroniclesPage() {
       <div ref={contentRef} className="relative z-20 w-full">
         <TheAlchemist />
         <TechGrimoire />
-        <TheCraftings projects={projects} isLoading={false} isError={false} />
+        <TheCraftings projects={projects} isLoading={isLoading} isError={isError} />
         <TheJourney />
       </div>
     </main>
