@@ -132,7 +132,7 @@ export function AlchemyPageDecoration() {
       {/* === HANDWRITTEN CODE ANNOTATIONS === */}
 
       {/* Main Code Block - Ink on Washi Style */}
-      <div className="absolute top-[28%] right-8 md:right-16 rotate-[-3deg] text-neutral-600/50 font-['Courier_New'] text-xs md:text-sm leading-relaxed select-none z-15 mix-blend-multiply">
+      <div className="absolute top-[28%] right-8 md:right-16 rotate-[-3deg] text-neutral-600/50 font-['Courier_New'] text-xs md:text-sm leading-relaxed select-none z-[15] mix-blend-multiply">
         <div className="space-y-0.5">
           <div className="italic opacity-70">async function transmute(</div>
           <div className="italic opacity-70">&nbsp;&nbsp;idea: RawConcept</div>
@@ -150,7 +150,7 @@ export function AlchemyPageDecoration() {
       {/* === MARGINALIA (Margin Notes) === */}
 
       {/* Left Margin - Alchemical Process Notes */}
-      <div className="absolute left-12 md:left-16 top-[45%] text-neutral-600/60 text-xs font-bilbo italic leading-relaxed select-none z-15 max-w-[80px] md:max-w-[100px]">
+      <div className="absolute left-12 md:left-16 top-[45%] text-neutral-600/60 text-xs font-bilbo italic leading-relaxed select-none z-[15] max-w-[80px] md:max-w-[100px]">
         <div className="rotate-[-2deg]">
           Prima Materia
           <br />
@@ -166,7 +166,7 @@ export function AlchemyPageDecoration() {
       </div>
 
       {/* Right Margin - Philosophical Notes */}
-      <div className="absolute right-12 md:right-16 top-[65%] text-neutral-600/60 text-xs font-bilbo italic leading-relaxed select-none z-15 max-w-[90px] md:max-w-[110px] text-right">
+      <div className="absolute right-12 md:right-16 top-[65%] text-neutral-600/60 text-xs font-bilbo italic leading-relaxed select-none z-[15] max-w-[90px] md:max-w-[110px] text-right">
         <div className="rotate-[2deg]">
           &quot;As above,
           <br />

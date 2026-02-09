@@ -96,6 +96,7 @@ export function TheAlchemist() {
         {/* SOLVE - Left Edge */}
         <div
           className="absolute left-10 top-1/2 origin-center"
+          aria-hidden="true"
           style={{
             transform: "translateY(-50%) rotate(-90deg)",
             transformOrigin: "left center",
@@ -111,6 +112,7 @@ export function TheAlchemist() {
         {/* COAGULA - Right Edge */}
         <div
           className="absolute right-10 top-1/2 origin-center"
+          aria-hidden="true"
           style={{
             transform: "translateY(-50%) rotate(90deg)",
             transformOrigin: "right center",

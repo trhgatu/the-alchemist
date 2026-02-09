@@ -33,14 +33,14 @@ export function TheAlchemistCard() {
   const handleMouseLeave = contextSafe(() => {
     if (displacementRef.current) {
       gsap.to(displacementRef.current, {
-        attr: { scale: 30 },
+        attr: { scale: 0 },
         duration: 0.8,
         ease: "power2.inOut",
       });
     }
     if (turbulenceRef.current) {
       gsap.to(turbulenceRef.current, {
-        attr: { baseFrequency: 0.04 },
+        attr: { baseFrequency: 0 },
         duration: 0.8,
         ease: "power2.inOut",
       });
