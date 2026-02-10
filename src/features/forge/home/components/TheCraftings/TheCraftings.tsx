@@ -303,7 +303,7 @@ export function TheCraftings({ projects, isLoading, isError }: ProjectHomeProps)
 
   return (
     <section ref={sectionRef} id="craftings" className="relative w-full min-h-screen text-white">
-      {/* <div ref={backgroundRef} className="absolute inset-0 z-0 bg-black" /> REMOVED for Master Scroll */}
+      <div ref={backgroundRef} className="absolute inset-0 z-0 bg-black pointer-events-none" />
       <div className="absolute inset-0 z-10 pointer-events-none">
         <div className="absolute inset-0 bg-gradient-to-b from-black via-black/90 to-transparent opacity-100" />
         <div

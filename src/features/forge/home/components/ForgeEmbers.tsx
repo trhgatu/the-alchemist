@@ -5,13 +5,10 @@ import { Canvas, useFrame, useLoader, extend } from "@react-three/fiber";
 import * as THREE from "three";
 import { AdditiveBlending, TextureLoader, Color } from "three";
 import { MagicCircleMaterial } from "@/shared/shaders";
+import { GoldenSparks } from "./GoldenSparks";
 
 // Register custom shader
 extend({ MagicCircleMaterial });
-
-interface GoldenSparksProps {
-  isIgnited?: boolean;
-}
 
 /**
  * Smoothly adjusts the scene camera's z-position to create a focus zoom when ignited.
@@ -124,125 +121,6 @@ function MagicCircle({ isIgnited = false }: { isIgnited?: boolean }) {
  * @param isIgnited - If true, use the ignited visual state (faster, larger, orange sparks); defaults to `false`.
  * @returns A React element containing a Three.js Points particle system with buffer geometry and a textured PointsMaterial.
  */
-export function GoldenSparks({ isIgnited = false }: GoldenSparksProps) {
-  const pointsRef = useRef<THREE.Points>(null);
-  const particleCount = 150;
-
-  const idleColor = useMemo(() => new THREE.Color("#4aa0ff"), []);
-  const activeColor = useMemo(() => new THREE.Color("#ffaa33"), []);
-
-  const currentState = useRef({
-    speedMultiplier: 0.2,
-    color: new THREE.Color("#4aa0ff"),
-    size: 0.2,
-  });
-
-  const sparkTexture = useMemo(() => {
-    const canvas = document.createElement("canvas");
-    canvas.width = 128;
-    canvas.height = 128;
-    const ctx = canvas.getContext("2d")!;
-    const gradient = ctx.createRadialGradient(64, 64, 0, 64, 64, 64);
-    gradient.addColorStop(0, "rgba(255, 255, 255, 1)");
-    gradient.addColorStop(0.1, "rgba(255, 255, 255, 0.8)");
-    gradient.addColorStop(0.4, "rgba(255, 255, 255, 0.2)");
-    gradient.addColorStop(1, "rgba(0, 0, 0, 0)");
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, 128, 128);
-    const texture = new THREE.CanvasTexture(canvas);
-    texture.premultiplyAlpha = true;
-    return texture;
-  }, []);
-
-  const { positions, velocities, phases } = useMemo(() => {
-    const pos = new Float32Array(particleCount * 3);
-    const vel = new Float32Array(particleCount * 3);
-    const ph = new Float32Array(particleCount);
-
-    for (let i = 0; i < particleCount; i++) {
-      pos[i * 3] = (Math.random() - 0.5) * 15;
-      pos[i * 3 + 1] = Math.random() * 10 - 5;
-      pos[i * 3 + 2] = (Math.random() - 0.5) * 5;
-
-      vel[i * 3] = (Math.random() - 0.5) * 0.02;
-      vel[i * 3 + 1] = 0.01 + Math.random() * 0.03;
-      vel[i * 3 + 2] = (Math.random() - 0.5) * 0.02;
-
-      ph[i] = Math.random() * Math.PI * 2;
-    }
-
-    return { positions: pos, velocities: vel, phases: ph };
-  }, []);
-
-  useFrame((state, delta) => {
-    if (!pointsRef.current) return;
-
-    const targetSpeed = isIgnited ? 1.0 : 0.2;
-    const targetColor = isIgnited ? activeColor : idleColor;
-    const targetSize = isIgnited ? 0.4 : 0.2;
-
-    const lerpFactor = delta * 2;
-    currentState.current.speedMultiplier = THREE.MathUtils.lerp(
-      currentState.current.speedMultiplier,
-      targetSpeed,
-      lerpFactor
-    );
-    currentState.current.size = THREE.MathUtils.lerp(
-      currentState.current.size,
-      targetSize,
-      lerpFactor
-    );
-    currentState.current.color.lerp(targetColor, lerpFactor);
-
-    const material = pointsRef.current.material as THREE.PointsMaterial;
-    material.color = currentState.current.color;
-    material.size = currentState.current.size;
-
-    const time = state.clock.elapsedTime;
-    const positionsAttr = pointsRef.current.geometry.attributes.position;
-
-    for (let i = 0; i < particleCount; i++) {
-      const speed = currentState.current.speedMultiplier;
-
-      positions[i * 3 + 0] +=
-        velocities[i * 3 + 0] * speed + Math.sin(time + phases[i]) * 0.002 * speed;
-      positions[i * 3 + 1] += velocities[i * 3 + 1] * speed;
-      positions[i * 3 + 2] += velocities[i * 3 + 2] * speed;
-
-      if (positions[i * 3 + 1] > 6) {
-        positions[i * 3 + 1] = -6;
-        positions[i * 3 + 0] = (Math.random() - 0.5) * 15;
-      }
-    }
-    positionsAttr.needsUpdate = true;
-
-    pointsRef.current.rotation.y = time * 0.05;
-  });
-
-  return (
-    <points ref={pointsRef}>
-      <bufferGeometry>
-        <bufferAttribute
-          attach="attributes-position"
-          count={particleCount}
-          array={positions}
-          itemSize={3}
-          args={[positions, 3]}
-        />
-      </bufferGeometry>
-      <pointsMaterial
-        map={sparkTexture}
-        size={0.4}
-        color="#ffffff"
-        transparent={true}
-        opacity={0.9}
-        blending={AdditiveBlending}
-        depthWrite={false}
-        sizeAttenuation={true}
-      />
-    </points>
-  );
-}
 
 interface ForgeEmbersProps {
   isIgnited?: boolean;

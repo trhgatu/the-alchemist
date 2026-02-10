@@ -21,13 +21,10 @@ export const HeroForgeEntry = () => {
   const [forceProceed, setForceProceed] = useState(false);
   const [isIgnited, setIsIgnited] = useState(false);
 
-  // Safety Timeout: Force proceed after 7 seconds if assets hang
   useEffect(() => {
     if (!introFinished) return;
 
-    // If intro finishes but resources take too long, force entry
     const timer = setTimeout(() => {
-      console.warn("⚠️ Resource loading timed out. Forcing entry.");
       setForceProceed(true);
     }, 7000);
 
@@ -39,12 +36,9 @@ export const HeroForgeEntry = () => {
     setScenePhase(ScenePhase.HERO_ANIMATION);
   }, [setScenePhase]);
 
-  // Main Logic: Wait for Intro AND (Resources OR Timeout)
   useEffect(() => {
     if (introFinished) {
-      // console.log("⏳ Waiting for resources...", loadingProgress);
       if (loadingProgress >= 100 || forceProceed) {
-        // console.log("✅ Ready! Triggering exit...");
         triggerExit();
       }
     }
@@ -62,7 +56,6 @@ export const HeroForgeEntry = () => {
 
     tl.set(scope.current, { autoAlpha: 1 });
 
-    // Intro Sequence
     tl.fromTo(
       ".hero-text-mini span",
       { y: 20, opacity: 0 },
@@ -120,7 +113,6 @@ export const HeroForgeEntry = () => {
         "-=0.4"
       );
 
-    // Ambient Breathing (Cloud)
     gsap.to(bgRef.current, {
       scale: 1.05,
       duration: 10,
@@ -130,24 +122,19 @@ export const HeroForgeEntry = () => {
     });
   }, [scenePhase]);
 
-  // Interaction: Hold to Ignite -> Teleport
   const chargeTl = useRef<gsap.core.Timeline | null>(null);
   const router = useRouter();
-  const shakeRef = useRef<HTMLDivElement>(null); // New Ref for Shake
+  const shakeRef = useRef<HTMLDivElement>(null);
 
   const handleIgniteStart = () => {
-    // console.log("🔥 Ignite Start");
     setIsIgnited(true);
 
-    // Charging Sequence
     chargeTl.current = gsap.timeline({
       onComplete: () => {
-        // console.log("🚀 Teleporting...");
         router.push("/forge/transmutation");
       },
     });
 
-    // 1. Shake (Inner Content Only)
     chargeTl.current
       .to(shakeRef.current, {
         x: "+=2",
@@ -157,10 +144,7 @@ export const HeroForgeEntry = () => {
         duration: 0.05,
         ease: "none",
       })
-      // 2. Charge (Just Wait/Shake)
-      .to({}, { duration: 1.0 }) // Wait 1s (Shake continues via yoyo)
-
-      // 3. Final Zoom & Burst
+      .to({}, { duration: 1.0 })
       .to(
         contentRef.current,
         {
@@ -171,7 +155,6 @@ export const HeroForgeEntry = () => {
         },
         ">-0.5"
       )
-      // Dissolve Text Characters Randomly
       .to(
         ".hero-text-name span, .hero-title span, .hero-text-mini span",
         {
@@ -196,12 +179,9 @@ export const HeroForgeEntry = () => {
   };
 
   const handleIgniteEnd = () => {
-    // console.log("❄️ Ignite End");
     setIsIgnited(false);
     if (chargeTl.current) {
       chargeTl.current.kill();
-
-      // Reset visuals
       gsap.to(contentRef.current, {
         scale: 1,
         opacity: 1,
@@ -209,7 +189,6 @@ export const HeroForgeEntry = () => {
         duration: 0.5,
       });
       gsap.to(shakeRef.current, {
-        // Reset shake
         x: 0,
         y: 0,
         duration: 0.5,
@@ -219,7 +198,6 @@ export const HeroForgeEntry = () => {
         opacity: 1,
         duration: 0.5,
       });
-      // Reset Text Spans (in case dissolve started)
       gsap.to(".hero-text-name span, .hero-title span, .hero-text-mini span", {
         opacity: 1,
         y: 0,
@@ -229,7 +207,6 @@ export const HeroForgeEntry = () => {
     }
   };
 
-  // Mouse Parallax Update
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const { clientX, clientY, currentTarget } = e;
     const rect = currentTarget.getBoundingClientRect();
@@ -238,7 +215,6 @@ export const HeroForgeEntry = () => {
     const xPos = clientX / width - 0.5;
     const yPos = clientY / height - 0.5;
 
-    // Cloud (Mid Background)
     gsap.to(bgRef.current, {
       x: xPos * -30,
       y: yPos * -30,
@@ -246,7 +222,6 @@ export const HeroForgeEntry = () => {
       ease: "power2.out",
     });
 
-    // Content (Foreground - Moves most)
     gsap.to(contentRef.current, {
       x: xPos * 15,
       y: yPos * 15,
@@ -257,7 +232,7 @@ export const HeroForgeEntry = () => {
 
   const name = "trhgatu";
   const introText = "I am";
-  const firstTitle = "Code";
+  const firstTitle = "Digital";
   const secondTitle = "Alchemist";
   const descriptionText =
     "Ideas are fleeting. Masterpieces are eternal. I transform the intangible into the unforgettable—forging reality from pure imagination.";
@@ -269,17 +244,14 @@ export const HeroForgeEntry = () => {
       onMouseMove={handleMouseMove}
       className="hero relative opacity-0 min-h-screen flex items-center justify-center text-center overflow-hidden"
     >
-      {/* Dynamic Background: Cold (Idle) -> Warm (Ignited) */}
       <div
         className={`absolute inset-0 z-0 transition-colors duration-1000 ease-in-out ${
           isIgnited ? "bg-[#1a0500]" : "bg-[#050810]"
         }`}
       />
 
-      {/* Forge Embers */}
       <ForgeEmbers isIgnited={isIgnited} />
 
-      {/* Subtle Vignette */}
       <div className="absolute inset-0 z-[25] pointer-events-none" />
       <div
         ref={contentRef}
@@ -290,14 +262,12 @@ export const HeroForgeEntry = () => {
             Where Vision Becomes Masterpiece
           </p>
 
-          {/* Trigger Wrapper (Static) */}
           <div
             className="interaction-trigger cursor-pointer group select-none w-fit mx-auto"
             onMouseEnter={handleIgniteStart}
             onMouseLeave={handleIgniteEnd}
-            onClick={() => router.push("/forge/chronicles")} // Failsafe Click
+            onClick={() => router.push("/forge/chronicles")}
           >
-            {/* Shake Wrapper (Inner) */}
             <div ref={shakeRef}>
               <div className="hero-text-first font-mono items-center justify-center flex flex-col md:flex-row mb-2">
                 <div className="hero-text-mini justify-center gap-1 md:mr-6 text-2xl md:text-3xl text-neutral-400 font-cinzel-decorative mb-2 md:mb-0 group-hover:text-amber-200/80 transition-colors duration-500">
@@ -340,7 +310,7 @@ export const HeroForgeEntry = () => {
                       {char === " " ? "\u00A0" : char}
                     </span>
                   ))}
-                  <span className="w-2 md:w-5" /> {/* Spacer */}
+                  <span className="w-2 md:w-5" />
                   {secondTitle.split("").map((char, idx) => (
                     <span
                       key={idx}
