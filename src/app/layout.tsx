@@ -135,9 +135,20 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${spaceMono.variable} ${bilbo.variable} ${playfairDisplay.variable} ${oldenBurg.variable} ${cinzelDecorative.variable} ${shareTechMono.variable} ${kings.variable} ${metamorphous.variable} ${beauRivage.variable} ${texTurina.variable}`}
+      className={`
+        ${spaceMono.variable}
+        ${bilbo.variable}
+        ${playfairDisplay.variable}
+        ${oldenBurg.variable}
+        ${cinzelDecorative.variable}
+        ${shareTechMono.variable}
+        ${kings.variable}
+        ${metamorphous.variable}
+        ${beauRivage.variable}
+        ${texTurina.variable}`}
+      suppressHydrationWarning={true}
     >
-      <body suppressHydrationWarning={false}>
+      <body>
         <div id="page-wrapper">
           <div className="lenis-body">
             <div className="lenis-content">
