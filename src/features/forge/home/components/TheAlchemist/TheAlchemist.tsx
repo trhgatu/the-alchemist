@@ -115,6 +115,7 @@ export function TheAlchemist() {
         <svg
           className="absolute inset-0 w-full h-full pointer-events-none z-10"
           preserveAspectRatio="none"
+          viewBox="0 0 100 100"
         >
           <defs>
             <filter id="burnt-edge" x="-20%" y="-20%" width="140%" height="140%">
@@ -130,7 +131,7 @@ export function TheAlchemist() {
           </defs>
 
           <path
-            d="M 0,0 L 100,0 L 100,20 Q 80,25 60,22 Q 40,19 20,24 Q 10,26 0,22 Z"
+            d="M 0,0 L 100,0 L 100,4 Q 80,5 60,4 Q 40,3 20,5 Q 10,6 0,4 Z"
             fill="#3d2817"
             opacity="0.15"
             filter="url(#burnt-edge)"

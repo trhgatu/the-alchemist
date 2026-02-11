@@ -111,7 +111,7 @@ export function TheAlchemistJournal() {
           <div className="relative w-40 h-40 flex items-center justify-center">
             <Image
               src="/assets/images/craftings/symbols/code_symbol.png"
-              alt="Philosopher's Stone"
+              alt="Universal Solvent Symbol"
               fill
               className="object-contain"
             />
