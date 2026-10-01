@@ -11,7 +11,6 @@ export const MOCK_PROJECTS_EN: Project[] = [
     thumbnail: "/assets/images/craftings/magnum-opus.png",
     images: [
       "/assets/images/craftings/magnum-opus.png",
-      "/assets/images/craftings/eye_of_providence.png",
       "/assets/images/craftings/magic_circle.png",
     ],
     tech: [
@@ -103,7 +102,6 @@ export const MOCK_PROJECTS_VI: Project[] = [
     thumbnail: "/assets/images/craftings/magnum-opus.png",
     images: [
       "/assets/images/craftings/magnum-opus.png",
-      "/assets/images/craftings/eye_of_providence.png",
       "/assets/images/craftings/magic_circle.png",
     ],
     tech: [
