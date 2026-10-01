@@ -11,7 +11,6 @@ import {
   TheJourney,
 } from "@/features/alchemist/chronicles/components";
 import { GlobalAtmosphere } from "@/features/alchemist/shared/atmosphere";
-import { AlchemicalFilters } from "@/features/alchemist/shared/effects";
 import { usePublicProjects } from "@/features/alchemist/craftings/hooks";
 import { useLang } from "@/hooks";
 gsap.registerPlugin(ScrollTrigger);
@@ -34,7 +33,6 @@ export default function ChroniclesPage() {
   return (
     <main className="relative w-full">
       <GlobalAtmosphere isIgnited={true} />
-      <AlchemicalFilters />
 
       {/* HERO INTRODUCTION */}
       <div className="relative z-20 w-full">

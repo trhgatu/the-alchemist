@@ -29,10 +29,7 @@ const getStoredLang = (): Language => {
 
 export const useAppStore = create<AppState>((set) => ({
   scenePhase: ScenePhase.LOADING,
-  setScenePhase: (phase: ScenePhase) => {
-    console.log("🔁 Switching to:", phase);
-    set({ scenePhase: phase });
-  },
+  setScenePhase: (phase: ScenePhase) => set({ scenePhase: phase }),
   emptySlotRef: null,
   setEmptySlotRef: (ref: HTMLDivElement | null) => set({ emptySlotRef: ref }),
   loadingProgress: 0,

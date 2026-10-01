@@ -16,8 +16,10 @@ export const useLang = (): Language => {
     }
   }, [setLang, storeLang]);
 
+  useEffect(() => {
+    document.documentElement.lang = storeLang;
+  }, [storeLang]);
+
   if (!isMounted) return "en";
   return storeLang;
 };
-
-

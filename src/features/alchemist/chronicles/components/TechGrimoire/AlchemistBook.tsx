@@ -11,7 +11,7 @@ type AlchemistBookProps = {
 };
 export const AlchemistBook = forwardRef<Group, AlchemistBookProps>(
   ({ scale = 1, onLoaded, visible, ...props }, ref) => {
-    const { scene, animations } = useGLTF("/models/book_of_alchemy.glb");
+    const { scene, animations } = useGLTF("/models/book_of_alchemy.opt.glb");
     const { actions, mixer } = useAnimations(animations, scene);
     useEffect(() => {
       if (actions && animations.length > 0) {
@@ -40,4 +40,4 @@ export const AlchemistBook = forwardRef<Group, AlchemistBookProps>(
 );
 AlchemistBook.displayName = "AlchemistBook";
 
-useGLTF.preload("/models/book_of_alchemy.glb");
+useGLTF.preload("/models/book_of_alchemy.opt.glb");

@@ -4,11 +4,7 @@ import {
   Share_Tech_Mono,
   Space_Mono,
   Kings,
-  Beau_Rivage,
-  Metamorphous,
   Cinzel_Decorative,
-  Oldenburg,
-  Texturina,
   Playfair_Display,
   Bilbo,
 } from "next/font/google";
@@ -24,13 +20,6 @@ const bilbo = Bilbo({
   variable: "--font-bilbo",
   display: "swap",
 });
-const oldenBurg = Oldenburg({
-  subsets: ["latin"],
-  weight: ["400"],
-  variable: "--font-oldenburg",
-  display: "swap",
-});
-
 const cinzelDecorative = Cinzel_Decorative({
   subsets: ["latin"],
   weight: ["400", "700", "900"],
@@ -42,20 +31,6 @@ const playfairDisplay = Playfair_Display({
   subsets: ["latin", "vietnamese"],
   weight: ["400", "700", "900", "500", "600", "800"],
   variable: "--font-playfair-display",
-  display: "swap",
-});
-
-const metamorphous = Metamorphous({
-  subsets: ["latin"],
-  weight: ["400"],
-  variable: "--font-metamorphous",
-  display: "swap",
-});
-
-const beauRivage = Beau_Rivage({
-  subsets: ["latin"],
-  weight: ["400"],
-  variable: "--font-beau-rivage",
   display: "swap",
 });
 
@@ -77,13 +52,6 @@ const shareTechMono = Share_Tech_Mono({
   subsets: ["latin"],
   weight: ["400"],
   variable: "--font-share-tech-mono",
-  display: "swap",
-});
-
-const texTurina = Texturina({
-  subsets: ["latin", "vietnamese"],
-  weight: ["400", "100", "200", "300", "500", "700", "600", "800", "900"],
-  variable: "--font-texturina",
   display: "swap",
 });
 
@@ -139,13 +107,9 @@ export default function RootLayout({
         ${spaceMono.variable}
         ${bilbo.variable}
         ${playfairDisplay.variable}
-        ${oldenBurg.variable}
         ${cinzelDecorative.variable}
         ${shareTechMono.variable}
-        ${kings.variable}
-        ${metamorphous.variable}
-        ${beauRivage.variable}
-        ${texTurina.variable}`}
+        ${kings.variable}`}
       suppressHydrationWarning={true}
     >
       <body>
