@@ -6,6 +6,7 @@ import {
   Kings,
   Cinzel_Decorative,
   Playfair_Display,
+  EB_Garamond,
   Bilbo,
 } from "next/font/google";
 import "./globals.css";
@@ -31,6 +32,13 @@ const playfairDisplay = Playfair_Display({
   subsets: ["latin", "vietnamese"],
   weight: ["400", "700", "900", "500", "600", "800"],
   variable: "--font-playfair-display",
+  display: "swap",
+});
+
+const ebGaramond = EB_Garamond({
+  subsets: ["latin", "vietnamese"],
+  weight: ["400", "500"],
+  variable: "--font-eb-garamond",
   display: "swap",
 });
 
@@ -109,7 +117,8 @@ export default function RootLayout({
         ${playfairDisplay.variable}
         ${cinzelDecorative.variable}
         ${shareTechMono.variable}
-        ${kings.variable}`}
+        ${kings.variable}
+        ${ebGaramond.variable}`}
       suppressHydrationWarning={true}
     >
       <body>

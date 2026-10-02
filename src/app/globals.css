@@ -20,6 +20,10 @@
     font-family: var(--font-share-tech-mono), monospace;
   }
 
+  .font-eb-garamond {
+    font-family: var(--font-eb-garamond), serif;
+  }
+
   .font-kings {
     font-family:
       var(--font-kings), var(--font-cinzel-decorative), var(--font-playfair-display), serif;

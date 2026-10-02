@@ -11,6 +11,10 @@ import { cn } from "@/lib/utils";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
+// Shared look for every opening quote
+const QUOTE_CLASS =
+  "font-playfair-display italic text-xl sm:text-3xl md:text-4xl lg:text-5xl text-white leading-[1.6] drop-shadow-[0_0_20px_rgba(255,255,255,0.45)]";
+
 // Timeline time after which the washi paper no longer sits behind the navbar
 const WASHI_COVER_END = 0.8;
 
@@ -194,23 +198,23 @@ export const HeroForgeEntry = () => {
         <div className="quote-1 absolute w-full max-w-5xl px-6 text-center">
           <AnimatedQuote
             text={translations[lang].chronicles.transmutation.text1}
-            className="font-playfair-display italic text-xl sm:text-3xl md:text-4xl lg:text-5xl text-white leading-[1.6] drop-shadow-[0_0_20px_rgba(255,255,255,0.45)]"
+            className={QUOTE_CLASS}
           />
         </div>
         <div className="quote-2 absolute w-full max-w-5xl px-6 text-center">
           <AnimatedQuote
             text={translations[lang].chronicles.transmutation.text2}
-            className="font-playfair-display italic text-xl sm:text-3xl md:text-4xl lg:text-5xl text-white leading-[1.6] drop-shadow-[0_0_20px_rgba(255,255,255,0.45)]"
+            className={QUOTE_CLASS}
           />
         </div>
-        <div className="quote-3 absolute w-full max-w-6xl px-4 text-center flex flex-col items-center gap-6 md:gap-10">
+        <div className="quote-3 absolute w-full max-w-5xl px-6 text-center flex flex-col items-center">
           <AnimatedQuote
             text={translations[lang].chronicles.transmutation.text3}
-            className="quote-3-text font-playfair-display italic text-2xl sm:text-4xl md:text-5xl lg:text-[3.5rem] text-amber-300 leading-snug drop-shadow-[0_0_25px_rgba(245,158,11,0.8)] whitespace-normal md:whitespace-nowrap"
+            className={cn("quote-3-text", QUOTE_CLASS)}
           />
           <AnimatedQuote
             text={translations[lang].chronicles.transmutation.text3Highlight}
-            className="quote-3-highlight font-kings text-3xl sm:text-5xl md:text-6xl lg:text-7xl text-white leading-tight drop-shadow-[0_0_25px_rgba(255,255,255,0.6)] whitespace-normal md:whitespace-nowrap"
+            className={cn("quote-3-highlight", QUOTE_CLASS)}
           />
         </div>
       </div>

@@ -15,13 +15,13 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 const TONES = {
   ink: {
     text: "text-neutral-900",
-    link: "text-neutral-900/60 hover:text-neutral-900",
+    link: "text-neutral-900/75 hover:text-neutral-900",
     seal: "bg-amber-800",
     veil: "from-transparent",
   },
   light: {
     text: "text-neutral-100",
-    link: "text-neutral-400 hover:text-neutral-100",
+    link: "text-neutral-300 hover:text-white",
     seal: "bg-amber-400",
     veil: "from-black/70",
   },
@@ -113,7 +113,7 @@ export function NavbarForge() {
                     }}
                     aria-current={active ? "page" : undefined}
                     className={cn(
-                      "relative font-playfair-display italic text-[15px] transition-colors duration-500",
+                      "relative font-eb-garamond font-medium text-[17px] tracking-[0.01em] transition-colors duration-500",
                       active ? tone.text : tone.link
                     )}
                   >
@@ -138,7 +138,7 @@ export function NavbarForge() {
             onClick={() => setIsMenuOpen((v) => !v)}
             aria-expanded={isMenuOpen}
             className={cn(
-              "md:hidden font-playfair-display italic text-base transition-colors duration-700",
+              "md:hidden font-eb-garamond font-medium text-[17px] transition-colors duration-700",
               tone.text
             )}
           >

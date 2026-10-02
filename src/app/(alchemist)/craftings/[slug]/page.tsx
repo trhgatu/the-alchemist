@@ -12,7 +12,7 @@ import { useTransitionRouter } from "@/hooks/useTransitionRouter";
 import { translations } from "@/constants/translations";
 import { usePublicProjects } from "@/features/alchemist/craftings/hooks";
 import { ArchiveGround } from "@/features/alchemist/craftings/components/ArchiveGround";
-import { LINK, projectMeta } from "@/features/alchemist/craftings/components/WorkPlate";
+import { LINK, projectMeta } from "@/features/alchemist/craftings/utils/format";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
