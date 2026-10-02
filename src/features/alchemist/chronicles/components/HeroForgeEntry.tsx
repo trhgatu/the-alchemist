@@ -5,10 +5,14 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useLang } from "@/hooks/useLang";
+import { useAppStore } from "@/hooks/useAppStore";
 import { translations } from "@/constants/translations";
 import { cn } from "@/lib/utils";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
+
+// Timeline time after which the washi paper no longer sits behind the navbar
+const WASHI_COVER_END = 0.8;
 
 const AnimatedQuote = ({ text, className }: { text: string; className?: string }) => {
   const words = text.split(" ");
@@ -37,6 +41,9 @@ export const HeroForgeEntry = () => {
 
   useGSAP(
     () => {
+      const setNavTone = useAppStore.getState().setNavTone;
+      setNavTone("ink");
+
       gsap.to(scope.current, { autoAlpha: 1, duration: 0.5 });
 
       gsap.to(".scroll-indicator-dot", {
@@ -55,6 +62,10 @@ export const HeroForgeEntry = () => {
           scrub: 1,
           pin: true,
           refreshPriority: 1000,
+        },
+        onUpdate() {
+          const tone = this.time() < WASHI_COVER_END ? "ink" : "light";
+          if (useAppStore.getState().navTone !== tone) setNavTone(tone);
         },
       });
       tl.to(
@@ -164,6 +175,8 @@ export const HeroForgeEntry = () => {
         );
 
       tl.to({}, { duration: 1.5 }, "+=0.5");
+
+      return () => setNavTone("light");
     },
     { scope, dependencies: [lang], revertOnUpdate: true }
   );

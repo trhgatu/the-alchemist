@@ -165,6 +165,15 @@ export const translations = {
         "This sanctuary was not born from commercial constraints or predefined templates, but purely from a spontaneous creative flow demanding to be manifest. Forged with pure devotion to code and the alchemy of transmuting thought into form.",
       signature: "— trhgatu • 2026",
     },
+    craftingsPage: {
+      title: "The Craftings",
+      visit: "Visit",
+      source: "Source",
+      states: { Completed: "completed", "In Progress": "in progress" },
+      back: "All craftings",
+      next: "Next",
+      notFound: "This work could not be found.",
+    },
     common: {
       loading: "Communing with the Ether...",
       error: "Failed to commune with the archives.",
@@ -335,6 +344,15 @@ export const translations = {
       quote:
         "Tác phẩm này được tạo nên không từ bất kỳ khuôn mẫu hay toan tính thương mại nào, mà đơn thuần là khoảnh khắc những ý niệm tự do tuôn trào và đòi được hữu hình hóa. Được rèn đúc bằng tình yêu thuần khiết dành cho dòng lệnh và niềm say mê chuyển hóa tư tưởng thành thực tại trường tồn.",
       signature: "— trhgatu • 2026",
+    },
+    craftingsPage: {
+      title: "Chế Tác",
+      visit: "Xem",
+      source: "Mã nguồn",
+      states: { Completed: "đã hoàn thành", "In Progress": "đang thực hiện" },
+      back: "Tất cả tác phẩm",
+      next: "Tiếp theo",
+      notFound: "Không tìm thấy tác phẩm này.",
     },
     common: {
       loading: "Đang kết nối với Ether...",

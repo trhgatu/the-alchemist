@@ -1,120 +1,192 @@
 "use client";
-import { ModeToggle } from "@/components/shared/ModeToggle";
+
+import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
+import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "motion/react";
 import { useLang } from "@/hooks/useLang";
-import { translations } from "@/constants/translations";
-import {
-  Navbar,
-  NavBody,
-  NavItems,
-  MobileNav,
-  NavbarLogo,
-  NavbarButton,
-  MobileNavHeader,
-  MobileNavToggle,
-  MobileNavMenu,
-} from "@/components/ui/resizable-navbar";
-import { useState } from "react";
-import { useScroll, useMotionValueEvent } from "motion/react";
-import { useScrambleText } from "@/hooks/useScrambleText";
+import { useAppStore } from "@/hooks/useAppStore";
 import { useTransitionRouter } from "@/hooks/useTransitionRouter";
+import { translations } from "@/constants/translations";
+import { cn } from "@/lib/utils";
+
+const EASE = [0.16, 1, 0.3, 1] as const;
+
+// Ink on washi paper, or starlight on the dark scenes
+const TONES = {
+  ink: {
+    text: "text-neutral-900",
+    link: "text-neutral-900/60 hover:text-neutral-900",
+    seal: "bg-amber-800",
+    veil: "from-transparent",
+  },
+  light: {
+    text: "text-neutral-100",
+    link: "text-neutral-400 hover:text-neutral-100",
+    seal: "bg-amber-400",
+    veil: "from-black/70",
+  },
+} as const;
 
 export function NavbarForge() {
-  useScrambleText();
-  const { transitionTo } = useTransitionRouter();
   const lang = useLang();
   const t = translations[lang].nav;
+  const pathname = usePathname();
+  const navTone = useAppStore((s) => s.navTone);
+  const { transitionTo } = useTransitionRouter();
+
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isHidden, setIsHidden] = useState(false);
 
   const navItems = [
-    {
-      name: t.chronicles,
-      link: "/chronicles",
-    },
-    {
-      name: t.craftings,
-      link: "/craftings",
-    },
-    {
-      name: t.alchemist,
-      link: "/the-alchemist",
-    },
-    {
-      name: t.timeline,
-      link: "/timeline",
-    },
+    { name: t.chronicles, link: "/chronicles" },
+    { name: t.craftings, link: "/craftings" },
+    { name: t.alchemist, link: "/the-alchemist" },
+    { name: t.timeline, link: "/timeline" },
   ];
 
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  // Framer Motion Smart Scroll Logic
+  // Hide while scrolling down, reveal on scroll up or near the top
   const { scrollY } = useScroll();
-  const [isVisible, setIsVisible] = useState(true);
-
   useMotionValueEvent(scrollY, "change", (latest) => {
     const previous = scrollY.getPrevious() ?? 0;
-    // Hide if scrolling down AND past 100px
-    if (latest > previous && latest > 100) {
-      setIsVisible(false);
-    }
-    // Show if scrolling up OR at the top
-    else if (latest < previous || latest < 100) {
-      setIsVisible(true);
-    }
+    if (latest > previous && latest > 120) setIsHidden(true);
+    else if (latest < previous || latest < 120) setIsHidden(false);
   });
 
-  return (
-    <Navbar
-      className="fixed top-6 z-50 pointer-events-auto transition-none"
-      initial={{ opacity: 1, filter: "blur(0px)", y: 0 }}
-      animate={{
-        opacity: isVisible ? 1 : 0,
-        filter: isVisible ? "blur(0px)" : "blur(10px)",
-        y: isVisible ? 0 : -20,
-        scale: isVisible ? 1 : 0.95,
-      }}
-      transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }} // Very slow, ethereal ease
-    >
-      <NavBody>
-        <NavbarLogo />
-        <NavItems items={navItems} />
-      </NavBody>
-      <MobileNav>
-        <MobileNavHeader>
-          <NavbarLogo />
-          <MobileNavToggle
-            isOpen={isMobileMenuOpen}
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          />
-        </MobileNavHeader>
+  useEffect(() => {
+    document.body.style.overflow = isMenuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isMenuOpen]);
 
-        <MobileNavMenu isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)}>
-          {navItems.map((item, idx) => (
-            <a
-              key={`mobile-link-${idx}`}
-              href={item.link}
-              onClick={(e) => {
-                e.preventDefault();
-                setIsMobileMenuOpen(false);
-                transitionTo(item.link);
-              }}
-              className="nav-link relative text-neutral-600 dark:text-neutral-300"
-            >
-              <span className="nav-anim block">{item.name}</span>
-            </a>
-          ))}
-          <div className="flex w-full flex-col gap-4">
-            <NavbarButton
-              onClick={() => setIsMobileMenuOpen(false)}
-              variant="primary"
-              className="w-full"
-            >
-              Login
-            </NavbarButton>
-            <div className="flex items-center justify-end mt-2">
-              <ModeToggle />
-            </div>
-          </div>
-        </MobileNavMenu>
-      </MobileNav>
-    </Navbar>
+  // The open mobile menu is always dark, so it overrides the page tone
+  const tone = TONES[isMenuOpen ? "light" : navTone];
+
+  const navigate = (href: string) => {
+    setIsMenuOpen(false);
+    transitionTo(href);
+  };
+
+  const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
+
+  return (
+    <>
+      <motion.header
+        initial={false}
+        animate={{ y: isHidden && !isMenuOpen ? "-110%" : "0%" }}
+        transition={{ duration: 0.8, ease: EASE }}
+        className="fixed inset-x-0 top-0 z-[60] pointer-events-auto"
+      >
+        {/* Soft veil so the links stay legible over bright nebulae */}
+        <div
+          className={cn(
+            "pointer-events-none absolute inset-x-0 top-0 h-32 bg-linear-to-b to-transparent transition-colors duration-700",
+            tone.veil
+          )}
+        />
+
+        <nav className="relative mx-auto flex max-w-screen-2xl items-center justify-between px-6 py-5 md:px-12 md:py-7">
+          <a
+            href="/chronicles"
+            onClick={(e) => {
+              e.preventDefault();
+              navigate("/chronicles");
+            }}
+            className={cn(
+              "font-kings text-2xl md:text-[1.75rem] leading-none transition-colors duration-700",
+              tone.text
+            )}
+          >
+            trhgatu
+          </a>
+
+          <ul className="hidden md:flex items-center gap-9">
+            {navItems.map((item) => {
+              const active = isActive(item.link);
+              return (
+                <li key={item.link}>
+                  <a
+                    href={item.link}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      navigate(item.link);
+                    }}
+                    aria-current={active ? "page" : undefined}
+                    className={cn(
+                      "relative font-playfair-display italic text-[15px] transition-colors duration-500",
+                      active ? tone.text : tone.link
+                    )}
+                  >
+                    {item.name}
+                    {active && (
+                      <motion.span
+                        layoutId="nav-seal"
+                        className={cn(
+                          "absolute -bottom-2.5 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full transition-colors duration-700",
+                          tone.seal
+                        )}
+                      />
+                    )}
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+
+          <button
+            type="button"
+            onClick={() => setIsMenuOpen((v) => !v)}
+            aria-expanded={isMenuOpen}
+            className={cn(
+              "md:hidden font-playfair-display italic text-base transition-colors duration-700",
+              tone.text
+            )}
+          >
+            {isMenuOpen ? "close" : "menu"}
+          </button>
+        </nav>
+      </motion.header>
+
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5, ease: EASE }}
+            className="fixed inset-0 z-[55] md:hidden bg-neutral-950"
+          >
+            <ul className="flex h-full flex-col justify-center gap-7 px-8">
+              {navItems.map((item, idx) => {
+                const active = isActive(item.link);
+                return (
+                  <motion.li
+                    key={item.link}
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.7, ease: EASE, delay: 0.06 * idx + 0.1 }}
+                  >
+                    <a
+                      href={item.link}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        navigate(item.link);
+                      }}
+                      aria-current={active ? "page" : undefined}
+                      className={cn(
+                        "font-playfair-display italic text-4xl",
+                        active ? "text-amber-200" : "text-neutral-400"
+                      )}
+                    >
+                      {item.name}
+                    </a>
+                  </motion.li>
+                );
+              })}
+            </ul>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }

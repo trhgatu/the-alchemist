@@ -4,6 +4,9 @@ import { ScenePhase } from "@/constants/ScenePhase";
 
 export type Language = "vi" | "en";
 
+/** "ink": dark text for light backgrounds (washi paper), "light": light text for dark backgrounds */
+export type NavTone = "ink" | "light";
+
 interface AppState {
   scenePhase: ScenePhase;
   setScenePhase: (phase: ScenePhase) => void;
@@ -21,6 +24,9 @@ interface AppState {
   setIsTransitioning: (v: boolean) => void;
   transitionHref: string | null;
   setTransitionHref: (href: string | null) => void;
+
+  navTone: NavTone;
+  setNavTone: (tone: NavTone) => void;
 }
 
 const getStoredLang = (): Language => {
@@ -45,4 +51,6 @@ export const useAppStore = create<AppState>((set) => ({
   setIsTransitioning: (v) => set({ isTransitioning: v }),
   transitionHref: null,
   setTransitionHref: (href) => set({ transitionHref: href }),
+  navTone: "light",
+  setNavTone: (tone) => set({ navTone: tone }),
 }));

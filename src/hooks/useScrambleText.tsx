@@ -5,7 +5,11 @@ import gsap from "gsap";
 
 gsap.registerPlugin(ScrambleTextPlugin);
 
-export function useScrambleText(selector = ".nav-link", childSelector = ".nav-anim") {
+export function useScrambleText(
+  selector = ".nav-link",
+  childSelector = ".nav-anim",
+  dependencies: unknown[] = []
+) {
   useGSAP(() => {
     if (!window.matchMedia("(min-width: 768px)").matches) return;
 
@@ -43,7 +47,6 @@ export function useScrambleText(selector = ".nav-link", childSelector = ".nav-an
         });
       };
 
-
       link.addEventListener("mouseenter", onEnter);
       link.addEventListener("mouseleave", onLeave);
 
@@ -56,5 +59,5 @@ export function useScrambleText(selector = ".nav-link", childSelector = ".nav-an
     return () => {
       links.forEach((link) => cleanupMap.get(link)?.());
     };
-  }, []);
+  }, dependencies);
 }
