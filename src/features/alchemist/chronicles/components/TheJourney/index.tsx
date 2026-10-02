@@ -203,17 +203,17 @@ export function TheJourney() {
         className="relative w-full h-full flex items-center justify-center pointer-events-none"
       >
         <div className="narrative-entry absolute inset-0 z-20 flex flex-col items-center justify-center pointer-events-none px-8 max-w-4xl mx-auto">
-          <p className="text-3xl md:text-5xl lg:text-6xl font-playfair-display italic text-white/90 tracking-widest leading-relaxed drop-shadow-[0_0_20px_rgba(255,255,255,0.4)] text-center">
+          <p className="text-3xl md:text-5xl lg:text-6xl font-garamond italic text-white/90 tracking-widest leading-relaxed drop-shadow-[0_0_20px_rgba(255,255,255,0.4)] text-center">
             {t.narrative1}
           </p>
         </div>
         <div className="narrative-entry absolute inset-0 z-20 flex flex-col items-center justify-center pointer-events-none px-8 max-w-4xl mx-auto">
-          <p className="text-3xl md:text-5xl lg:text-6xl font-playfair-display italic text-white/90 tracking-widest leading-relaxed drop-shadow-[0_0_20px_rgba(255,255,255,0.4)] text-center">
+          <p className="text-3xl md:text-5xl lg:text-6xl font-garamond italic text-white/90 tracking-widest leading-relaxed drop-shadow-[0_0_20px_rgba(255,255,255,0.4)] text-center">
             {t.narrative2}
           </p>
         </div>
         <div className="narrative-entry absolute inset-0 z-20 flex flex-col items-center justify-center pointer-events-none px-8 max-w-4xl mx-auto">
-          <p className="text-3xl md:text-5xl lg:text-6xl font-playfair-display italic text-white/90 tracking-widest leading-relaxed drop-shadow-[0_0_20px_rgba(255,255,255,0.4)] text-center">
+          <p className="text-3xl md:text-5xl lg:text-6xl font-garamond italic text-white/90 tracking-widest leading-relaxed drop-shadow-[0_0_20px_rgba(255,255,255,0.4)] text-center">
             {t.narrative3}
           </p>
         </div>
@@ -234,7 +234,7 @@ export function TheJourney() {
             ))}
           </h2>
 
-          <p className="crafting-text text-sm sm:text-base md:text-lg leading-relaxed max-w-2xl mx-auto text-neutral-600 font-playfair-display mb-6 sm:mb-8">
+          <p className="crafting-text text-sm sm:text-base md:text-lg leading-relaxed max-w-2xl mx-auto text-neutral-600 font-garamond mb-6 sm:mb-8">
             {t.legaciesDesc.split(" ").map((word, i) => (
               <span key={i} className="inline-block mr-1.5">
                 {word}
@@ -257,11 +257,11 @@ export function TheJourney() {
               height={40}
               className="absolute -bottom-4 -right-2 sm:-right-4 opacity-20 invert rotate-180 select-none pointer-events-none"
             />
-            <span className="relative z-10 block leading-relaxed text-xl sm:text-2xl md:text-3xl lg:text-4xl font-playfair-display italic text-neutral-900 drop-shadow-sm">
+            <span className="relative z-10 block leading-relaxed text-xl sm:text-2xl md:text-3xl lg:text-4xl font-garamond italic text-neutral-900 drop-shadow-sm">
               {t.quote}
             </span>
 
-            <div className="mt-4 sm:mt-5 relative z-10 font-space-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-neutral-600">
+            <div className="mt-4 sm:mt-5 relative z-10 font-garamond text-[10px] sm:text-xs uppercase tracking-[0.25em] text-neutral-600">
               {t.author}
             </div>
 

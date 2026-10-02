@@ -13,7 +13,7 @@ gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 // Shared look for every opening quote
 const QUOTE_CLASS =
-  "font-playfair-display italic text-xl sm:text-3xl md:text-4xl lg:text-5xl text-white leading-[1.6] drop-shadow-[0_0_20px_rgba(255,255,255,0.45)]";
+  "font-garamond italic text-xl sm:text-3xl md:text-4xl lg:text-5xl text-white leading-[1.6] drop-shadow-[0_0_20px_rgba(255,255,255,0.45)]";
 
 // Timeline time after which the washi paper no longer sits behind the navbar
 const WASHI_COVER_END = 0.8;
@@ -267,16 +267,14 @@ export const HeroForgeEntry = () => {
         <div className="w-full grid grid-cols-1 md:grid-cols-12 gap-8 items-end mb-16">
           <div className="md:col-span-6 space-y-4">
             <div className="w-12 h-[2px] bg-amber-900/60 mb-4" />
-            <p className="font-playfair-display text-neutral-900 text-base md:text-xl leading-[1.8] italic opacity-95 max-w-xl font-medium drop-shadow-sm">
+            <p className="font-garamond text-neutral-900 text-base md:text-xl leading-[1.8] italic opacity-95 max-w-xl font-medium drop-shadow-sm">
               {t.desc}
             </p>
           </div>
           <div className="md:col-span-6 md:text-right flex flex-col items-start md:items-end justify-end space-y-6">
             <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold tracking-wide drop-shadow-sm">
-              <span className="block text-neutral-900 font-playfair-display italic">
-                {t.firstTitle}
-              </span>
-              <span className="block text-amber-900 mt-1 font-playfair-display italic">
+              <span className="block text-neutral-900 font-garamond italic">{t.firstTitle}</span>
+              <span className="block text-amber-900 mt-1 font-garamond italic">
                 {t.secondTitle}
               </span>
             </h1>

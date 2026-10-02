@@ -332,9 +332,9 @@ export const STAR_GLOW_CONFIG = {
   LIGHT_DISTANCE: 3.0,
 
   /** Light color (warm white)
-   * Màu ánh sáng (Cyan - #00E5FF)
+   * Màu ánh sáng (vàng ấm - #FFC46B)
    */
-  LIGHT_COLOR: "#00E5FF",
+  LIGHT_COLOR: "#FFC46B",
 
   /** Pulse animation
    * Animation nhấp nháy

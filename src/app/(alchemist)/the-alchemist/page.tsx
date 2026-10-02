@@ -12,7 +12,7 @@ gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 export default function AlchemistPage() {
   return (
-    <div className="min-h-screen bg-neutral-900 text-white selection:bg-red-900 selection:text-white overflow-hidden">
+    <div className="min-h-screen bg-neutral-900 text-white selection:bg-amber-300 selection:text-black overflow-hidden">
       {/*
         The Alchemist's Journey
         1. Prologue: Who I Was (Silhouette)

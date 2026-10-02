@@ -127,7 +127,7 @@ export function CraftingsIndex({ projects }: { projects: Project[] }) {
               >
                 <span
                   className={cn(
-                    "font-playfair-display italic text-5xl leading-[1.05] text-[#f3ead8] transition-opacity duration-500 md:text-7xl lg:text-8xl",
+                    "font-garamond italic text-5xl leading-[1.05] text-[#f3ead8] transition-opacity duration-500 md:text-7xl lg:text-8xl",
                     dimmed && "opacity-20"
                   )}
                 >

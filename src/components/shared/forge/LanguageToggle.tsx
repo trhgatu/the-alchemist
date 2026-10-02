@@ -20,7 +20,7 @@ export function LanguageToggle({ className }: { className?: string }) {
           onClick={() => setLang("en")}
           aria-label="Switch to English"
           className={cn(
-            "relative px-3.5 py-1 text-xs font-space-mono tracking-wider transition-colors duration-300 cursor-pointer rounded-full",
+            "relative px-3.5 py-1 text-xs font-garamond tracking-wider transition-colors duration-300 cursor-pointer rounded-full",
             lang === "en"
               ? "text-amber-200 font-semibold"
               : "text-neutral-400 hover:text-neutral-200"
@@ -37,14 +37,14 @@ export function LanguageToggle({ className }: { className?: string }) {
         </button>
 
         {/* Minimal Divider */}
-        <span className="text-white/20 text-[10px] px-0.5 select-none font-mono">/</span>
+        <span className="text-white/20 text-[10px] px-0.5 select-none font-garamond">/</span>
 
         {/* VI Button */}
         <button
           onClick={() => setLang("vi")}
           aria-label="Chuyển sang Tiếng Việt"
           className={cn(
-            "relative px-3.5 py-1 text-xs font-space-mono tracking-wider transition-colors duration-300 cursor-pointer rounded-full",
+            "relative px-3.5 py-1 text-xs font-garamond tracking-wider transition-colors duration-300 cursor-pointer rounded-full",
             lang === "vi"
               ? "text-amber-200 font-semibold"
               : "text-neutral-400 hover:text-neutral-200"

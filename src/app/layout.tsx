@@ -1,43 +1,16 @@
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
-import {
-  Share_Tech_Mono,
-  Space_Mono,
-  Kings,
-  Cinzel_Decorative,
-  Playfair_Display,
-  EB_Garamond,
-  Bilbo,
-} from "next/font/google";
+import { Kings, EB_Garamond } from "next/font/google";
 import "./globals.css";
 import LenisScroll from "@/components/common/LenisScroll";
 import { ThemeProvider } from "@/components/shared/ThemeProvider";
 import { ReactQueryProvider } from "@/app/providers/react-query-provider";
 import { siteConfig } from "@/config/site";
 
-const bilbo = Bilbo({
-  subsets: ["latin"],
-  weight: ["400"],
-  variable: "--font-bilbo",
-  display: "swap",
-});
-const cinzelDecorative = Cinzel_Decorative({
-  subsets: ["latin"],
-  weight: ["400", "700", "900"],
-  variable: "--font-cinzel-decorative",
-  display: "swap",
-});
-
-const playfairDisplay = Playfair_Display({
-  subsets: ["latin", "vietnamese"],
-  weight: ["400", "700", "900", "500", "600", "800"],
-  variable: "--font-playfair-display",
-  display: "swap",
-});
-
 const ebGaramond = EB_Garamond({
   subsets: ["latin", "vietnamese"],
-  weight: ["400", "500"],
+  weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
   variable: "--font-eb-garamond",
   display: "swap",
 });
@@ -46,20 +19,6 @@ const kings = Kings({
   subsets: ["latin"],
   weight: ["400"],
   variable: "--font-kings",
-  display: "swap",
-});
-
-const spaceMono = Space_Mono({
-  subsets: ["latin"],
-  weight: ["400", "700"],
-  variable: "--font-space-mono",
-  display: "swap",
-});
-
-const shareTechMono = Share_Tech_Mono({
-  subsets: ["latin"],
-  weight: ["400"],
-  variable: "--font-share-tech-mono",
   display: "swap",
 });
 
@@ -111,14 +70,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`
-        ${spaceMono.variable}
-        ${bilbo.variable}
-        ${playfairDisplay.variable}
-        ${cinzelDecorative.variable}
-        ${shareTechMono.variable}
-        ${kings.variable}
-        ${ebGaramond.variable}`}
+      className={`${kings.variable} ${ebGaramond.variable}`}
       suppressHydrationWarning={true}
     >
       <body>

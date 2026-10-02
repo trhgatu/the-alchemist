@@ -33,13 +33,13 @@ export function ProphecyCard({ project: p, index: i, activeIndex }: ProphecyCard
         <div className="flex items-center justify-between gap-4 pb-3 border-b border-amber-500/15 mb-6">
           <div className="flex items-center gap-3">
             <span className="w-1.5 h-1.5 rounded-full bg-amber-400 shadow-[0_0_8px_#f59e0b]" />
-            <span className="font-space-mono text-xs tracking-[0.25em] uppercase text-amber-300 font-medium">
+            <span className="font-garamond text-xs tracking-[0.25em] uppercase text-amber-300 font-medium">
               {p.category || "PROJECT"}
             </span>
             {p.year && (
               <>
                 <span className="text-neutral-600 text-xs">•</span>
-                <span className="font-space-mono text-xs tracking-wider text-neutral-400">
+                <span className="font-garamond text-xs tracking-wider text-neutral-400">
                   {p.year}
                 </span>
               </>
@@ -57,17 +57,17 @@ export function ProphecyCard({ project: p, index: i, activeIndex }: ProphecyCard
           {/* Left: Lore & Signature Action Link */}
           <div className="flex-1 flex flex-col justify-between max-w-xl">
             {/* Narrative Quote */}
-            <div className="font-bilbo text-2xl md:text-3xl lg:text-4xl leading-relaxed text-white/90 mb-10 text-justify">
+            <div className="font-garamond italic text-xl md:text-2xl lg:text-[1.75rem] leading-relaxed text-white/90 mb-10">
               <p>&ldquo;{p.description}&rdquo;</p>
             </div>
 
             {/* Signature Artisanal Editorial Action Links */}
             <div className="flex flex-wrap items-center gap-6 sm:gap-8 pt-4">
               <Link
-                href={`/project/${p.slug}`}
+                href={`/craftings/${p.slug}`}
                 className="group/link relative inline-flex items-center gap-2 py-1.5 text-amber-300 hover:text-amber-200 transition-colors duration-300 whitespace-nowrap"
               >
-                <span className="font-playfair-display italic text-base sm:text-lg tracking-wide text-amber-300 group-hover/link:text-amber-200">
+                <span className="font-garamond italic text-base sm:text-lg tracking-wide text-amber-300 group-hover/link:text-amber-200">
                   {t.examineChronicle}
                 </span>
                 <span className="text-base text-amber-400 group-hover/link:translate-x-1.5 transition-transform duration-300">
@@ -85,7 +85,7 @@ export function ProphecyCard({ project: p, index: i, activeIndex }: ProphecyCard
                   rel="noopener noreferrer"
                   className="group/live relative inline-flex items-center gap-1.5 py-1.5 text-neutral-400 hover:text-amber-300 transition-colors duration-300 whitespace-nowrap"
                 >
-                  <span className="font-playfair-display italic text-sm sm:text-base tracking-wide">
+                  <span className="font-garamond italic text-sm sm:text-base tracking-wide">
                     {t.liveManifestation}
                   </span>
                   <span className="text-sm text-amber-500/70 group-hover/live:text-amber-300 group-hover/live:translate-x-0.5 group-hover/live:-translate-y-0.5 transition-all duration-300">

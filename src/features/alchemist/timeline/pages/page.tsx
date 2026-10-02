@@ -30,10 +30,10 @@ export default function TimelinePage() {
   const t = translations[lang].timeline;
 
   const ICONS = [
-    <IconFlame key="flame" className="w-6 h-6 text-red-500" />,
+    <IconFlame key="flame" className="w-6 h-6 text-amber-500" />,
     <IconCode key="code" className="w-6 h-6 text-orange-500" />,
     <IconRocket key="rocket" className="w-6 h-6 text-yellow-500" />,
-    <IconHammer key="hammer" className="w-6 h-6 text-purple-500" />,
+    <IconHammer key="hammer" className="w-6 h-6 text-amber-400" />,
   ];
 
   const DATA = (t.events as readonly RawEvent[]).map(
@@ -129,7 +129,7 @@ export default function TimelinePage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-black text-white font-serif overflow-hidden selection:bg-red-900 selection:text-white">
+    <div className="min-h-screen bg-black text-white font-serif overflow-hidden selection:bg-amber-300 selection:text-black">
       {/* Background Texture with Parallax */}
       <div className="fixed inset-0 z-0 timeline-bg opacity-40 mix-blend-screen pointer-events-none scale-105">
         <Image
@@ -148,10 +148,10 @@ export default function TimelinePage() {
 
       {/* --- PROLOGUE HERO --- */}
       <section className="relative h-[70vh] flex flex-col items-center justify-center z-10">
-        <h1 className="text-6xl md:text-8xl font-kings text-white mb-6 text-center shadow-red-500/50 drop-shadow-2xl">
+        <h1 className="text-6xl md:text-8xl font-kings text-white mb-6 text-center shadow-amber-500/50 drop-shadow-2xl">
           {t.heroTitle}
         </h1>
-        <p className="font-space-mono text-white/50 text-center max-w-xl px-4">{t.heroSubtitle}</p>
+        <p className="font-garamond text-white/50 text-center max-w-xl px-4">{t.heroSubtitle}</p>
         <div className="absolute bottom-12 animate-bounce opacity-50">
           <IconArrowDown className="text-white" />
         </div>
@@ -211,7 +211,7 @@ export default function TimelinePage() {
                   className={`timeline-card w-full md:w-1/2 pl-16 md:pl-0 ${isLeft ? "md:pr-16 md:text-right" : "md:pl-16 md:text-left"}`}
                 >
                   <div className="mb-2">
-                    <span className="font-space-mono text-white/70 text-sm tracking-widest uppercase">
+                    <span className="font-garamond text-white/70 text-sm tracking-widest uppercase">
                       {item.year}
                     </span>
                   </div>
@@ -226,7 +226,7 @@ export default function TimelinePage() {
                       {item.tags.map((tag: string) => (
                         <span
                           key={tag}
-                          className="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-xs font-space-mono text-gray-300"
+                          className="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-xs font-garamond text-gray-300"
                         >
                           {tag}
                         </span>

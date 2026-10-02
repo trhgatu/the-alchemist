@@ -65,26 +65,24 @@ export default function CraftingDetailPage() {
         <Link
           href="/craftings"
           onClick={go("/craftings")}
-          className="font-playfair-display italic text-sm text-[#a39680] hover:text-amber-200 transition-colors"
+          className="font-garamond italic text-sm text-[#a39680] hover:text-amber-200 transition-colors"
         >
           {t.back}
         </Link>
 
         {isLoading && (
-          <p className="mt-24 font-playfair-display italic text-[#8a7e69]">
+          <p className="mt-24 font-garamond italic text-[#8a7e69]">
             {translations[lang].common.loading}
           </p>
         )}
 
         {!isLoading && !project && (
-          <p className="mt-24 pb-40 font-playfair-display italic text-xl text-[#c8bca5]">
-            {t.notFound}
-          </p>
+          <p className="mt-24 pb-40 font-garamond italic text-xl text-[#c8bca5]">{t.notFound}</p>
         )}
 
         {project && (
           <>
-            <h1 className="reveal mt-12 md:mt-16 font-playfair-display italic text-5xl md:text-7xl lg:text-8xl leading-none text-[#f3ead8]">
+            <h1 className="reveal mt-12 md:mt-16 font-garamond italic text-5xl md:text-7xl lg:text-8xl leading-none text-[#f3ead8]">
               {project.name}
             </h1>
 
@@ -102,7 +100,7 @@ export default function CraftingDetailPage() {
             )}
 
             <section className="mt-14 md:mt-20 max-w-3xl">
-              <p className="font-playfair-display text-xl md:text-2xl leading-[1.7] text-[#e9dfcc]">
+              <p className="font-garamond text-xl md:text-2xl leading-[1.7] text-[#e9dfcc]">
                 {project.description}
               </p>
               <p className="mt-6 text-sm text-[#8a7e69]">{projectMeta(project, t.states)}</p>
@@ -111,7 +109,7 @@ export default function CraftingDetailPage() {
                   {project.tech.map((x) => x.name).join(", ")}
                 </p>
               )}
-              <div className="mt-8 flex flex-wrap gap-x-8 gap-y-3 font-playfair-display italic text-lg">
+              <div className="mt-8 flex flex-wrap gap-x-8 gap-y-3 font-garamond italic text-lg">
                 {project.link && (
                   <a href={project.link} target="_blank" rel="noopener noreferrer" className={LINK}>
                     {t.visit}
@@ -150,7 +148,7 @@ export default function CraftingDetailPage() {
                 <a
                   href={`/craftings/${next.slug}`}
                   onClick={go(`/craftings/${next.slug}`)}
-                  className="mt-3 inline-block font-playfair-display italic text-5xl md:text-7xl text-[#f3ead8] hover:text-amber-200 transition-colors"
+                  className="mt-3 inline-block font-garamond italic text-5xl md:text-7xl text-[#f3ead8] hover:text-amber-200 transition-colors"
                 >
                   {next.name}
                 </a>

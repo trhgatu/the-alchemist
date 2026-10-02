@@ -1221,7 +1221,8 @@ export default function SplashCursor({
     }
 
     function generateColor(): ColorRGB {
-      const c = HSVtoRGB(Math.random(), 1.0, 1.0);
+      // Amber–gold hues only, to stay within the site palette
+      const c = HSVtoRGB(0.05 + Math.random() * 0.07, 0.85, 1.0);
       c.r *= 0.15;
       c.g *= 0.15;
       c.b *= 0.15;

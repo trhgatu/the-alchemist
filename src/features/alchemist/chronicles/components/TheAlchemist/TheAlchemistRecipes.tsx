@@ -40,9 +40,9 @@ export function TheAlchemistRecipes() {
           keyframes: [
             {
               opacity: 1,
-              color: "#ff6b35",
+              color: "#f59e0b",
               filter: "brightness(1.6)",
-              textShadow: "0 0 20px rgba(255,107,53,0.95), 0 0 40px rgba(245,158,11,0.6)",
+              textShadow: "0 0 20px rgba(245,158,11,0.95), 0 0 40px rgba(245,158,11,0.6)",
               y: -5,
               duration: 0.25,
             },
@@ -79,9 +79,9 @@ export function TheAlchemistRecipes() {
           keyframes: [
             {
               opacity: 1,
-              color: "#ff6b35",
+              color: "#f59e0b",
               filter: "brightness(1.6)",
-              textShadow: "0 0 20px rgba(255,107,53,0.95), 0 0 40px rgba(245,158,11,0.6)",
+              textShadow: "0 0 20px rgba(245,158,11,0.95), 0 0 40px rgba(245,158,11,0.6)",
               y: -5,
               duration: 0.25,
             },
@@ -128,7 +128,7 @@ export function TheAlchemistRecipes() {
             <span className="text-xl text-neutral-500 font-serif">✧</span>
             <div className="w-24 h-[1px] bg-neutral-500" />
           </div>
-          <p className="font-bilbo text-2xl sm:text-3xl md:text-4xl text-neutral-800/90 max-w-3xl mx-auto mt-4 leading-relaxed tracking-wide">
+          <p className="font-garamond text-2xl sm:text-3xl md:text-4xl text-neutral-800/90 max-w-3xl mx-auto mt-4 leading-relaxed tracking-wide">
             {t.desc}
           </p>
         </div>
@@ -141,7 +141,7 @@ export function TheAlchemistRecipes() {
               <h4 className="font-kings text-4xl text-[#5c3a21] border-b border-[#5c3a21]/20 pb-3 mb-6 flex items-center gap-4">
                 <span className="text-3xl opacity-60">☿</span> {t.materiaPrima}
               </h4>
-              <ul className="space-y-6 font-playfair-display text-[#3d2817]">
+              <ul className="space-y-6 font-garamond text-[#3d2817]">
                 <li className="flex justify-between items-end border-b border-dotted border-[#8b5a2b]/40 pb-1">
                   <span>
                     <strong className="font-kings text-2xl">{t.ingredients.fluidity}</strong>{" "}
@@ -149,7 +149,7 @@ export function TheAlchemistRecipes() {
                       ({t.ingredients.mercury})
                     </span>
                   </span>
-                  <span className="font-bilbo text-2xl text-[#78350f]">
+                  <span className="font-garamond text-2xl text-[#78350f]">
                     {t.ingredients.measures}
                   </span>
                 </li>
@@ -160,7 +160,9 @@ export function TheAlchemistRecipes() {
                       ({t.ingredients.sulfur})
                     </span>
                   </span>
-                  <span className="font-bilbo text-2xl text-[#78350f]">{t.ingredients.ember}</span>
+                  <span className="font-garamond text-2xl text-[#78350f]">
+                    {t.ingredients.ember}
+                  </span>
                 </li>
                 <li className="flex justify-between items-end border-b border-dotted border-[#8b5a2b]/40 pb-1">
                   <span>
@@ -169,7 +171,7 @@ export function TheAlchemistRecipes() {
                       ({t.ingredients.salt})
                     </span>
                   </span>
-                  <span className="font-bilbo text-2xl text-[#78350f]">
+                  <span className="font-garamond text-2xl text-[#78350f]">
                     {t.ingredients.pinches}
                   </span>
                 </li>
@@ -180,7 +182,9 @@ export function TheAlchemistRecipes() {
                       ({t.ingredients.fire})
                     </span>
                   </span>
-                  <span className="font-bilbo text-2xl text-[#78350f]">{t.ingredients.boil}</span>
+                  <span className="font-garamond text-2xl text-[#78350f]">
+                    {t.ingredients.boil}
+                  </span>
                 </li>
               </ul>
             </div>
@@ -189,12 +193,12 @@ export function TheAlchemistRecipes() {
               <h4 className="font-kings text-4xl text-[#5c3a21] border-b border-[#5c3a21]/20 pb-3 mb-6 flex items-center gap-4">
                 <span className="text-3xl opacity-60">⚗</span> {t.catalysts.title}
               </h4>
-              <ul className="space-y-6 font-playfair-display text-[#3d2817]">
+              <ul className="space-y-6 font-garamond text-[#3d2817]">
                 <li className="flex justify-between items-end border-b border-dotted border-[#8b5a2b]/40 pb-1">
                   <span>
                     <strong className="font-kings text-2xl">{t.catalysts.obsession}</strong>
                   </span>
-                  <span className="font-bilbo text-2xl text-[#78350f]">
+                  <span className="font-garamond text-2xl text-[#78350f]">
                     {t.catalysts.obsessionDesc}
                   </span>
                 </li>
@@ -202,7 +206,7 @@ export function TheAlchemistRecipes() {
                   <span>
                     <strong className="font-kings text-2xl">{t.catalysts.curiosity}</strong>
                   </span>
-                  <span className="font-bilbo text-2xl text-[#78350f]">
+                  <span className="font-garamond text-2xl text-[#78350f]">
                     {t.catalysts.curiosityDesc}
                   </span>
                 </li>
@@ -210,7 +214,7 @@ export function TheAlchemistRecipes() {
                   <span>
                     <strong className="font-kings text-2xl">{t.catalysts.discipline}</strong>
                   </span>
-                  <span className="font-bilbo text-2xl text-[#78350f]">
+                  <span className="font-garamond text-2xl text-[#78350f]">
                     {t.catalysts.disciplineDesc}
                   </span>
                 </li>
@@ -218,7 +222,7 @@ export function TheAlchemistRecipes() {
                   <span>
                     <strong className="font-kings text-2xl">{t.catalysts.solitude}</strong>
                   </span>
-                  <span className="font-bilbo text-2xl text-[#78350f]">
+                  <span className="font-garamond text-2xl text-[#78350f]">
                     {t.catalysts.solitudeDesc}
                   </span>
                 </li>
@@ -238,7 +242,7 @@ export function TheAlchemistRecipes() {
                 <span className="font-kings text-4xl sm:text-5xl text-[#78350f] shrink-0 min-w-[42px] leading-none pt-1 select-none group-hover/step:text-amber-600 transition-colors">
                   I.
                 </span>
-                <p className="flex-1 font-bilbo text-2xl sm:text-3xl text-neutral-800 leading-relaxed text-left">
+                <p className="flex-1 font-garamond text-2xl sm:text-3xl text-neutral-800 leading-relaxed text-left">
                   {t.process.step1}
                 </p>
               </div>
@@ -248,7 +252,7 @@ export function TheAlchemistRecipes() {
                 <span className="font-kings text-4xl sm:text-5xl text-[#78350f] shrink-0 min-w-[42px] leading-none pt-1 select-none group-hover/step:text-amber-600 transition-colors">
                   II.
                 </span>
-                <p className="flex-1 font-bilbo text-2xl sm:text-3xl text-neutral-800 leading-relaxed text-left">
+                <p className="flex-1 font-garamond text-2xl sm:text-3xl text-neutral-800 leading-relaxed text-left">
                   {t.process.step2}
                 </p>
               </div>
@@ -258,7 +262,7 @@ export function TheAlchemistRecipes() {
                 <span className="font-kings text-4xl sm:text-5xl text-[#78350f] shrink-0 min-w-[42px] leading-none pt-1 select-none group-hover/step:text-amber-600 transition-colors">
                   III.
                 </span>
-                <p className="flex-1 font-bilbo text-2xl sm:text-3xl text-neutral-800 leading-relaxed text-left">
+                <p className="flex-1 font-garamond text-2xl sm:text-3xl text-neutral-800 leading-relaxed text-left">
                   {t.process.step3}
                 </p>
               </div>
@@ -285,7 +289,7 @@ export function TheAlchemistRecipes() {
           </div>
           <div
             key={`manifest-poem-${lang}`}
-            className="font-bilbo text-4xl md:text-5xl text-[#2a1a10] text-center px-4 md:px-12 py-6 leading-relaxed"
+            className="font-garamond text-4xl md:text-5xl text-[#2a1a10] text-center px-4 md:px-12 py-6 leading-relaxed"
           >
             {t.manifestation.poem.map((line: string, i: number) => (
               <p key={i} className={i !== t.manifestation.poem.length - 1 ? "mb-8" : ""}>
@@ -297,7 +301,7 @@ export function TheAlchemistRecipes() {
           </div>
 
           <div className="w-full max-w-2xl flex justify-end items-end mt-12 opacity-80 px-4">
-            <div className="font-bilbo text-4xl text-[#3d2817] -rotate-3">
+            <div className="font-garamond text-4xl text-[#3d2817] -rotate-3">
               {t.manifestation.author}
             </div>
           </div>

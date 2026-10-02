@@ -113,7 +113,7 @@ export function NavbarForge() {
                     }}
                     aria-current={active ? "page" : undefined}
                     className={cn(
-                      "relative font-eb-garamond font-medium text-[17px] tracking-[0.01em] transition-colors duration-500",
+                      "relative font-garamond font-medium text-[17px] tracking-[0.01em] transition-colors duration-500",
                       active ? tone.text : tone.link
                     )}
                   >
@@ -138,7 +138,7 @@ export function NavbarForge() {
             onClick={() => setIsMenuOpen((v) => !v)}
             aria-expanded={isMenuOpen}
             className={cn(
-              "md:hidden font-eb-garamond font-medium text-[17px] transition-colors duration-700",
+              "md:hidden font-garamond font-medium text-[17px] transition-colors duration-700",
               tone.text
             )}
           >
@@ -174,7 +174,7 @@ export function NavbarForge() {
                       }}
                       aria-current={active ? "page" : undefined}
                       className={cn(
-                        "font-playfair-display italic text-4xl",
+                        "font-garamond italic text-4xl",
                         active ? "text-amber-200" : "text-neutral-400"
                       )}
                     >

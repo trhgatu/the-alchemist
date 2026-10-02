@@ -21,7 +21,7 @@ export const ForgeFooter = () => {
   const { transitionTo } = useTransitionRouter();
 
   return (
-    <footer className="w-full bg-black border-t border-white/10 text-white font-mono relative overflow-hidden">
+    <footer className="w-full bg-black border-t border-white/10 text-white font-garamond relative overflow-hidden">
       <style jsx>{`
         @keyframes fire-flicker {
           0%,
@@ -62,7 +62,7 @@ export const ForgeFooter = () => {
             <div className="h-[1px] w-12 sm:w-20 bg-gradient-to-r from-transparent via-amber-500/30 to-amber-500/60 group-hover/ribbon:via-amber-400/50 group-hover/ribbon:to-amber-400 transition-all duration-300" />
 
             <div className="flex items-center gap-2.5">
-              <span className="font-bilbo text-2xl sm:text-3xl text-neutral-300 group-hover/ribbon:text-amber-300 transition-colors duration-300">
+              <span className="font-garamond text-2xl sm:text-3xl text-neutral-300 group-hover/ribbon:text-amber-300 transition-colors duration-300">
                 {t.colophon.badge}
               </span>
               <span className="text-xs text-amber-500/40 font-serif transition-transform duration-300 group-hover/ribbon:text-amber-400">
@@ -80,11 +80,11 @@ export const ForgeFooter = () => {
           >
             <div className="overflow-hidden flex flex-col items-center">
               <div className="p-6 rounded-2xl bg-amber-950/[0.08] border border-amber-500/15 max-w-2xl relative shadow-inner">
-                <p className="font-playfair-display italic text-sm sm:text-base md:text-lg text-neutral-300 leading-relaxed text-center">
+                <p className="font-garamond italic text-sm sm:text-base md:text-lg text-neutral-300 leading-relaxed text-center">
                   “{t.colophon.quote}”
                 </p>
 
-                <div className="font-bilbo text-xl sm:text-2xl text-amber-400/90 mt-3 text-right tracking-wider">
+                <div className="font-garamond text-xl sm:text-2xl text-amber-400/90 mt-3 text-right tracking-wider">
                   {t.colophon.signature}
                 </div>
               </div>
@@ -110,7 +110,7 @@ export const ForgeFooter = () => {
               }}
               className="nav-link relative w-fit group"
             >
-              <span className="text-neutral-500 group-hover:text-amber-500 transition-colors duration-300 font-space-mono text-sm uppercase tracking-widest">
+              <span className="text-neutral-500 group-hover:text-amber-500 transition-colors duration-300 font-garamond text-sm uppercase tracking-widest">
                 {item.name}
               </span>
               <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-amber-500 transition-all duration-300 group-hover:w-full" />
@@ -157,10 +157,10 @@ export const ForgeFooter = () => {
           </div>
 
           <div className="space-y-1">
-            <span className="block text-xs text-neutral-500 font-space-mono uppercase tracking-widest">
+            <span className="block text-xs text-neutral-500 font-garamond uppercase tracking-widest">
               &copy; {year} trhgatu — The Alchemical Engine
             </span>
-            <span className="block text-[10px] text-neutral-600 font-playfair-display italic">
+            <span className="block text-[10px] text-neutral-600 font-garamond italic">
               “Infinity in every line of code.”
             </span>
           </div>

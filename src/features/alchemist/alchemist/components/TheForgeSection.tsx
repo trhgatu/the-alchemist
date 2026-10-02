@@ -100,13 +100,13 @@ export function TheForgeSection() {
         <h2 className="text-5xl md:text-7xl font-kings text-white text-center mb-12 drop-shadow-[0_0_10px_rgba(255,200,200,0.2)]">
           The Alchemist&apos;s Code
         </h2>
-        <p className="font-space-mono text-center text-gray-500 max-w-2xl mx-auto mb-32">
+        <p className="font-garamond text-center text-gray-500 max-w-2xl mx-auto mb-32">
           The principles that govern every line of code I write.
         </p>
 
         <div className="relative max-w-4xl mx-auto flex flex-col gap-24">
           {/* Central Line */}
-          <div className="absolute left-4 md:left-1/2 md:-translate-x-1/2 top-0 bottom-0 w-[1px] bg-gradient-to-b from-transparent via-red-900/50 to-transparent" />
+          <div className="absolute left-4 md:left-1/2 md:-translate-x-1/2 top-0 bottom-0 w-[1px] bg-gradient-to-b from-transparent via-amber-900/50 to-transparent" />
 
           {PHILOSOPHY_STEPS.map((step, index) => (
             <div
@@ -118,24 +118,24 @@ export function TheForgeSection() {
               }`}
             >
               {/* Content */}
-              <div className="w-full md:w-[45%] p-6 border-l-2 md:border-l-0 md:border-b-2 border-red-900/30 bg-black/60 backdrop-blur-sm group hover:border-red-500 transition-colors duration-500">
-                <div className="font-cinzel-decorative text-red-500 mb-2 text-sm tracking-widest uppercase flex items-center gap-2 md:justify-end">
+              <div className="w-full md:w-[45%] p-6 border-l-2 md:border-l-0 md:border-b-2 border-amber-900/30 bg-black/60 backdrop-blur-sm group hover:border-amber-500 transition-colors duration-500">
+                <div className="font-kings text-amber-500 mb-2 text-sm tracking-widest uppercase flex items-center gap-2 md:justify-end">
                   {index % 2 !== 0 && <span>{step.element}</span>}
                   <span>
                     {"//"} {step.subtitle}
                   </span>
                   {index % 2 === 0 && <span>{step.element}</span>}
                 </div>
-                <h3 className="font-kings text-3xl text-white mb-4 group-hover:text-red-500 transition-colors">
+                <h3 className="font-kings text-3xl text-white mb-4 group-hover:text-amber-500 transition-colors">
                   {step.phase}
                 </h3>
-                <p className="font-space-mono text-gray-400 text-sm leading-relaxed">
+                <p className="font-garamond text-gray-400 text-sm leading-relaxed">
                   {step.description}
                 </p>
               </div>
 
               {/* Center Marker */}
-              <div className="absolute left-4 md:left-1/2 md:-translate-x-1/2 w-4 h-4 bg-black border-2 border-red-600 rotate-45 shadow-[0_0_15px_red] z-20 mt-1 md:mt-0" />
+              <div className="absolute left-4 md:left-1/2 md:-translate-x-1/2 w-4 h-4 bg-black border-2 border-amber-600 rotate-45 shadow-[0_0_15px_#f59e0b] z-20 mt-1 md:mt-0" />
 
               {/* Spacer for alternate side */}
               <div className="hidden md:block w-0 md:w-[45%]" />
@@ -147,7 +147,7 @@ export function TheForgeSection() {
         <div className="mt-32 flex justify-center">
           <Link
             href="/timeline"
-            className="group relative px-8 py-4 bg-black border border-red-900/50 text-white font-space-mono text-sm uppercase tracking-widest hover:bg-red-900/20 hover:border-red-500 transition-all duration-300 flex items-center gap-4"
+            className="group relative px-8 py-4 bg-black border border-amber-900/50 text-white font-garamond text-sm uppercase tracking-widest hover:bg-amber-900/20 hover:border-amber-500 transition-all duration-300 flex items-center gap-4"
           >
             <span>View The Full Chronicle</span>
             <IconArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

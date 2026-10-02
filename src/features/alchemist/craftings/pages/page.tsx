@@ -48,12 +48,10 @@ export default function CraftingsPage() {
         </header>
 
         {isLoading && (
-          <p className="font-playfair-display italic text-[#8a7e69]">
-            {translations[lang].common.loading}
-          </p>
+          <p className="font-garamond italic text-[#8a7e69]">{translations[lang].common.loading}</p>
         )}
         {isError && (
-          <p className="font-playfair-display italic text-amber-300/90">
+          <p className="font-garamond italic text-amber-300/90">
             {translations[lang].common.error}
           </p>
         )}

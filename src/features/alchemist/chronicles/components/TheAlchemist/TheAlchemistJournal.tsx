@@ -89,7 +89,7 @@ export function TheAlchemistJournal() {
           <h3 className="text-3xl sm:text-4xl font-kings text-neutral-800 tracking-wide border-b border-neutral-400/30 pb-2 inline-block">
             {t.nigredo.title}
           </h3>
-          <p className="font-bilbo text-2xl sm:text-3xl leading-relaxed text-neutral-700 text-justify">
+          <p className="font-garamond text-2xl sm:text-3xl leading-relaxed text-neutral-700">
             <span className="float-left text-7xl font-kings text-neutral-900 mr-3 mt-[-6px] leading-none drop-shadow-sm">
               {t.nigredo.initial}
             </span>
@@ -123,7 +123,7 @@ export function TheAlchemistJournal() {
           <h3 className="text-3xl sm:text-4xl font-kings text-neutral-800 tracking-wide border-b border-neutral-400/30 pb-2 inline-block">
             {t.albedo.title}
           </h3>
-          <p className="font-bilbo text-2xl sm:text-3xl leading-relaxed text-neutral-700 text-justify">
+          <p className="font-garamond text-2xl sm:text-3xl leading-relaxed text-neutral-700">
             <span className="float-left text-7xl font-kings text-neutral-900 mr-3 mt-[-6px] leading-none drop-shadow-sm">
               {t.albedo.initial}
             </span>
@@ -143,7 +143,7 @@ export function TheAlchemistJournal() {
           <h3 className="text-3xl sm:text-4xl font-kings text-neutral-800 tracking-wide border-b border-neutral-400/30 pb-2 inline-block">
             {t.citrinitas.title}
           </h3>
-          <p className="font-bilbo text-2xl sm:text-3xl leading-relaxed text-neutral-700 text-justify">
+          <p className="font-garamond text-2xl sm:text-3xl leading-relaxed text-neutral-700">
             <span className="float-left text-7xl font-kings text-neutral-900 mr-3 mt-[-6px] leading-none drop-shadow-sm">
               {t.citrinitas.initial}
             </span>
@@ -183,7 +183,7 @@ export function TheAlchemistJournal() {
           <h3 className="text-3xl sm:text-4xl font-kings text-neutral-800 tracking-wide border-b border-neutral-400/30 pb-2 inline-block">
             {t.rubedo.title}
           </h3>
-          <p className="font-bilbo text-2xl sm:text-3xl leading-relaxed text-neutral-700 text-justify">
+          <p className="font-garamond text-2xl sm:text-3xl leading-relaxed text-neutral-700">
             <span className="float-left text-7xl font-kings text-neutral-900 mr-3 mt-[-6px] leading-none drop-shadow-sm">
               {t.rubedo.initial}
             </span>

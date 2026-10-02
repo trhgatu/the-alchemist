@@ -5,6 +5,29 @@ interface TechIconProps {
   url: string;
 }
 
+const GOLD = { r: 255, g: 200, b: 120 };
+const ICON_SIZE = 256;
+
+// Brand logos come in their own colours; recast them as gold by luminance
+// so detail survives (e.g. the dark "JS" on its yellow square).
+function toGold(img: HTMLImageElement): HTMLCanvasElement {
+  const canvas = document.createElement("canvas");
+  canvas.width = canvas.height = ICON_SIZE;
+  const ctx = canvas.getContext("2d")!;
+  ctx.drawImage(img, 0, 0, ICON_SIZE, ICON_SIZE);
+  const data = ctx.getImageData(0, 0, ICON_SIZE, ICON_SIZE);
+  const px = data.data;
+  for (let i = 0; i < px.length; i += 4) {
+    const lum = (0.299 * px[i] + 0.587 * px[i + 1] + 0.114 * px[i + 2]) / 255;
+    const k = 0.25 + 0.75 * lum;
+    px[i] = GOLD.r * k;
+    px[i + 1] = GOLD.g * k;
+    px[i + 2] = GOLD.b * k;
+  }
+  ctx.putImageData(data, 0, 0);
+  return canvas;
+}
+
 export function TechIcon({ url }: TechIconProps) {
   const [texture, setTexture] = useState<THREE.Texture | null>(null);
 
@@ -36,7 +59,7 @@ export function TechIcon({ url }: TechIconProps) {
           const img = new Image();
           img.onload = () => {
             if (!active) return;
-            tex = new THREE.Texture(img);
+            tex = new THREE.CanvasTexture(toGold(img));
             tex.colorSpace = THREE.SRGBColorSpace;
             tex.needsUpdate = true;
             setTexture(tex);

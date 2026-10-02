@@ -309,8 +309,8 @@ export function TheCraftings({ projects, isLoading, isError }: ProjectHomeProps)
     return (
       <section className="relative w-full h-screen bg-neutral-950 flex items-center justify-center">
         <div className="text-center space-y-2">
-          <h3 className="font-kings text-3xl text-red-500/80">Flux Disruption</h3>
-          <p className="font-space-mono text-xs text-neutral-500 tracking-wider">
+          <h3 className="font-kings text-3xl text-amber-500/80">Flux Disruption</h3>
+          <p className="font-garamond text-xs text-neutral-500 tracking-wider">
             {translations[lang].common.error}
           </p>
         </div>
@@ -350,7 +350,7 @@ export function TheCraftings({ projects, isLoading, isError }: ProjectHomeProps)
           {/* 📜 4. Poetic Lore Inscription in Bilbo */}
           <p
             key={`craftings-desc-${lang}`}
-            className="craftings-desc font-bilbo text-2xl sm:text-3xl md:text-4xl text-white/90 max-w-2xl text-center leading-relaxed tracking-wide opacity-0"
+            className="craftings-desc font-garamond text-2xl sm:text-3xl md:text-4xl text-white/90 max-w-2xl text-center leading-relaxed tracking-wide opacity-0"
           >
             &ldquo;{t.desc}&rdquo;
           </p>

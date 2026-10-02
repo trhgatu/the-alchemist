@@ -100,7 +100,7 @@ export function PhilosopherPathSection() {
           <div className="absolute inset-0 bg-black/20 mix-blend-overlay pointer-events-none transition-opacity duration-700 group-hover:opacity-0" />
         </div>
 
-        <div className="vision-text max-w-2xl font-space-mono text-gray-300 text-lg leading-relaxed mb-16">
+        <div className="vision-text max-w-2xl font-garamond text-gray-300 text-lg leading-relaxed mb-16">
           <p className="mb-6">
             &quot;I am no longer just a builder of things. I am a student of the craft. The code is
             simply the hammer; the mind is the steel.&quot;
@@ -115,7 +115,7 @@ export function PhilosopherPathSection() {
           href="/craftings"
           className="vision-text group relative px-8 py-3 overflow-hidden border border-white/30 hover:border-white transition-colors duration-500"
         >
-          <span className="relative z-10 font-cinzel-decorative text-white tracking-widest uppercase text-sm group-hover:text-black transition-colors duration-500">
+          <span className="relative z-10 font-kings text-white tracking-widest uppercase text-sm group-hover:text-black transition-colors duration-500">
             Continue the Journey
           </span>
           <div className="absolute inset-0 bg-white transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out z-0" />

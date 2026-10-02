@@ -33,9 +33,9 @@ export function TheAlchemist() {
           keyframes: [
             {
               opacity: 1,
-              color: "#ff6b35",
+              color: "#f59e0b",
               filter: "brightness(1.6)",
-              textShadow: "0 0 20px rgba(255,107,53,0.95), 0 0 40px rgba(245,158,11,0.6)",
+              textShadow: "0 0 20px rgba(245,158,11,0.95), 0 0 40px rgba(245,158,11,0.6)",
               y: -5,
               duration: 0.25,
             },
@@ -70,9 +70,9 @@ export function TheAlchemist() {
           keyframes: [
             {
               opacity: 1,
-              color: "#ff6b35",
+              color: "#f59e0b",
               filter: "brightness(1.5)",
-              textShadow: "0 0 15px rgba(255,107,53,0.8), 0 0 30px rgba(255,107,53,0.4)",
+              textShadow: "0 0 15px rgba(245,158,11,0.8), 0 0 30px rgba(245,158,11,0.4)",
               duration: 0.25,
             },
             {
@@ -174,11 +174,11 @@ export function TheAlchemist() {
           </div>
         </div>
 
-        <div className="the-alchemist-content-container font-playfair-display relative z-10 w-full flex flex-col items-center gap-16">
+        <div className="the-alchemist-content-container font-garamond relative z-10 w-full flex flex-col items-center gap-16">
           <div className="space-y-6 p-6 md:p-0 relative z-20 text-center max-w-5xl mx-auto mb-12">
             <p
               key={`alchemist-desc-${lang}`}
-              className="the-alchemist-desc-1 text-3xl sm:text-4xl lg:text-5xl leading-[1.6] text-neutral-900 font-medium font-bilbo relative"
+              className="the-alchemist-desc-1 text-3xl sm:text-4xl lg:text-5xl leading-[1.6] text-neutral-900 font-medium font-garamond relative"
               aria-label={theAlchemistText}
             >
               {theAlchemistText.split(" ").map((word, wi) => (

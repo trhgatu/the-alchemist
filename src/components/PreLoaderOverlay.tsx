@@ -118,14 +118,14 @@ export default function LoaderWithOverlay() {
             </svg>
           </div>
 
-          <h2 className="font-playfair-display text-5xl md:text-7xl text-amber-50/90 tracking-widest blur-[0.5px] italic">
+          <h2 className="font-garamond text-5xl md:text-7xl text-amber-50/90 tracking-widest blur-[0.5px] italic">
             Transmuting
           </h2>
           <div className="flex flex-col items-center gap-2">
-            <span className="font-space-mono text-amber-200/50 text-xs tracking-[0.4em] uppercase">
+            <span className="font-garamond text-amber-200/50 text-xs tracking-[0.4em] uppercase">
               Gathering Aether
             </span>
-            <span className="font-playfair-display text-amber-200/80 text-xl tracking-widest">
+            <span className="font-garamond text-amber-200/80 text-xl tracking-widest">
               {count}%
             </span>
           </div>

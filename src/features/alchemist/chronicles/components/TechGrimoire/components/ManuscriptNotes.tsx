@@ -28,7 +28,7 @@ export function ManuscriptNotes() {
               transform: `rotate(${pos.rotate})`,
             }}
           >
-            <p className="font-bilbo text-2xl md:text-4xl text-amber-900/80 leading-relaxed text-justify drop-shadow-sm">
+            <p className="font-garamond text-2xl md:text-4xl text-amber-900/80 leading-relaxed drop-shadow-sm">
               {text}
             </p>
           </div>

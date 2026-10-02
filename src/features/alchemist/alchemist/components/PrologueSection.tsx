@@ -80,7 +80,7 @@ export function PrologueSection() {
         {/* Tag */}
         <div className="flex items-center gap-4 opacity-80">
           <div className="w-12 h-[1px] bg-gradient-to-r from-transparent via-gray-300 to-transparent" />
-          <span className="font-space-mono text-gray-300 text-xs tracking-[0.4em] uppercase">
+          <span className="font-garamond text-gray-300 text-xs tracking-[0.4em] uppercase">
             Archive // 001
           </span>
           <div className="w-12 h-[1px] bg-gradient-to-r from-transparent via-gray-300 to-transparent" />
@@ -91,7 +91,7 @@ export function PrologueSection() {
           <h2 className="font-kings text-7xl md:text-9xl text-gray-100 drop-shadow-[0_0_30px_rgba(255,255,255,0.3)] mb-2">
             The Void
           </h2>
-          <p className="font-cinzel-decorative text-xl md:text-2xl text-gray-400 tracking-widest uppercase opacity-80">
+          <p className="font-kings text-xl md:text-2xl text-gray-400 tracking-widest uppercase opacity-80">
             Before the Spark
           </p>
         </div>
