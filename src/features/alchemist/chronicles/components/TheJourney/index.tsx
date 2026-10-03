@@ -7,18 +7,28 @@ import { useRef } from "react";
 import Image from "next/image";
 import { useLang } from "@/hooks/useLang";
 import { translations } from "@/constants/translations";
-import { DesertDustCanvas } from "./components/DesertDustCanvas";
 import { cn } from "@/lib/utils";
 import { QUOTE_CLASS } from "../quoteStyle";
-// Global GoldenThread used in ChroniclesPage
+import { DawnAir } from "./components/DawnAir";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
+// The caravan, as a box of the square sketch (percent of its side). The sketch
+// is a single path, so the camels are cut out of a second copy and moved, and
+// the same box is punched out of the still scene.
+const CARAVAN_BOX = { left: 59, top: 64, right: 87, bottom: 82 };
+const { left: L, top: T, right: Rr, bottom: B } = CARAVAN_BOX;
+const CARAVAN_ONLY = `polygon(${L}% ${T}%, ${Rr}% ${T}%, ${Rr}% ${B}%, ${L}% ${B}%)`;
+// Outer square clockwise, inner box counter-clockwise: a hole under nonzero fill
+const WITHOUT_CARAVAN = `polygon(0 0, 100% 0, 100% 100%, 0 100%, 0 0, ${L}% ${T}%, ${L}% ${B}%, ${Rr}% ${B}%, ${Rr}% ${T}%, ${L}% ${T}%)`;
+
+/**
+ * The last leg: three lines spoken in the night, then dawn breaks over the
+ * desert the journal promised. Amber returns to the sky, closing the colour
+ * arc of the chronicle: forge amber, night silver, dawn gold.
+ */
 export function TheJourney() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const bgAdventureRef = useRef<HTMLDivElement>(null);
-  const legaciesContentRef = useRef<HTMLDivElement>(null);
-  const flashRef = useRef<HTMLDivElement>(null);
   const lang = useLang();
   const t = translations[lang].chronicles.journey;
 
@@ -27,13 +37,14 @@ export function TheJourney() {
       if (!containerRef.current) return;
 
       const entries = containerRef.current.querySelectorAll(".narrative-entry");
-      gsap.set(entries, { opacity: 0, scale: 0.85, filter: "blur(30px)" });
-
-      gsap.set(bgAdventureRef.current, { opacity: 1 }); // We keep parent visible, animate children
-      gsap.set(".the-sun", { x: -100, scale: 1, opacity: 0, filter: "blur(10px)" });
-      gsap.set(".the-moon", { x: 100, scale: 1, opacity: 0, filter: "blur(10px)" });
-      gsap.set(".the-desert", { scale: 1.1, filter: "blur(10px)", opacity: 0 });
-      gsap.set(".desert-dust-layer", { opacity: 0 });
+      gsap.set(entries, { opacity: 0, scale: 0.9, filter: "blur(24px)" });
+      gsap.set(".dawn-sky", { opacity: 0 });
+      gsap.set(".dawn-sun", { yPercent: 60, opacity: 0 });
+      gsap.set(".dawn-land", { yPercent: 12, opacity: 0 });
+      gsap.set(".dawn-air", { opacity: 0 });
+      gsap.set([".dawn-quote", ".dawn-author"], { opacity: 0, y: 24 });
+      gsap.set(".maktub-pen", { attr: { x: -420 } });
+      gsap.set(".caravan-trail", { strokeDashoffset: 1 });
 
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -47,104 +58,43 @@ export function TheJourney() {
         },
       });
 
-      // thread animation removed, handled globally
-
+      // The last stretch of night
       entries.forEach((entry, i) => {
-        const startTime = i * 6.0; // Slowed down from 4.0 to 6.0 seconds per entry
+        const at = i * 6;
         tl.to(
           entry,
-          {
-            opacity: 1,
-            scale: 1,
-            filter: "blur(0px)",
-            duration: 2.0,
-            ease: "power2.out",
-          },
-          startTime
+          { opacity: 1, scale: 1, filter: "blur(0px)", duration: 2, ease: "power2.out" },
+          at
         )
+          .to(entry, { opacity: 1, duration: 2.5 }, at + 2)
           .to(
             entry,
-            { opacity: 1, duration: 2.5 }, // Hold longer
-            startTime + 2.0
-          )
-          .to(
-            entry,
-            {
-              opacity: 0,
-              scale: 1.15,
-              filter: "blur(30px)",
-              duration: 1.5,
-              ease: "power2.in",
-            },
-            startTime + 4.5
+            { opacity: 0, scale: 1.08, filter: "blur(24px)", duration: 1.5, ease: "power2.in" },
+            at + 4.5
           );
       });
 
-      // THE AWAKENING: Flash of Light
-      // Wait for 1.5s in pure blackness after the last quote
-      tl.to(flashRef.current, { opacity: 1, duration: 1.5, ease: "power2.in" }, "+=1.5");
+      // Dawn: the sky lightens from the horizon up, the sun rises, the land appears
+      tl.to(".dawn-sky", { opacity: 1, duration: 4, ease: "power1.inOut" }, "+=0.5")
+        .to(".dawn-sun", { yPercent: 0, opacity: 1, duration: 4, ease: "power2.out" }, "<1")
+        .to(".dawn-land", { yPercent: 0, opacity: 1, duration: 3, ease: "power2.out" }, "<0.5")
+        .to(".dawn-air", { opacity: 1, duration: 3, ease: "power1.inOut" }, "<0.5");
 
-      // The background transitions to a bright desert color exactly when the flash is fully white
-      tl.to(containerRef.current, { backgroundColor: "#FBF5E6", duration: 0.1 }, "<1.0");
+      // The caravan sets off towards the pyramid (the sketch draws the camels
+      // facing left), leaving footprints behind
+      tl.addLabel("onward", "-=1")
+        .to(
+          ".dawn-caravan",
+          { xPercent: -14, yPercent: -4, scale: 0.82, duration: 9, ease: "none" },
+          "onward"
+        )
+        .to(".caravan-trail", { strokeDashoffset: 0, duration: 9, ease: "none" }, "onward");
 
-      // Flash fades out slowly, revealing the bright desert oasis dynamically
-      tl.to(flashRef.current, { opacity: 0, duration: 3.0, ease: "power2.out" })
-        .to(
-          ".the-desert",
-          { scale: 1, filter: "blur(0px)", opacity: 1, duration: 3.0, ease: "power2.out" },
-          "<"
-        )
-        .to(".desert-dust-layer", { opacity: 1, duration: 3.0, ease: "power2.out" }, "<")
-        .to(
-          ".the-sun",
-          { x: 0, opacity: 1, filter: "blur(0px)", duration: 2.5, ease: "power2.out" },
-          "<0.5"
-        )
-        .to(
-          ".the-moon",
-          { x: 0, opacity: 1, filter: "blur(0px)", duration: 2.5, ease: "power2.out" },
-          "<0.2"
-        );
-
-      tl.fromTo(
-        ".crafting-title span",
-        { opacity: 0, y: 50, filter: "blur(10px)", scale: 1.2 },
-        {
-          opacity: 1,
-          y: 0,
-          filter: "blur(0px)",
-          scale: 1,
-          stagger: 0.05,
-          duration: 1.2,
-          ease: "back.out(1.7)",
-        },
-        "-=1.0"
-      )
-        .fromTo(
-          ".crafting-text span",
-          { opacity: 0, y: 30, filter: "blur(5px)" },
-          {
-            opacity: 1,
-            y: 0,
-            filter: "blur(0px)",
-            stagger: 0.02,
-            duration: 0.8,
-            ease: "power2.out",
-          },
-          "-=0.5"
-        )
-        .fromTo(
-          ".crafting-quote",
-          { opacity: 0, y: 20 },
-          { opacity: 1, y: 0, duration: 1, ease: "power2.out" },
-          "-=0.5"
-        )
-        .fromTo(
-          "#maktub",
-          { opacity: 0, scale: 1.2, filter: "blur(10px)" },
-          { opacity: 0.9, scale: 1, filter: "blur(0px)", duration: 1.5, ease: "power2.out" },
-          "+=0.3"
-        );
+      // One quote, then the word that answers it, written by hand
+      tl.to(".dawn-quote", { opacity: 1, y: 0, duration: 2, ease: "power2.out" }, "onward")
+        .to(".dawn-author", { opacity: 1, y: 0, duration: 1.2, ease: "power2.out" }, "-=0.8")
+        .to(".maktub-pen", { attr: { x: 0 }, duration: 3.5, ease: "power1.inOut" }, "+=0.8")
+        .to({}, { duration: 1.5 });
     },
     { scope: containerRef, dependencies: [lang], revertOnUpdate: true }
   );
@@ -153,122 +103,230 @@ export function TheJourney() {
     <section
       id="the-journey"
       ref={containerRef}
-      className="relative w-full min-h-screen flex flex-col items-center justify-center bg-transparent text-neutral-800 overflow-hidden"
+      className="relative w-full h-screen overflow-hidden bg-transparent"
     >
+      {/* Dawn sky, lightening from the horizon */}
       <div
-        ref={flashRef}
-        className="absolute inset-0 bg-white z-[60] pointer-events-none opacity-0"
+        aria-hidden
+        className="dawn-sky absolute inset-0 z-0"
+        style={{
+          background:
+            "linear-gradient(to bottom, #0d1022 0%, #262747 22%, #5e4a66 40%, #b9806c 54%, #eab07e 62%, #f8dcaa 68%, #f8dcaa 100%)",
+        }}
       />
 
+      {/* The rising sun, a soft disc on the horizon */}
       <div
-        ref={bgAdventureRef}
-        className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none transition-colors duration-1000"
-      >
-        <div className="the-sun absolute top-0 -left-2 w-40 h-40 md:w-60 md:h-60 z-20 pointer-events-none">
-          <Image
-            src="/assets/images/the-sun-left.svg"
-            alt="The Sun"
-            fill
-            className="object-contain brightness-0 opacity-80 drop-shadow-[0_0_15px_rgba(0,0,0,0.2)]"
-          />
-        </div>
+        aria-hidden
+        className="dawn-sun absolute left-1/2 top-[67%] z-10 h-[38vmin] w-[38vmin] -translate-x-1/2 -translate-y-1/2 rounded-full"
+        style={{
+          background:
+            "radial-gradient(circle, #fff3d6 0%, #ffd99a 32%, rgba(255,190,110,0.55) 52%, rgba(255,170,90,0) 72%)",
+        }}
+      />
 
-        <div className="the-moon absolute top-0 right-0 w-40 h-40 md:w-60 md:h-60 z-20 pointer-events-none">
-          <Image
-            src="/assets/images/the-moon-right.svg"
-            alt="The Moon"
-            fill
-            className="object-contain brightness-0 opacity-80 drop-shadow-[0_0_15px_rgba(0,0,0,0.2)]"
-          />
-        </div>
-
-        <div className="the-desert absolute inset-0 flex items-center justify-center pointer-events-none opacity-50">
-          <Image
-            src="/assets/images/adventure.svg"
-            alt="Desert Adventure"
-            width={1000}
-            height={1000}
-            priority
-            className="object-contain w-full h-full opacity-5 md:opacity-[0.1]"
-          />
-        </div>
-
-        {/* 🌟 Golden Sandstorm & Desert Dust Particles */}
-        <div className="desert-dust-layer absolute inset-0 z-10 pointer-events-none opacity-0">
-          <DesertDustCanvas particleCount={130} />
-        </div>
-      </div>
-      {/* Global GoldenThread is layered over this container */}
-
-      <div
-        key={`narratives-${lang}`}
-        className="relative w-full h-full flex items-center justify-center pointer-events-none"
-      >
-        <div className="narrative-entry absolute inset-0 z-20 flex flex-col items-center justify-center pointer-events-none px-6 max-w-5xl mx-auto">
-          <p className={cn(QUOTE_CLASS, "text-center")}>{t.narrative1}</p>
-        </div>
-        <div className="narrative-entry absolute inset-0 z-20 flex flex-col items-center justify-center pointer-events-none px-6 max-w-5xl mx-auto">
-          <p className={cn(QUOTE_CLASS, "text-center")}>{t.narrative2}</p>
-        </div>
-        <div className="narrative-entry absolute inset-0 z-20 flex flex-col items-center justify-center pointer-events-none px-6 max-w-5xl mx-auto">
-          <p className={cn(QUOTE_CLASS, "text-center")}>{t.narrative3}</p>
-        </div>
-      </div>
-      <div
-        ref={legaciesContentRef}
-        className="absolute inset-0 z-40 flex flex-col items-center justify-center text-center px-4 sm:px-6 pointer-events-none"
-      >
-        <div
-          key={`legacies-${lang}`}
-          className="crafting-content relative w-full max-w-4xl mx-auto flex flex-col items-center justify-center"
+      {/* The desert, engraved like the sketch it holds: inked dune crests and
+          hatched shadow, denser and darker towards the viewer */}
+      <div aria-hidden className="dawn-land absolute inset-x-0 bottom-0 z-20 h-[36%]">
+        <svg
+          className="absolute inset-0 h-full w-full"
+          viewBox="0 0 1440 320"
+          preserveAspectRatio="none"
         >
-          <h2 className="crafting-title text-3xl sm:text-4xl md:text-5xl font-kings tracking-wide mb-2 sm:mb-3 text-amber-600 drop-shadow-[0_0_15px_rgba(251,191,36,0.2)]">
-            {t.legacies.split("").map((char, i) => (
-              <span key={i} className="inline-block">
-                {char === " " ? "\u00A0" : char}
-              </span>
-            ))}
-          </h2>
+          <path
+            d="M0 72 C 180 44, 360 66, 560 46 S 920 24, 1120 40 S 1340 62, 1440 50 L1440 320 L0 320 Z"
+            fill="#f2d3a1"
+          />
+        </svg>
 
-          <p className="crafting-text text-sm sm:text-base md:text-lg leading-relaxed max-w-2xl mx-auto text-neutral-600 font-garamond mb-6 sm:mb-8">
-            {t.legaciesDesc.split(" ").map((word, i) => (
-              <span key={i} className="inline-block mr-1.5">
-                {word}
-              </span>
-            ))}
-          </p>
+        {/* The sketch, square like its viewBox so percentages map onto it */}
+        <div className="absolute bottom-[38%] left-1/2 aspect-square h-[150%] -translate-x-1/2 opacity-50 mix-blend-multiply">
+          <div className="absolute inset-0" style={{ clipPath: WITHOUT_CARAVAN }}>
+            <Image src="/assets/images/adventure.svg" alt="" fill sizes="500px" />
+          </div>
 
-          <div className="crafting-quote relative max-w-3xl mx-auto text-neutral-600 px-6 sm:px-10">
-            <Image
-              src="/assets/images/apos.svg"
-              alt="quote open mark"
-              width={40}
-              height={40}
-              className="absolute -top-4 -left-2 sm:-left-4 opacity-20 invert select-none pointer-events-none"
+          <svg className="absolute inset-0 h-full w-full" viewBox="0 0 1200 1200">
+            <defs>
+              <mask id="caravan-trail-mask" maskUnits="userSpaceOnUse">
+                <path
+                  className="caravan-trail"
+                  d="M 965 940 C 910 932, 850 920, 790 910"
+                  pathLength={1}
+                  fill="none"
+                  stroke="white"
+                  strokeWidth="40"
+                  strokeDasharray="1 1"
+                />
+              </mask>
+            </defs>
+            {/* Footprints in the sand */}
+            <path
+              d="M 965 940 C 910 932, 850 920, 790 910"
+              fill="none"
+              stroke="#3a2516"
+              strokeWidth="5"
+              strokeLinecap="round"
+              strokeDasharray="1 17"
+              mask="url(#caravan-trail-mask)"
             />
-            <Image
-              src="/assets/images/apos.svg"
-              alt="quote close mark"
-              width={40}
-              height={40}
-              className="absolute -bottom-4 -right-2 sm:-right-4 opacity-20 invert rotate-180 select-none pointer-events-none"
-            />
-            <span className="relative z-10 block leading-relaxed text-xl sm:text-2xl md:text-3xl lg:text-4xl font-garamond italic text-neutral-900 drop-shadow-sm">
-              {t.quote}
-            </span>
+          </svg>
 
-            <div className="mt-4 sm:mt-5 relative z-10 font-garamond text-[10px] sm:text-xs uppercase tracking-[0.25em] text-neutral-600">
-              {t.author}
-            </div>
-
-            <div
-              id="maktub"
-              className="mt-6 sm:mt-8 font-kings text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-[0.35em] text-amber-500 select-none pointer-events-none drop-shadow-[0_2px_15px_rgba(245,158,11,0.35)]"
-            >
-              {t.maktub}
-            </div>
+          <div
+            className="dawn-caravan absolute inset-0"
+            style={{ clipPath: CARAVAN_ONLY, transformOrigin: `${(L + Rr) / 2}% ${B}%` }}
+          >
+            <Image src="/assets/images/adventure.svg" alt="" fill sizes="500px" />
           </div>
         </div>
+
+        <svg
+          className="absolute inset-0 h-full w-full"
+          viewBox="0 0 1440 320"
+          preserveAspectRatio="none"
+        >
+          <defs>
+            <pattern
+              id="hatch-light"
+              width="7"
+              height="7"
+              patternUnits="userSpaceOnUse"
+              patternTransform="rotate(-24)"
+            >
+              <line x1="0" y1="0" x2="0" y2="7" stroke="#5a3b25" strokeWidth="0.8" />
+            </pattern>
+            <pattern
+              id="hatch-dense"
+              width="3.5"
+              height="3.5"
+              patternUnits="userSpaceOnUse"
+              patternTransform="rotate(-24)"
+            >
+              <line x1="0" y1="0" x2="0" y2="3.5" stroke="#3a2516" strokeWidth="1" />
+            </pattern>
+            <linearGradient id="to-night" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#0b0806" stopOpacity="0" />
+              <stop offset="100%" stopColor="#0b0806" stopOpacity="1" />
+            </linearGradient>
+          </defs>
+
+          {/* Far dune crest */}
+          <path
+            d="M0 72 C 180 44, 360 66, 560 46 S 920 24, 1120 40 S 1340 62, 1440 50"
+            fill="none"
+            stroke="#5a3b25"
+            strokeWidth="1.2"
+            opacity="0.55"
+          />
+
+          {/* Middle dune */}
+          <path
+            d="M0 196 C 160 170, 330 150, 520 182 S 860 214, 1040 176 S 1330 148, 1440 168 L1440 320 L0 320 Z"
+            fill="#e8c08a"
+          />
+          <path
+            d="M0 196 C 160 170, 330 150, 520 182 S 860 214, 1040 176 S 1330 148, 1440 168 L1440 320 L0 320 Z"
+            fill="url(#hatch-light)"
+            opacity="0.35"
+          />
+          <path
+            d="M0 196 C 160 170, 330 150, 520 182 S 860 214, 1040 176 S 1330 148, 1440 168"
+            fill="none"
+            stroke="#4a3020"
+            strokeWidth="1.5"
+            opacity="0.7"
+          />
+
+          {/* Near dune, in shadow */}
+          <path
+            d="M0 262 C 240 236, 470 252, 700 274 S 1110 238, 1440 252 L1440 320 L0 320 Z"
+            fill="#d2a271"
+          />
+          <path
+            d="M0 262 C 240 236, 470 252, 700 274 S 1110 238, 1440 252 L1440 320 L0 320 Z"
+            fill="url(#hatch-dense)"
+            opacity="0.6"
+          />
+          <path
+            d="M0 262 C 240 236, 470 252, 700 274 S 1110 238, 1440 252"
+            fill="none"
+            stroke="#2e1d11"
+            strokeWidth="2"
+            opacity="0.8"
+          />
+
+          {/* Ground falls into the night of the footer */}
+          <rect y="250" width="1440" height="70" fill="url(#to-night)" />
+        </svg>
+      </div>
+
+      {/* Clouds over the horizon */}
+      <DawnAir className="dawn-air absolute inset-0 z-30" />
+
+      {/* Three lines in the night */}
+      <div key={`narratives-${lang}`} className="absolute inset-0 z-40 pointer-events-none">
+        {[t.narrative1, t.narrative2, t.narrative3].map((line) => (
+          <div
+            key={line}
+            className="narrative-entry absolute inset-0 mx-auto flex max-w-5xl items-center justify-center px-6"
+          >
+            <p className={cn(QUOTE_CLASS, "text-center")}>{line}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Dawn: the quote, and Maktub */}
+      <div
+        key={`dawn-${lang}`}
+        className="absolute inset-x-0 top-[12%] z-40 mx-auto max-w-4xl px-6 text-center pointer-events-none"
+      >
+        <p className={cn(QUOTE_CLASS, "dawn-quote")}>{t.quote}</p>
+        <p className="dawn-author mt-4 font-garamond text-sm tracking-wide text-white/70">
+          {t.author}
+        </p>
+        {/* Maktub, "it is written": revealed left to right as if by a pen */}
+        <svg
+          className="mx-auto mt-6 h-20 w-80 overflow-visible drop-shadow-[0_0_14px_rgba(255,220,160,0.55)]"
+          viewBox="0 0 400 100"
+          role="img"
+          aria-label={t.maktub}
+        >
+          <defs>
+            <linearGradient id="maktub-nib" x1="0" x2="1" y1="0" y2="0">
+              <stop offset="0%" stopColor="white" />
+              <stop offset="88%" stopColor="white" />
+              <stop offset="100%" stopColor="black" />
+            </linearGradient>
+            <mask
+              id="maktub-ink"
+              maskUnits="userSpaceOnUse"
+              x="-20"
+              y="-20"
+              width="440"
+              height="140"
+            >
+              <rect
+                className="maktub-pen"
+                x="-420"
+                y="-20"
+                width="420"
+                height="140"
+                fill="url(#maktub-nib)"
+              />
+            </mask>
+          </defs>
+          <text
+            x="200"
+            y="70"
+            textAnchor="middle"
+            className="font-garamond italic"
+            fontSize="60"
+            letterSpacing="1"
+            fill="#fde9c4"
+            mask="url(#maktub-ink)"
+          >
+            {t.maktub}
+          </text>
+        </svg>
       </div>
     </section>
   );

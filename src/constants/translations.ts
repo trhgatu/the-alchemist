@@ -69,20 +69,15 @@ export const translations = {
         quote:
           "“And, when you want something, all the universe conspires in helping you to achieve it.”",
         author: "— Paulo Coelho, The Alchemist",
-        maktub: "MAKTUB !",
-        legacies: "Crafting Legacies",
-        legaciesDesc:
-          "Every line of code is not just a solution — it's a legacy, a trace left behind to inspire, empower, and endure.",
+        maktub: "Maktub.",
         narrative1: '"There is a language beyond words..."',
         narrative2: '"It speaks of the courage to follow one\'s own Personal Legend."',
         narrative3: '"Until the hands build what the heart has always known."',
       },
     },
     colophon: {
-      badge: "Author's Colophon",
-      quote:
-        "This sanctuary was not born from commercial constraints or predefined templates, but purely from a spontaneous creative flow demanding to be manifest. Forged with pure devotion to code and the alchemy of transmuting thought into form.",
-      signature: "— trhgatu • 2026",
+      rights: "All rights reserved.",
+      write: "Write to me",
     },
     craftingsPage: {
       title: "The Craftings",
@@ -168,20 +163,15 @@ export const translations = {
         quote:
           "“Và khi bạn thực sự khao khát một điều gì đó, cả vũ trụ sẽ hợp sức lại để giúp bạn đạt được nó.”",
         author: "— Paulo Coelho, Nhà Giả Kim",
-        maktub: "MAKTUB !",
-        legacies: "Di Sản",
-        legaciesDesc:
-          "Mỗi dòng mã không chỉ là một giải pháp — đó là một di sản, một dấu vết để lại để truyền cảm hứng, tiếp thêm sức mạnh và trường tồn.",
+        maktub: "Maktub.",
         narrative1: '"Có một ngôn ngữ vượt xa ngoài lời nói..."',
         narrative2: '"Nó nói về lòng can đảm để theo đuổi Vận Mệnh của chính mình."',
         narrative3: '"Cho đến khi bàn tay xây dựng nên những gì trái tim hằng thấu hiểu."',
       },
     },
     colophon: {
-      badge: "Lời Bạt Của Tác Giả",
-      quote:
-        "Tác phẩm này được tạo nên không từ bất kỳ khuôn mẫu hay toan tính thương mại nào, mà đơn thuần là khoảnh khắc những ý niệm tự do tuôn trào và đòi được hữu hình hóa. Được rèn đúc bằng tình yêu thuần khiết dành cho dòng lệnh và niềm say mê chuyển hóa tư tưởng thành thực tại trường tồn.",
-      signature: "— trhgatu • 2026",
+      rights: "Bảo lưu mọi quyền.",
+      write: "Viết cho tôi",
     },
     craftingsPage: {
       title: "Chế Tác",

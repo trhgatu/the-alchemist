@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { isHiddenOnScreen } from "@/lib/visibility";
 import { Renderer, Camera, Program, Mesh, Triangle } from "ogl";
 
 const vertexShader = `
@@ -119,7 +120,8 @@ export function OglStarField({ cool = 1, coolRef }: OglStarFieldProps = {}) {
     const container = containerRef.current;
     if (!container) return;
 
-    const renderer = new Renderer({ alpha: true, dpr: Math.min(window.devicePixelRatio, 2) });
+    // Soft clouds need no retina detail; 1x is a quarter of the pixels at dpr 2
+    const renderer = new Renderer({ alpha: true, dpr: 1 });
     const gl = renderer.gl;
     gl.canvas.className = "absolute inset-0 w-full h-full pointer-events-none";
     container.appendChild(gl.canvas);
@@ -171,7 +173,18 @@ export function OglStarField({ cool = 1, coolRef }: OglStarFieldProps = {}) {
     handleResize();
 
     let lastTime = performance.now();
+    let frame = 0;
+    let hidden = false;
     const update = (now: number) => {
+      // The scroll timelines fade this layer out for long stretches; check
+      // a few times a second and skip drawing while it cannot be seen
+      if (frame++ % 15 === 0) hidden = isHiddenOnScreen(container);
+      if (hidden) {
+        lastTime = now;
+        animationId = requestAnimationFrame(update);
+        return;
+      }
+
       const delta = Math.min((now - lastTime) / 1000, 0.1);
       lastTime = now;
 

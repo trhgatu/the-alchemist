@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { isHiddenOnScreen } from "@/lib/visibility";
 
 interface Star {
   x: number;
@@ -105,7 +106,14 @@ export function StarField() {
 
     let animationId: number;
 
+    let frame = 0;
+    let hidden = false;
     const draw = () => {
+      if (frame++ % 15 === 0) hidden = isHiddenOnScreen(canvas);
+      if (hidden) {
+        animationId = requestAnimationFrame(draw);
+        return;
+      }
       ctx.clearRect(0, 0, width, height);
 
       // Star colors: Ivory to pale gold

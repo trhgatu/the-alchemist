@@ -208,7 +208,10 @@ export function MistFrame({ src, alt, className, focus = TOP_CENTER, zoom = 1 }:
     img.src = src;
 
     const resize = () => {
-      const { width, height } = container.getBoundingClientRect();
+      // Layout size, not the on-screen rect: parents may scale the frame
+      // (the journal parallax does), and the buffer must not follow that
+      const width = container.offsetWidth;
+      const height = container.offsetHeight;
       if (width === 0 || height === 0) return;
       renderer.setSize(width, height);
       program.uniforms.uRes.value = [gl.canvas.width, gl.canvas.height];
@@ -238,9 +241,14 @@ export function MistFrame({ src, alt, className, focus = TOP_CENTER, zoom = 1 }:
       if (!alive || !visible) return;
       program.uniforms.uTime.value = (performance.now() - start) / 1000;
 
+      // Map the pointer through the on-screen rect as a fraction, so any CSS
+      // transform (the parallax scale) still lands on the right pixel
       const rect = container.getBoundingClientRect();
-      const dpr = renderer.dpr;
-      program.uniforms.uMouse.value = [(mouse.x - rect.left) * dpr, (rect.bottom - mouse.y) * dpr];
+      const [bufW, bufH] = program.uniforms.uRes.value as number[];
+      program.uniforms.uMouse.value = [
+        ((mouse.x - rect.left) / rect.width) * bufW,
+        ((rect.bottom - mouse.y) / rect.height) * bufH,
+      ];
       program.uniforms.uMouseStrength.value = mouse.strength;
       mouse.strength *= 0.94;
       hover += ((hovered ? 1 : 0) - hover) * 0.12;
