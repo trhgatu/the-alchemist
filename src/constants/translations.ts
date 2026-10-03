@@ -3,8 +3,6 @@ export const translations = {
     nav: {
       chronicles: "Chronicles",
       craftings: "Craftings",
-      alchemist: "The Alchemist",
-      timeline: "Timeline",
     },
     hero: {
       subtitle: "Where Vision Becomes Masterpiece",
@@ -38,77 +36,26 @@ export const translations = {
         title: "The Alchemist",
         subtitle: "The Art of Forging the Creator",
         desc: "Where lines of code become poetry, and logic dances with imagination to crystallize abstract thoughts into existing reality. I give form to the illusory, and in the process, forge a resilient self that stands firm against all fluctuations. Every creation is a testament to the transmutation of fragments into an enduring structure.",
-        solve: "SOLVE",
-        coagula: "COAGULA",
         journal: {
           nigredo: {
             title: "Nigredo: The Void",
-            desc: "The years of darkness where every preconception was shattered on the brink of surrender. It was the necessary destruction—the blackening of the spirit. Before anything could be rebuilt, the first lesson was learning to exist among the shards of shattered logic.",
+            desc: "There was a time when the apprentice was lost in the dark, not knowing who to become, nor which way to go. The days passed without shape, like raw metal lying still at the bottom of the furnace. Yet the old books are clear: before metal can turn to gold, it must first turn black.",
             initial: "N",
           },
           albedo: {
             title: "Albedo: Purification",
-            desc: "From the ashes of that collapse, the mirror of consciousness began to clear. Purging the noise, sitting at the keys day after day, code was forged into a steady rhythm over years of discipline. The soul was cleansed in silent ritual until it could reflect original light.",
+            desc: "Then came the first lines of code, and the lost one lit the furnace for the very first time. Day after day, month after month, the noise was washed away, until rough lines of code found an even breath. No one was watching, only a small flame that never went out, and a mirror within growing clearer each day.",
             initial: "A",
           },
           citrinitas: {
             title: "Citrinitas: Awakening",
-            desc: "Suddenly, the silence of the forge was broken by a new spark as the Personal Legend unfolded. Shedding every confining title, the hands moved no longer from fear, but in pure harmony with the joy of transmuting abstract ideas into living reality.",
+            desc: "Then one night, in the silence of the forge, the spark caught. A Personal Legend called out, clear at last, and every narrow title fell away like an old cloak. From then on, the hands worked not out of fear, but for the joy of breathing life into things that had no form.",
             initial: "C",
           },
           rubedo: {
             title: "Rubedo: Realization",
-            desc: "I stand resilient now, holding structure against the chaos that once consumed. The journey is not complete, but the masterpiece is realized—stepping out from one's own forge into the vast world, a living testament to the alchemy of transmutation.",
+            desc: "Now the raw metal of those years glows red in the fire. The journey is not over, but the furnace door has opened onto the wide desert, where the whole universe waits.",
             initial: "R",
-          },
-        },
-        recipes: {
-          finalFormula: "The Final Formula",
-          magnumOpus: "Magnum Opus",
-          desc: "A precise formulation for the transmutation of abstract thought into enduring structure.",
-          materiaPrima: "Materia Prima",
-          ingredients: {
-            fluidity: "Fluidity",
-            mercury: "Mercury",
-            passion: "Passion",
-            sulfur: "Sulfur",
-            grounding: "Grounding",
-            salt: "Salt",
-            energy: "Energy",
-            fire: "Fire",
-            measures: "3 measures",
-            ember: "1 ember",
-            pinches: "2 pinches",
-            boil: "To a boil",
-          },
-          catalysts: {
-            title: "The Catalysts",
-            obsession: "Obsession",
-            obsessionDesc: "Unrelenting",
-            curiosity: "Curiosity",
-            curiosityDesc: "Endless",
-            discipline: "Discipline",
-            disciplineDesc: "Daily rigor",
-            solitude: "Solitude",
-            solitudeDesc: "A quiet refuge",
-          },
-          process: {
-            title: "The Process",
-            step1:
-              "Melt down the ego within the crucible of continuous failure. The code will break; I must not.",
-            step2:
-              "Apply the relentless heat of Obsession. Iterate until the chaotic logic aligns into elegant structure.",
-            step3:
-              "Realize the ultimate truth: I am not merely forging software. The software is the fire forging me.",
-          },
-          manifestation: {
-            title: "The Manifestation",
-            poem: [
-              "Every line of code I write is more than a technical directive; it is a manifestation of will and the hunger to bring the self into existence.",
-              "Through thousands of errors purged and the rigorous refinement of logic, I have breathed life into the void.",
-              "The final product was never just about code—it is the crystallization of my evolution, a living testament that I am the forge, the fire, and the ultimate gold.",
-            ],
-            author: "~ The Alchemist",
           },
         },
       },
@@ -130,34 +77,6 @@ export const translations = {
         narrative2: '"It speaks of the courage to follow one\'s own Personal Legend."',
         narrative3: '"Until the hands build what the heart has always known."',
       },
-    },
-    timeline: {
-      heroTitle: "The Path of Mastery",
-      heroSubtitle:
-        "Tracing the thread of fate through years of code, design, and relentless creation.",
-      epilogue: "The chronicle continues...",
-      events: [
-        {
-          year: "2025",
-          title: "The Year of Forging Excellence",
-          desc: "Forged and launched revolutionary UI systems from the depths of creativity, each component tempered by passion and refined through countless iterations.",
-        },
-        {
-          year: "Early 2023",
-          title: "The Foundation Era",
-          desc: "In the early flames of creation, every line of code was a battle against mediocrity. Each design forged with purpose, each component crafted with soul.",
-        },
-        {
-          year: "Forge Log",
-          title: "Latest Weapons Forged",
-          desc: "Today's conquests in the eternal battle against mediocrity. New templates, new systems, new powers.",
-        },
-        {
-          year: "2022",
-          title: "The Awakening",
-          desc: "The first sparks of creation ignited. Learning the ancient arts of web development, each tutorial a step closer to mastery.",
-        },
-      ],
     },
     colophon: {
       badge: "Author's Colophon",
@@ -184,8 +103,6 @@ export const translations = {
     nav: {
       chronicles: "Biên Niên Sử",
       craftings: "Chế Tác",
-      alchemist: "Nhà Giả Kim",
-      timeline: "Dòng Thời Gian",
     },
     hero: {
       subtitle: "Nơi Tầm Nhìn Trở Thành Tuyệt Tác",
@@ -218,77 +135,26 @@ export const translations = {
       alchemist: {
         title: "Nhà Giả Kim",
         desc: "Nơi dòng mã trở thành thơ ca, khơi nguồn cho logic khiêu vũ cùng trí tưởng tượng để kết tinh những ý niệm thành thực tại hiện hữu. Tôi ban hình hài cho những gì vốn là hư ảo, và qua đó, tôi luyện nên một bản thể vững chãi trước mọi biến động. Mỗi tạo vật ra đời là một minh chứng cho sự chuyển hóa những vụn vỡ thành một cấu trúc trường tồn.",
-        solve: "HÒA TAN",
-        coagula: "KẾT TỤ",
         journal: {
           nigredo: {
             title: "Nigredo: Hư Vô",
-            desc: "Những năm tháng bóng tối nơi mọi định kiến bị đập tan trước bờ vực buông xuôi. Đó là sự hủy diệt cần thiết—giai đoạn đen hóa của tâm hồn. Trước khi có thể tái thiết bất cứ điều gì, bài học đầu tiên là học cách tồn tại giữa những mảnh vỡ của chính logic đã vụn tàn.",
+            desc: "Có một thời, người học việc lạc giữa bóng tối, chưa biết mình là ai, cũng chưa biết phải đi về đâu. Những ngày trôi qua không hình hài, như kim loại thô nằm im dưới đáy lò. Nhưng sách xưa vẫn chép: muốn luyện thành vàng, trước hết kim loại phải hoá đen.",
             initial: "N",
           },
           albedo: {
             title: "Albedo: Thanh Tẩy",
-            desc: "Từ đống tro tàn đổ nát, tấm gương tâm thức bắt đầu được lau sạch. Gạt bỏ mọi tạp âm, kiên nhẫn ngồi lại bên bàn phím mỗi ngày và biến từng dòng lệnh thành nhịp thở bền bỉ suốt nhiều năm ròng. Linh hồn được gột rửa trong kỷ luật thầm lặng cho đến khi có thể phản chiếu lại ánh sáng nguyên bản.",
+            desc: "Rồi những dòng mã đầu tiên xuất hiện, và kẻ lạc lối ấy lần đầu nhóm lửa trong lò. Ngày này qua tháng khác, từng lớp tạp âm được gạn đi, để những dòng lệnh thô ráp dần mang nhịp thở đều đặn. Không ai chứng kiến, chỉ có ngọn lửa nhỏ chưa từng tắt, và tấm gương trong lòng mỗi ngày một trong hơn.",
             initial: "A",
           },
           citrinitas: {
             title: "Citrinitas: Thức Tỉnh",
-            desc: "Đột nhiên, sự tĩnh lặng của lò rèn bị phá vỡ bởi một tia lửa mới khi Vận Mệnh được khai mở. Rũ bỏ mọi danh xưng trói buộc, đôi tay chuyển động không còn vì nỗi sợ, mà hòa cùng niềm say mê thuần khiết khi biến những ý niệm trừu tượng thành thực tại sống động.",
+            desc: "Rồi một đêm, giữa im lặng của lò rèn, tia lửa ấy bùng lên. Tiếng gọi của Vận Mệnh vang lên rõ ràng, và những danh xưng chật hẹp rơi xuống như trút một tấm áo cũ. Từ đó, đôi tay không còn làm vì sợ hãi, mà vì niềm vui được thổi hồn vào những điều chưa có hình hài.",
             initial: "C",
           },
           rubedo: {
             title: "Rubedo: Hiện Thực",
-            desc: "Giờ đây tôi đứng vững vàng, giữ vững cấu trúc trước sự hỗn loạn từng một thời nuốt chửng. Hành trình chưa kết thúc, nhưng tạo tác đã thành hình—bước ra khỏi lò rèn của chính mình để tiến vào thế giới rộng lớn, như một minh chứng sống động cho thuật giả kim của sự chuyển hóa.",
+            desc: "Giờ đây, thứ kim loại thô năm ấy đã đỏ rực trong lửa. Hành trình chưa khép lại, nhưng cửa lò luyện đã mở ra phía sa mạc mênh mông, nơi cả vũ trụ đang chờ.",
             initial: "R",
-          },
-        },
-        recipes: {
-          finalFormula: "Công Thức Cuối Cùng",
-          magnumOpus: "Đại Tạo Tác",
-          desc: "Một công thức chính xác để chuyển hóa tư tưởng trừu tượng thành cấu trúc trường tồn.",
-          materiaPrima: "Nguyên Liệu Sơ Khai",
-          ingredients: {
-            fluidity: "Sự Uyển Chuyển",
-            mercury: "Thủy Ngân",
-            passion: "Đam Mê",
-            sulfur: "Lưu Huỳnh",
-            grounding: "Sự Vững Chãi",
-            salt: "Muối",
-            energy: "Năng Lượng",
-            fire: "Lửa",
-            measures: "3 liều lượng",
-            ember: "1 mồi lửa",
-            pinches: "2 nhúm",
-            boil: "Đến khi sôi",
-          },
-          catalysts: {
-            title: "Chất Xúc Tác",
-            obsession: "Sự Ám Ảnh",
-            obsessionDesc: "Không ngừng nghỉ",
-            curiosity: "Sự Tò Mò",
-            curiosityDesc: "Vô tận",
-            discipline: "Kỷ Luật",
-            disciplineDesc: "Rèn luyện mỗi ngày",
-            solitude: "Sự Tĩnh Lặng",
-            solitudeDesc: "Khoảng không thuần khiết",
-          },
-          process: {
-            title: "Quy Trình",
-            step1:
-              "Nung chảy cái tôi trong lò luyện của những thất bại liên tiếp. Mã nguồn có thể vỡ; nhưng tôi thì không.",
-            step2:
-              "Áp dụng sức nóng không ngừng của sự Ám ảnh. Lặp lại cho đến khi logic hỗn loạn kết tinh thành cấu trúc hoàn mỹ.",
-            step3:
-              "Nhận ra chân lý cuối cùng: Tôi không chỉ đang rèn giũa những tạo vật. Chính những tạo vật đó là ngọn lửa đang rèn giũa tôi.",
-          },
-          manifestation: {
-            title: "Sự Hiển Lộ",
-            poem: [
-              "Mỗi dòng mã viết ra không chỉ là một chỉ thị kỹ thuật, mà là sự hiển lộ của ý chí và khát khao hiện thực hóa bản ngã.",
-              "Qua hàng ngàn lỗi lầm được gọt rửa và sự tinh luyện khắc nghiệt của logic, tôi đã ban sự sống cho hư vô.",
-              "Sản phẩm cuối cùng không bao giờ chỉ là những dòng code—nó là sự kết tinh của quá trình tiến hóa, là minh chứng rằng tôi chính là lò rèn, là ngọn lửa, và là vàng ròng sau cùng.",
-            ],
-            author: "~ trhgatu",
           },
         },
       },
@@ -310,34 +176,6 @@ export const translations = {
         narrative2: '"Nó nói về lòng can đảm để theo đuổi Vận Mệnh của chính mình."',
         narrative3: '"Cho đến khi bàn tay xây dựng nên những gì trái tim hằng thấu hiểu."',
       },
-    },
-    timeline: {
-      heroTitle: "Con Đường Thành Thạo",
-      heroSubtitle:
-        "Dõi theo sợi chỉ định mệnh qua nhiều năm lập trình, thiết kế và sáng tạo không ngừng nghỉ.",
-      epilogue: "Biên niên sử vẫn đang được viết tiếp...",
-      events: [
-        {
-          year: "2025",
-          title: "Năm Của Sự Hoàn Hảo",
-          desc: "Chế tác và ra mắt các hệ thống UI mang tính cách mạng từ chiều sâu sáng tạo, mỗi thành phần đều được tôi luyện bằng đam mê.",
-        },
-        {
-          year: "Đầu 2023",
-          title: "Kỷ Nguyên Nền Tảng",
-          desc: "Trong những ngọn lửa sáng tạo đầu tiên, mỗi dòng mã là một cuộc chiến chống lại sự tầm thường. Mỗi thiết kế đều có mục đích.",
-        },
-        {
-          year: "Nhật Ký Lò Rèn",
-          title: "Vũ Khí Mới Nhất",
-          desc: "Những cuộc chinh phục hôm nay trong cuộc chiến vĩnh cửu. Những hệ thống mới, quyền năng mới.",
-        },
-        {
-          year: "2022",
-          title: "Sự Thức Tỉnh",
-          desc: "Những tia lửa sáng tạo đầu tiên bùng cháy. Học những nghệ thuật cổ xưa của phát triển web.",
-        },
-      ],
     },
     colophon: {
       badge: "Lời Bạt Của Tác Giả",

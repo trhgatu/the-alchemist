@@ -98,8 +98,6 @@ export const ForgeFooter = () => {
           {[
             { name: t.nav.chronicles, link: "/chronicles" },
             { name: t.nav.craftings, link: "/craftings" },
-            { name: t.nav.alchemist, link: "/the-alchemist" },
-            { name: t.nav.timeline, link: "/timeline" },
           ].map((item) => (
             <a
               key={item.link}

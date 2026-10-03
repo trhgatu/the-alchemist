@@ -1,12 +1,20 @@
 "use client";
-import Image from "next/image";
-import { TheAlchemistCard } from "./TheAlchemistCard";
 import { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/all";
 import { useGSAP } from "@gsap/react";
 import { useLang } from "@/hooks/useLang";
 import { translations } from "@/constants/translations";
+import { MistFrame } from "@/features/alchemist/shared/effects/MistFrame";
+
+// The four photos of the journal, darkest to brightest. focus is the point of
+// each photo kept in frame, [x, y] from the top-left.
+const PHOTOS = {
+  nigredo: { src: "/assets/images/the-alchemist/old.webp", focus: [0.42, 0.62], zoom: 1 },
+  albedo: { src: "/assets/images/the-alchemist/night.webp", focus: [0.62, 0.5], zoom: 1.9 },
+  citrinitas: { src: "/assets/images/the-alchemist/desk.webp", focus: [0.62, 0.6], zoom: 1 },
+  rubedo: { src: "/assets/images/the-alchemist/now.webp", focus: [0.55, 0.52], zoom: 1 },
+} as const satisfies Record<string, { src: string; focus: [number, number]; zoom: number }>;
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -59,143 +67,103 @@ export function TheAlchemistJournal() {
           );
         }
       });
-
-      const dividers = gsap.utils.toArray<HTMLElement>(".journal-divider");
-      dividers.forEach((divider) => {
-        gsap.fromTo(
-          divider,
-          { opacity: 0, scaleX: 0 },
-          {
-            opacity: 0.4,
-            scaleX: 1,
-            duration: 1.2,
-            ease: "power3.inOut",
-            scrollTrigger: {
-              trigger: divider,
-              start: "top 90%",
-              toggleActions: "play none none reverse",
-            },
-          }
-        );
-      });
     },
     { scope: containerRef, dependencies: [lang], revertOnUpdate: true }
   );
 
   return (
-    <div key={lang} ref={containerRef} className="space-y-12 max-w-5xl mx-auto px-4">
-      <div className="grid grid-cols-1 md:grid-cols-[7fr_3fr] gap-8 items-center relative overflow-visible group journal-phase">
+    <div key={lang} ref={containerRef} className="space-y-24 md:space-y-32 max-w-6xl mx-auto px-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-14 items-center relative group journal-phase">
         <div className="text-left space-y-4 order-2 md:order-1 journal-text">
           <h3 className="text-3xl sm:text-4xl font-kings text-neutral-800 tracking-wide border-b border-neutral-400/30 pb-2 inline-block">
             {t.nigredo.title}
           </h3>
-          <p className="font-garamond text-2xl sm:text-3xl leading-relaxed text-neutral-700">
-            <span className="float-left text-7xl font-kings text-neutral-900 mr-3 mt-[-6px] leading-none drop-shadow-sm">
-              {t.nigredo.initial}
+          <p className="font-garamond text-xl sm:text-2xl leading-relaxed text-neutral-700">
+            <span className="float-left text-7xl font-kings text-neutral-900 mr-3 mt-[-4px] leading-none drop-shadow-sm">
+              {t.nigredo.desc.charAt(0)}
             </span>
-            {t.nigredo.desc}
+            {t.nigredo.desc.slice(1)}
           </p>
         </div>
-        <div className="relative h-64 overflow-visible order-1 md:order-2 flex justify-center journal-image">
-          <div className="absolute top-1/2 left-[50%] md:left-[70%] -translate-x-1/2 -translate-y-1/2 z-50 scale-140 overflow-visible w-64 md:w-80">
-            <TheAlchemistCard />
-          </div>
+        <div className="order-1 md:order-2 journal-image">
+          <MistFrame
+            src={PHOTOS.nigredo.src}
+            alt="Looking out over a grey sea"
+            focus={[...PHOTOS.nigredo.focus]}
+            zoom={PHOTOS.nigredo.zoom}
+            className="aspect-4/5 w-full"
+          />
         </div>
       </div>
-      <div className="flex items-center justify-center gap-4 opacity-70 journal-divider">
-        <div className="w-24 h-[1px] bg-neutral-500" />
-        <span className="text-xl text-neutral-500 font-serif">✧</span>
-        <div className="w-24 h-[1px] bg-neutral-500" />
-      </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-[3fr_7fr] gap-8 items-center group journal-phase">
-        <div className="flex justify-center opacity-20 mix-blend-multiply order-1 journal-image">
-          <div className="relative w-48 h-48">
-            <Image
-              src="/assets/images/craftings/transmutation_circle.png"
-              alt="Ouroboros"
-              fill
-              className="object-contain animate-[spin_120s_linear_infinite]"
-            />
-          </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-14 items-center group journal-phase">
+        <div className="order-1 journal-image">
+          {/* A real night at the keys, held in the same drifting mist as the craftings */}
+          <MistFrame
+            src={PHOTOS.albedo.src}
+            alt="Coding alone late at night, lit only by the screens"
+            focus={[...PHOTOS.albedo.focus]}
+            zoom={PHOTOS.albedo.zoom}
+            className="aspect-4/5 w-full"
+          />
         </div>
         <div className="text-left space-y-4 order-2 journal-text">
           <h3 className="text-3xl sm:text-4xl font-kings text-neutral-800 tracking-wide border-b border-neutral-400/30 pb-2 inline-block">
             {t.albedo.title}
           </h3>
-          <p className="font-garamond text-2xl sm:text-3xl leading-relaxed text-neutral-700">
-            <span className="float-left text-7xl font-kings text-neutral-900 mr-3 mt-[-6px] leading-none drop-shadow-sm">
-              {t.albedo.initial}
+          <p className="font-garamond text-xl sm:text-2xl leading-relaxed text-neutral-700">
+            <span className="float-left text-7xl font-kings text-neutral-900 mr-3 mt-[-4px] leading-none drop-shadow-sm">
+              {t.albedo.desc.charAt(0)}
             </span>
-            {t.albedo.desc}
+            {t.albedo.desc.slice(1)}
           </p>
         </div>
       </div>
 
-      <div className="flex items-center justify-center gap-4 opacity-70 journal-divider">
-        <div className="w-24 h-[1px] bg-neutral-500" />
-        <span className="text-xl text-neutral-500 font-serif">✧</span>
-        <div className="w-24 h-[1px] bg-neutral-500" />
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-[7fr_3fr] gap-8 items-center group journal-phase">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-14 items-center group journal-phase">
         <div className="text-left space-y-4 order-2 md:order-1 journal-text">
           <h3 className="text-3xl sm:text-4xl font-kings text-neutral-800 tracking-wide border-b border-neutral-400/30 pb-2 inline-block">
             {t.citrinitas.title}
           </h3>
-          <p className="font-garamond text-2xl sm:text-3xl leading-relaxed text-neutral-700">
-            <span className="float-left text-7xl font-kings text-neutral-900 mr-3 mt-[-6px] leading-none drop-shadow-sm">
-              {t.citrinitas.initial}
+          <p className="font-garamond text-xl sm:text-2xl leading-relaxed text-neutral-700">
+            <span className="float-left text-7xl font-kings text-neutral-900 mr-3 mt-[-4px] leading-none drop-shadow-sm">
+              {t.citrinitas.desc.charAt(0)}
             </span>
-            {t.citrinitas.desc}
+            {t.citrinitas.desc.slice(1)}
           </p>
         </div>
-        <div className="flex justify-center order-1 md:order-2 opacity-60 mix-blend-multiply journal-image">
-          <div className="relative w-48 h-48">
-            <Image
-              src="/assets/images/craftings/symbols/squared_circle.svg"
-              alt="Philosopher's Stone"
-              fill
-              className="object-contain animate-[spin_120s_linear_infinite]"
-            />
-          </div>
+        <div className="order-1 md:order-2 journal-image">
+          <MistFrame
+            src={PHOTOS.citrinitas.src}
+            alt="A desk under warm lamplight, The Alchemist on the shelf"
+            focus={[...PHOTOS.citrinitas.focus]}
+            zoom={PHOTOS.citrinitas.zoom}
+            className="aspect-4/5 w-full"
+          />
         </div>
       </div>
 
-      <div className="flex items-center justify-center gap-4 opacity-70 journal-divider">
-        <div className="w-24 h-[1px] bg-neutral-500" />
-        <span className="text-xl text-neutral-500 font-serif">✧</span>
-        <div className="w-24 h-[1px] bg-neutral-500" />
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-[3fr_7fr] gap-8 items-center group journal-phase">
-        <div className="flex justify-center opacity-60 mix-blend-multiply order-1 journal-image">
-          <div className="relative w-40 h-40 flex items-center justify-center">
-            <Image
-              src="/assets/images/craftings/symbols/code_symbol.png"
-              alt="Universal Solvent Symbol"
-              fill
-              className="object-contain"
-            />
-          </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-14 items-center group journal-phase">
+        <div className="order-1 journal-image">
+          <MistFrame
+            src={PHOTOS.rubedo.src}
+            alt="Standing in the sun, looking out to sea"
+            focus={[...PHOTOS.rubedo.focus]}
+            zoom={PHOTOS.rubedo.zoom}
+            className="aspect-4/5 w-full"
+          />
         </div>
         <div className="text-left space-y-4 order-2 journal-text">
           <h3 className="text-3xl sm:text-4xl font-kings text-neutral-800 tracking-wide border-b border-neutral-400/30 pb-2 inline-block">
             {t.rubedo.title}
           </h3>
-          <p className="font-garamond text-2xl sm:text-3xl leading-relaxed text-neutral-700">
-            <span className="float-left text-7xl font-kings text-neutral-900 mr-3 mt-[-6px] leading-none drop-shadow-sm">
-              {t.rubedo.initial}
+          <p className="font-garamond text-xl sm:text-2xl leading-relaxed text-neutral-700">
+            <span className="float-left text-7xl font-kings text-neutral-900 mr-3 mt-[-4px] leading-none drop-shadow-sm">
+              {t.rubedo.desc.charAt(0)}
             </span>
-            {t.rubedo.desc}
+            {t.rubedo.desc.slice(1)}
           </p>
         </div>
-      </div>
-
-      <div className="flex items-center justify-center gap-4 opacity-40 journal-divider">
-        <div className="h-[1px] w-32 bg-gradient-to-r from-transparent via-neutral-600 to-transparent" />
-        <div className="w-2 h-2 rotate-45 border border-neutral-600 bg-neutral-600/20" />
-        <div className="h-[1px] w-32 bg-gradient-to-r from-transparent via-neutral-600 to-transparent" />
       </div>
     </div>
   );

@@ -20,6 +20,7 @@ const fragmentShader = `
   uniform vec2 uResolution;
   uniform vec2 uMouse;
   uniform float uScroll;
+  uniform float uCool; // 0 = forge amber, 1 = night silver
 
   // Hash function for noise
   float hash(vec2 p) {
@@ -74,10 +75,17 @@ const fragmentShader = `
     // Layer 3: Top layer moves fastest, creating volumetric separation
     float f = fbm(nebulaSt + r + vec2(0.0, uScroll * 0.22));
 
-    // Deep Amber/Gold color palette
-    vec3 color = mix(vec3(0.01, 0.01, 0.01), vec3(0.1, 0.03, 0.0), clamp((f * f) * 3.0, 0.0, 1.0));
-    color = mix(color, vec3(0.4, 0.15, 0.0), clamp(length(q), 0.0, 1.0));
-    color = mix(color, vec3(0.6, 0.3, 0.0), clamp(length(r.x), 0.0, 1.0));
+    // Forge palette (amber) cools into the night palette (ink blue, moonlit silver)
+    vec3 warm = mix(vec3(0.01, 0.01, 0.01), vec3(0.1, 0.03, 0.0), clamp((f * f) * 3.0, 0.0, 1.0));
+    warm = mix(warm, vec3(0.4, 0.15, 0.0), clamp(length(q), 0.0, 1.0));
+    warm = mix(warm, vec3(0.6, 0.3, 0.0), clamp(length(r.x), 0.0, 1.0));
+
+    vec3 cool = mix(vec3(0.005, 0.007, 0.014), vec3(0.03, 0.04, 0.08), clamp((f * f) * 3.0, 0.0, 1.0));
+    cool = mix(cool, vec3(0.14, 0.17, 0.28), clamp(length(q), 0.0, 1.0));
+    cool = mix(cool, vec3(0.34, 0.36, 0.44), clamp(length(r.x), 0.0, 1.0));
+    cool = mix(cool, vec3(0.30, 0.17, 0.06), clamp(r.y * r.y * 0.6, 0.0, 0.35));
+
+    vec3 color = mix(warm, cool, uCool);
 
     // Thin out the clouds using smoothstep to only keep the denser wisps
     float density = smoothstep(0.4, 1.0, f);
@@ -96,7 +104,14 @@ const fragmentShader = `
   }
 `;
 
-export function OglStarField() {
+type OglStarFieldProps = {
+  /** Fixed temperature, 0 = forge amber, 1 = night silver */
+  cool?: number;
+  /** Live temperature, read every frame; overrides `cool` */
+  coolRef?: React.RefObject<number>;
+};
+
+export function OglStarField({ cool = 1, coolRef }: OglStarFieldProps = {}) {
   const containerRef = useRef<HTMLDivElement>(null);
   const rendererRef = useRef<Renderer | null>(null);
 
@@ -125,6 +140,7 @@ export function OglStarField() {
         },
         uMouse: { value: [0, 0] },
         uScroll: { value: 0 },
+        uCool: { value: coolRef?.current ?? cool },
       },
     });
 
@@ -166,6 +182,9 @@ export function OglStarField() {
       currentScroll += (targetScroll - currentScroll) * 0.08;
       program.uniforms.uScroll.value = currentScroll;
 
+      const targetCool = coolRef?.current ?? cool;
+      program.uniforms.uCool.value += (targetCool - program.uniforms.uCool.value) * 0.08;
+
       // Smooth mouse interpolation
       currentMouseX += (targetMouseX - currentMouseX) * 0.05;
       currentMouseY += (targetMouseY - currentMouseY) * 0.05;
@@ -185,7 +204,9 @@ export function OglStarField() {
         container.removeChild(gl.canvas);
       }
     };
-  }, []);
+    // coolRef is read per frame; only a change of the fixed value needs a rebuild
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cool]);
 
   return <div ref={containerRef} className="absolute inset-0 w-full h-full" />;
 }

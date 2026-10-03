@@ -20,6 +20,13 @@ export interface BookSceneProps {
   scrollProgress: React.MutableRefObject<number>;
 }
 
+// The descent of the book, as a share of the grimoire timeline. It starts the
+// moment the torn edge of the journal page comes into view, so the book seems
+// to fall out from under the paper, and lands just before the tech icons burst
+// out at 0.4.
+const ENTRANCE_START = 0;
+const ENTRANCE_END = 0.38;
+
 export function BookScene({ scrollProgress }: BookSceneProps) {
   const bookRef = useRef<THREE.Group>(null);
 
@@ -27,10 +34,11 @@ export function BookScene({ scrollProgress }: BookSceneProps) {
     if (!bookRef.current) return;
     const p = scrollProgress.current;
 
-    // Phase 1: Entrance (0.0 - 0.2)
-    if (p < 0.2) {
-      const entranceProgress = p / 0.2;
-      const ease = 1 - Math.pow(1 - entranceProgress, 3);
+    // Phase 1: Entrance
+    if (p < ENTRANCE_END) {
+      const entranceProgress = Math.max(0, (p - ENTRANCE_START) / (ENTRANCE_END - ENTRANCE_START));
+      // Quadratic ease-out: a steady glide that settles gently, no sudden plunge
+      const ease = 1 - (1 - entranceProgress) ** 2;
 
       // ĐIỀU CHỈNH VỊ TRÍ BAY VÀO: Sách bay từ trên cao xuống giữa màn hình (y=0)
       // Bắt đầu ở y=6 (ngay sát mép trên của camera) để tạo cảm giác bay ra từ tờ giấy rách
@@ -48,9 +56,9 @@ export function BookScene({ scrollProgress }: BookSceneProps) {
       const s = THREE.MathUtils.lerp(0, 1, ease);
       bookRef.current.scale.setScalar(s);
     }
-    // Phase 2: Idle (0.2 - 0.7)
+    // Phase 2: Idle (ENTRANCE_END - 0.7)
     else if (p < 0.7) {
-      const rangeProgress = (p - 0.2) / 0.5;
+      const rangeProgress = (p - ENTRANCE_END) / (0.7 - ENTRANCE_END);
 
       bookRef.current.position.y = 0;
       bookRef.current.scale.setScalar(1);

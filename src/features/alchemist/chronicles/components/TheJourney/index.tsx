@@ -8,6 +8,8 @@ import Image from "next/image";
 import { useLang } from "@/hooks/useLang";
 import { translations } from "@/constants/translations";
 import { DesertDustCanvas } from "./components/DesertDustCanvas";
+import { cn } from "@/lib/utils";
+import { QUOTE_CLASS } from "../quoteStyle";
 // Global GoldenThread used in ChroniclesPage
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
@@ -37,7 +39,7 @@ export function TheJourney() {
         scrollTrigger: {
           trigger: containerRef.current,
           start: "top top",
-          end: "+=800%", // Increased scroll distance for longer void reading time
+          end: "+=400%",
           pin: true,
           scrub: 1.5,
           anticipatePin: 1,
@@ -202,20 +204,14 @@ export function TheJourney() {
         key={`narratives-${lang}`}
         className="relative w-full h-full flex items-center justify-center pointer-events-none"
       >
-        <div className="narrative-entry absolute inset-0 z-20 flex flex-col items-center justify-center pointer-events-none px-8 max-w-4xl mx-auto">
-          <p className="text-3xl md:text-5xl lg:text-6xl font-garamond italic text-white/90 tracking-widest leading-relaxed drop-shadow-[0_0_20px_rgba(255,255,255,0.4)] text-center">
-            {t.narrative1}
-          </p>
+        <div className="narrative-entry absolute inset-0 z-20 flex flex-col items-center justify-center pointer-events-none px-6 max-w-5xl mx-auto">
+          <p className={cn(QUOTE_CLASS, "text-center")}>{t.narrative1}</p>
         </div>
-        <div className="narrative-entry absolute inset-0 z-20 flex flex-col items-center justify-center pointer-events-none px-8 max-w-4xl mx-auto">
-          <p className="text-3xl md:text-5xl lg:text-6xl font-garamond italic text-white/90 tracking-widest leading-relaxed drop-shadow-[0_0_20px_rgba(255,255,255,0.4)] text-center">
-            {t.narrative2}
-          </p>
+        <div className="narrative-entry absolute inset-0 z-20 flex flex-col items-center justify-center pointer-events-none px-6 max-w-5xl mx-auto">
+          <p className={cn(QUOTE_CLASS, "text-center")}>{t.narrative2}</p>
         </div>
-        <div className="narrative-entry absolute inset-0 z-20 flex flex-col items-center justify-center pointer-events-none px-8 max-w-4xl mx-auto">
-          <p className="text-3xl md:text-5xl lg:text-6xl font-garamond italic text-white/90 tracking-widest leading-relaxed drop-shadow-[0_0_20px_rgba(255,255,255,0.4)] text-center">
-            {t.narrative3}
-          </p>
+        <div className="narrative-entry absolute inset-0 z-20 flex flex-col items-center justify-center pointer-events-none px-6 max-w-5xl mx-auto">
+          <p className={cn(QUOTE_CLASS, "text-center")}>{t.narrative3}</p>
         </div>
       </div>
       <div

@@ -54,25 +54,25 @@ export function useGrimoireTimeline({
       ScrollTrigger.create({
         trigger: containerRef.current,
         start: "top top",
-        end: `+=${TIMELINE_CONFIG.TOTAL_DURATION}`,
+        end: `+=${TIMELINE_CONFIG.PIN_SCREENS * 100}%`,
         pin: true,
         refreshPriority: TIMELINE_CONFIG.REFRESH_PRIORITY,
       });
 
-      const mm = gsap.matchMedia();
-
-      mm.add("(min-width: 768px)", () => {
-        gsap.timeline({
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: "top bottom",
-            end: () => `+=${TIMELINE_CONFIG.TOTAL_DURATION + window.innerHeight}`,
-            scrub: TIMELINE_CONFIG.SCRUB,
-            onUpdate: (self) => {
-              scrollProgress.current = self.progress;
-            },
+      // Drives the book and the tech icons at every screen width; gating this
+      // to desktop left the progress at 0 on narrow screens, where the book
+      // has zero scale and never appears.
+      gsap.timeline({
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top bottom",
+          // Starts one screen before the pin, so it runs for the pin plus that screen
+          end: () => `+=${(TIMELINE_CONFIG.PIN_SCREENS + 1) * window.innerHeight}`,
+          scrub: TIMELINE_CONFIG.SCRUB,
+          onUpdate: (self) => {
+            scrollProgress.current = self.progress;
           },
-        });
+        },
       });
     },
     { scope: containerRef }

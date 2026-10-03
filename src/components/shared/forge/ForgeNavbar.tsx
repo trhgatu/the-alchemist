@@ -40,8 +40,6 @@ export function NavbarForge() {
   const navItems = [
     { name: t.chronicles, link: "/chronicles" },
     { name: t.craftings, link: "/craftings" },
-    { name: t.alchemist, link: "/the-alchemist" },
-    { name: t.timeline, link: "/timeline" },
   ];
 
   // Hide while scrolling down, reveal on scroll up or near the top

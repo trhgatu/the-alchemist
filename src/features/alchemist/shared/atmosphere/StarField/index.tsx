@@ -109,7 +109,7 @@ export function StarField() {
       ctx.clearRect(0, 0, width, height);
 
       // Star colors: Ivory to pale gold
-      ctx.fillStyle = "#fef3c7";
+      ctx.fillStyle = "#e6eaf2";
 
       targetX += (mouseX - targetX) * 0.05;
       targetY += (mouseY - targetY) * 0.05;
@@ -140,7 +140,7 @@ export function StarField() {
 
         if (star.size > 2) {
           ctx.shadowBlur = 15;
-          ctx.shadowColor = "rgba(245, 158, 11, 0.8)"; // Amber trail glow
+          ctx.shadowColor = "rgba(200, 212, 235, 0.7)"; // Moonlight trail glow
         } else {
           ctx.shadowBlur = 0;
         }

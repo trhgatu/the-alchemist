@@ -21,9 +21,9 @@ export const createStarTexture = (): THREE.Texture | null => {
 
   const gradient = ctx.createRadialGradient(cx, cy, 0, cx, cy, size * 0.4);
   gradient.addColorStop(0, "rgba(255, 255, 255, 1)");
-  gradient.addColorStop(0.1, "rgba(255, 196, 107, 0.8)");
-  gradient.addColorStop(0.5, "rgba(245, 158, 11, 0.1)");
-  gradient.addColorStop(1, "rgba(245, 158, 11, 0)");
+  gradient.addColorStop(0.1, "rgba(214, 224, 245, 0.8)");
+  gradient.addColorStop(0.5, "rgba(170, 185, 220, 0.1)");
+  gradient.addColorStop(1, "rgba(170, 185, 220, 0)");
 
   ctx.fillStyle = gradient;
   ctx.fillRect(0, 0, size, size);
@@ -66,7 +66,7 @@ export const createStarTexture = (): THREE.Texture | null => {
 
   const coreGlow = ctx.createRadialGradient(cx, cy, 0, cx, cy, size * 0.05);
   coreGlow.addColorStop(0, "rgba(255, 255, 255, 0.9)");
-  coreGlow.addColorStop(0.5, "rgba(255, 236, 200, 0.4)");
+  coreGlow.addColorStop(0.5, "rgba(225, 232, 248, 0.4)");
   coreGlow.addColorStop(1, "rgba(255, 255, 255, 0)");
   ctx.fillStyle = coreGlow;
   ctx.fillRect(0, 0, size, size);

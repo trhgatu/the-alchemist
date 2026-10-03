@@ -5,7 +5,6 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/all";
 import { useGSAP } from "@gsap/react";
 import { TheAlchemistJournal } from "./TheAlchemistJournal";
-import { TheAlchemistRecipes } from "./TheAlchemistRecipes";
 import { useLang } from "@/hooks/useLang";
 import { translations } from "@/constants/translations";
 
@@ -166,19 +165,13 @@ export function TheAlchemist() {
               </span>
             ))}
           </div>
-
-          <div className="flex items-center justify-center gap-4 my-6 relative z-20 opacity-70">
-            <div className="w-24 h-[1px] bg-neutral-500" />
-            <span className="text-xl text-neutral-500 font-serif">✧</span>
-            <div className="w-24 h-[1px] bg-neutral-500" />
-          </div>
         </div>
 
         <div className="the-alchemist-content-container font-garamond relative z-10 w-full flex flex-col items-center gap-16">
-          <div className="space-y-6 p-6 md:p-0 relative z-20 text-center max-w-5xl mx-auto mb-12">
+          <div className="space-y-6 p-6 md:p-0 relative z-20 text-center max-w-4xl mx-auto mb-12">
             <p
               key={`alchemist-desc-${lang}`}
-              className="the-alchemist-desc-1 text-3xl sm:text-4xl lg:text-5xl leading-[1.6] text-neutral-900 font-medium font-garamond relative"
+              className="the-alchemist-desc-1 text-2xl sm:text-[1.7rem] lg:text-3xl leading-[1.7] text-neutral-900 font-medium font-garamond relative"
               aria-label={theAlchemistText}
             >
               {theAlchemistText.split(" ").map((word, wi) => (
@@ -194,7 +187,6 @@ export function TheAlchemist() {
           </div>
           <div className="w-full space-y-12 mt-12">
             <TheAlchemistJournal />
-            <TheAlchemistRecipes />
           </div>
         </div>
       </div>

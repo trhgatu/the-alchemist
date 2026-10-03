@@ -25,11 +25,13 @@ export const GlobalAtmosphere = ({
   const embersRef = useRef<HTMLDivElement>(null);
   const starsRef = useRef<HTMLDivElement>(null);
   const [embersVisible, setEmbersVisible] = useState(true);
+  const coolRef = useRef(0);
 
   useAtmosphereTimeline({
     containerRef,
     starsRef,
     embersRef,
+    coolRef,
     setEmbersVisible: (visible) => {
       setEmbersVisible((prev) => (prev !== visible ? visible : prev));
     },
@@ -39,7 +41,7 @@ export const GlobalAtmosphere = ({
     <div ref={containerRef} className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
       {showStars && (
         <div ref={starsRef} className="absolute inset-0 z-0 global-stars pointer-events-none">
-          <OglStarField />
+          <OglStarField coolRef={coolRef} />
           <StarField />
         </div>
       )}

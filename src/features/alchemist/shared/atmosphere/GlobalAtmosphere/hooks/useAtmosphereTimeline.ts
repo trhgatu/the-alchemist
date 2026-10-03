@@ -7,6 +7,8 @@ interface UseAtmosphereTimelineProps {
   containerRef: React.RefObject<HTMLDivElement | null>;
   starsRef: React.RefObject<HTMLDivElement | null>;
   embersRef: React.RefObject<HTMLDivElement | null>;
+  /** Nebula temperature, 0 = forge, 1 = night; written as the forge embers die out */
+  coolRef: React.RefObject<number>;
   setEmbersVisible: (visible: boolean) => void;
 }
 
@@ -14,6 +16,7 @@ export const useAtmosphereTimeline = ({
   containerRef,
   starsRef,
   embersRef,
+  coolRef,
   setEmbersVisible,
 }: UseAtmosphereTimelineProps) => {
   useGSAP(
@@ -33,6 +36,7 @@ export const useAtmosphereTimeline = ({
           end: "top top",
           scrub: true,
           onUpdate: (self) => {
+            coolRef.current = self.progress;
             gsap.set(embersRef.current, {
               opacity: 1 - self.progress,
               autoAlpha: self.progress >= 1 ? 0 : 1,

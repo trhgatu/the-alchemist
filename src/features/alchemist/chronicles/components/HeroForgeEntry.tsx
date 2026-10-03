@@ -8,12 +8,9 @@ import { useLang } from "@/hooks/useLang";
 import { useAppStore } from "@/hooks/useAppStore";
 import { translations } from "@/constants/translations";
 import { cn } from "@/lib/utils";
+import { QUOTE_CLASS } from "./quoteStyle";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
-
-// Shared look for every opening quote
-const QUOTE_CLASS =
-  "font-garamond italic text-xl sm:text-3xl md:text-4xl lg:text-5xl text-white leading-[1.6] drop-shadow-[0_0_20px_rgba(255,255,255,0.45)]";
 
 // Timeline time after which the washi paper no longer sits behind the navbar
 const WASHI_COVER_END = 0.8;
@@ -62,7 +59,7 @@ export const HeroForgeEntry = () => {
         scrollTrigger: {
           trigger: scope.current,
           start: "top top",
-          end: "+=8000",
+          end: "+=4500",
           scrub: 1,
           pin: true,
           refreshPriority: 1000,

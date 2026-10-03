@@ -17,12 +17,6 @@ export interface TechParticlesProps {
   scrollProgress: React.MutableRefObject<number>;
 }
 
-/**
- * Render an animated constellation of technology icons that explodes, scatters, and converges based on scroll progress.
- *
- * @param scrollProgress - Mutable ref whose current numeric value (typically 0–1) drives the particle animation timeline
- * @returns The React element containing the particle group, icon sprites, and connecting constellation lines
- */
 export function TechParticles({ scrollProgress }: TechParticlesProps) {
   const groupRef = useRef<THREE.Group>(null);
 
@@ -138,10 +132,8 @@ export function TechParticles({ scrollProgress }: TechParticlesProps) {
         explosionEnd
       );
 
-      // Vị trí bay ra chậm hơn một chút ở lúc đầu (easeOut nhẹ hơn)
       const easePosition = 1 - Math.pow(1 - particleExplosionFactor, 2);
 
-      // Kích thước to ra thật nhanh ngay từ đầu để người dùng nhìn thấy nó xuất phát từ tâm
       const easeScale = 1 - Math.pow(1 - particleExplosionFactor, 5);
 
       const easeConverge = convergeFactor * convergeFactor * (3 - 2 * convergeFactor);

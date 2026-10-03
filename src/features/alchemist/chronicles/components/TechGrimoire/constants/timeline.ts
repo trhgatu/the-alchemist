@@ -1,5 +1,6 @@
 export const TIMELINE_CONFIG = {
-  TOTAL_DURATION: "+=1200%",
+  /** Pin length in viewport heights */
+  PIN_SCREENS: 5,
   SCRUB: 1.5,
   REFRESH_PRIORITY: 800,
 } as const;

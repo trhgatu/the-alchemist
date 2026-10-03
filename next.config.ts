@@ -8,6 +8,9 @@ const nextConfig: NextConfig = {
         destination: "/chronicles",
         permanent: false,
       },
+      // Retired pages; their story now lives in the chronicles
+      { source: "/the-alchemist", destination: "/chronicles", permanent: true },
+      { source: "/timeline", destination: "/chronicles", permanent: true },
     ];
   },
   images: {
