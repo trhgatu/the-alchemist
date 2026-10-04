@@ -5,11 +5,8 @@ export const translations = {
       craftings: "Craftings",
     },
     hero: {
-      subtitle: "Where Vision Becomes Masterpiece",
-      intro: "I am",
-      firstTitle: "The Architect",
-      secondTitle: "Of Reality",
-      desc: "Ideas are fleeting. Masterpieces are eternal. I transform the intangible into the unforgettable—forging reality from pure imagination.",
+      role: "Creative developer — I write code the way a smith works metal.",
+      scroll: "scroll to open",
     },
     chronicles: {
       transmutation: {
@@ -87,6 +84,7 @@ export const translations = {
       back: "All craftings",
       next: "Next",
       notFound: "This work could not be found.",
+      labels: { year: "Year", discipline: "Discipline", state: "State", materials: "Materials" },
     },
     common: {
       loading: "Communing with the Ether...",
@@ -100,11 +98,8 @@ export const translations = {
       craftings: "Chế Tác",
     },
     hero: {
-      subtitle: "Nơi Tầm Nhìn Trở Thành Tuyệt Tác",
-      intro: "Tôi là",
-      firstTitle: "The Architect",
-      secondTitle: "Of Reality",
-      desc: "Ý niệm là phù du, tuyệt tác mới là vĩnh cửu. Tôi tôi luyện những điều vô hình thành những dấu ấn không thể phai mờ—hiển lộ thực tại từ hư vô của trí tưởng tượng.",
+      role: "Lập trình viên sáng tạo — viết code như người thợ rèn kim loại.",
+      scroll: "cuộn để mở",
     },
     chronicles: {
       transmutation: {
@@ -181,6 +176,7 @@ export const translations = {
       back: "Tất cả tác phẩm",
       next: "Tiếp theo",
       notFound: "Không tìm thấy tác phẩm này.",
+      labels: { year: "Năm", discipline: "Lĩnh vực", state: "Trạng thái", materials: "Chất liệu" },
     },
     common: {
       loading: "Đang kết nối với Ether...",

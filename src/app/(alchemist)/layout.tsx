@@ -1,4 +1,4 @@
-import { LanguageToggle, ForgeNavigationWrapper } from "@/components/shared/forge";
+import { ForgeNavigationWrapper } from "@/components/shared/forge";
 import SplashCursor from "@/features/alchemist/shared/effects/SplashCursor";
 // import { View } from '@react-three/drei';
 // import InfinityLoopScene from '@/features/alchemist/chronicles/scenes/InfinityLoopScene';
@@ -28,8 +28,6 @@ export default async function ForgeLayout({ children }: { children: React.ReactN
           </div>
         </div>
       </ForgeNavigationWrapper>
-
-      <LanguageToggle />
     </div>
   );
 }

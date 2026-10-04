@@ -8,6 +8,7 @@ import { useAppStore } from "@/hooks/useAppStore";
 import { useTransitionRouter } from "@/hooks/useTransitionRouter";
 import { translations } from "@/constants/translations";
 import { cn } from "@/lib/utils";
+import { LanguageToggle } from "./LanguageToggle";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -16,12 +17,14 @@ const TONES = {
   ink: {
     text: "text-neutral-900",
     link: "text-neutral-900/75 hover:text-neutral-900",
+    faint: "text-neutral-900/45 hover:text-neutral-900",
     seal: "bg-amber-800",
     veil: "from-transparent",
   },
   light: {
     text: "text-neutral-100",
     link: "text-neutral-300 hover:text-white",
+    faint: "text-neutral-500 hover:text-white",
     seal: "bg-amber-400",
     veil: "from-black/70",
   },
@@ -91,57 +94,69 @@ export function NavbarForge() {
               navigate("/chronicles");
             }}
             className={cn(
-              "font-kings text-2xl md:text-[1.75rem] leading-none transition-colors duration-700",
-              tone.text
+              "font-kings text-2xl md:text-[1.75rem] leading-none transition-all duration-700",
+              tone.text,
+              // The hero already shows the name, large; avoid saying it twice
+              navTone === "ink" && !isMenuOpen && "opacity-0 pointer-events-none"
             )}
           >
             trhgatu
           </a>
 
-          <ul className="hidden md:flex items-center gap-9">
-            {navItems.map((item) => {
-              const active = isActive(item.link);
-              return (
-                <li key={item.link}>
-                  <a
-                    href={item.link}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      navigate(item.link);
-                    }}
-                    aria-current={active ? "page" : undefined}
-                    className={cn(
-                      "relative font-garamond font-medium text-[17px] tracking-[0.01em] transition-colors duration-500",
-                      active ? tone.text : tone.link
-                    )}
-                  >
-                    {item.name}
-                    {active && (
-                      <motion.span
-                        layoutId="nav-seal"
-                        className={cn(
-                          "absolute -bottom-2.5 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full transition-colors duration-700",
-                          tone.seal
-                        )}
-                      />
-                    )}
-                  </a>
-                </li>
-              );
-            })}
-          </ul>
+          <div className="flex items-center gap-6 md:gap-9">
+            <ul className="hidden md:flex items-center gap-9">
+              {navItems.map((item) => {
+                const active = isActive(item.link);
+                return (
+                  <li key={item.link}>
+                    <a
+                      href={item.link}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        navigate(item.link);
+                      }}
+                      aria-current={active ? "page" : undefined}
+                      className={cn(
+                        "relative font-garamond font-medium text-[17px] tracking-[0.01em] transition-colors duration-500",
+                        active ? tone.text : tone.link
+                      )}
+                    >
+                      {item.name}
+                      {active && (
+                        <motion.span
+                          layoutId="nav-seal"
+                          className={cn(
+                            "absolute -bottom-2.5 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full transition-colors duration-700",
+                            tone.seal
+                          )}
+                        />
+                      )}
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
 
-          <button
-            type="button"
-            onClick={() => setIsMenuOpen((v) => !v)}
-            aria-expanded={isMenuOpen}
-            className={cn(
-              "md:hidden font-garamond font-medium text-[17px] transition-colors duration-700",
-              tone.text
-            )}
-          >
-            {isMenuOpen ? "close" : "menu"}
-          </button>
+            {/* A thin rule sets the language apart from the pages */}
+            <span
+              aria-hidden
+              className={cn("hidden md:block h-4 w-px opacity-25 bg-current", tone.text)}
+            />
+
+            <LanguageToggle activeClassName={tone.text} idleClassName={tone.faint} />
+
+            <button
+              type="button"
+              onClick={() => setIsMenuOpen((v) => !v)}
+              aria-expanded={isMenuOpen}
+              className={cn(
+                "md:hidden font-garamond font-medium text-[17px] transition-colors duration-700",
+                tone.text
+              )}
+            >
+              {isMenuOpen ? "close" : "menu"}
+            </button>
+          </div>
         </nav>
       </motion.header>
 

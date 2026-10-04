@@ -56,12 +56,12 @@ function pointerPrototype(): Pointer {
 
 export default function SplashCursor({
   SIM_RESOLUTION = 128,
-  DYE_RESOLUTION = 1440,
+  DYE_RESOLUTION = 720,
   CAPTURE_RESOLUTION = 512,
   DENSITY_DISSIPATION = 3.5,
   VELOCITY_DISSIPATION = 2,
   PRESSURE = 0.1,
-  PRESSURE_ITERATIONS = 20,
+  PRESSURE_ITERATIONS = 10,
   CURL = 3,
   SPLAT_RADIUS = 0.2,
   SPLAT_FORCE = 6000,
@@ -922,7 +922,8 @@ export default function SplashCursor({
     }
 
     function scaleByPixelRatio(input: number) {
-      const pixelRatio = window.devicePixelRatio || 1;
+      // Soft ink trails: full retina resolution only multiplies the fill cost
+      const pixelRatio = 1;
       return Math.floor(input * pixelRatio);
     }
 
@@ -932,7 +933,31 @@ export default function SplashCursor({
     let lastUpdateTime = Date.now();
     let colorUpdateTimer = 0.0;
 
+    // The fluid only lives while the cursor moves; once the trail has faded
+    // the simulation sleeps instead of solving an empty field every frame.
+    const IDLE_AFTER_MS = 2500;
+    let lastInputAt = 0;
+    let sleeping = false;
+    const wake = () => {
+      lastInputAt = performance.now();
+      sleeping = false;
+    };
+    window.addEventListener("pointermove", wake, { passive: true });
+    window.addEventListener("pointerdown", wake, { passive: true });
+    window.addEventListener("touchmove", wake, { passive: true });
+
     function updateFrame() {
+      if (performance.now() - lastInputAt > IDLE_AFTER_MS) {
+        if (!sleeping) {
+          // Leave a clean, transparent canvas behind
+          gl.clearColor(0, 0, 0, 0);
+          gl.clear(gl.COLOR_BUFFER_BIT);
+          sleeping = true;
+        }
+        lastUpdateTime = Date.now();
+        requestAnimationFrame(updateFrame);
+        return;
+      }
       const dt = calcDeltaTime();
       if (resizeCanvas()) initFramebuffers();
       updateColors(dt);

@@ -164,10 +164,8 @@ export const ForgeFooter = () => {
         </p>
       </div>
 
-      {/* The name, wide across the page, its descenders sunk below the edge */}
       <div aria-hidden className="relative mt-16 h-[14vw] select-none">
         <div className="footer-name absolute inset-x-0 top-0 whitespace-nowrap text-center font-kings text-[16vw] leading-[0.8] will-change-transform">
-          {/* Flare sits behind, so it only warms the halo, never the letters */}
           <span className="fire-flare absolute inset-0 block">trhgatu</span>
           <span className="fire relative block">trhgatu</span>
         </div>
