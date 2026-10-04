@@ -37,7 +37,7 @@ export function TheJourney() {
       if (!containerRef.current) return;
 
       const entries = containerRef.current.querySelectorAll(".narrative-entry");
-      gsap.set(entries, { opacity: 0, scale: 0.9, filter: "blur(24px)" });
+      gsap.set(entries, { opacity: 0, scale: 0.9 });
       gsap.set(".dawn-sky", { opacity: 0 });
       gsap.set(".dawn-sun", { yPercent: 60, opacity: 0 });
       gsap.set(".dawn-land", { yPercent: 12, opacity: 0 });
@@ -61,17 +61,9 @@ export function TheJourney() {
       // The last stretch of night
       entries.forEach((entry, i) => {
         const at = i * 6;
-        tl.to(
-          entry,
-          { opacity: 1, scale: 1, filter: "blur(0px)", duration: 2, ease: "power2.out" },
-          at
-        )
+        tl.to(entry, { opacity: 1, scale: 1, duration: 2, ease: "power2.out" }, at)
           .to(entry, { opacity: 1, duration: 2.5 }, at + 2)
-          .to(
-            entry,
-            { opacity: 0, scale: 1.08, filter: "blur(24px)", duration: 1.5, ease: "power2.in" },
-            at + 4.5
-          );
+          .to(entry, { opacity: 0, scale: 1.08, duration: 1.5, ease: "power2.in" }, at + 4.5);
       });
 
       // Dawn: the sky lightens from the horizon up, the sun rises, the land appears

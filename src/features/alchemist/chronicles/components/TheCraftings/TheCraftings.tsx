@@ -134,11 +134,10 @@ export function TheCraftings({ projects, isLoading, isError }: ProjectHomeProps)
       // 1. Title characters ignite with deep optical defocus & scale
       entranceTl.fromTo(
         ".craftings-title span",
-        { opacity: 0, y: 35, filter: "blur(16px)", scale: 1.15 },
+        { opacity: 0, y: 35, scale: 1.15 },
         {
           opacity: 1,
           y: 0,
-          filter: "blur(0px)",
           scale: 1,
           stagger: 0.035,
           duration: 1.2,
@@ -163,8 +162,8 @@ export function TheCraftings({ projects, isLoading, isError }: ProjectHomeProps)
       // 4. Poetic Lore desc softly manifests
       entranceTl.fromTo(
         ".craftings-desc",
-        { opacity: 0, y: 20, filter: "blur(10px)" },
-        { opacity: 1, y: 0, filter: "blur(0px)", duration: 1.2, ease: "power3.out" },
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 1.2, ease: "power3.out" },
         "-=0.6"
       );
 
@@ -187,16 +186,12 @@ export function TheCraftings({ projects, isLoading, isError }: ProjectHomeProps)
           const dist = Math.abs(angleDeg);
           const opacity = Math.max(0.5, 1 - dist / 80);
 
-          const blurAmount = Math.min(dist / 30, 1.5);
-          const brightness = Math.max(0.8, 1 - dist / 150);
-
           gsap.set(item, {
             x: x,
             y: y,
             yPercent: -50,
             rotation: angleDeg,
             opacity: opacity,
-            filter: `blur(${blurAmount}px) brightness(${brightness})`,
             zIndex: 100 - Math.round(dist),
           });
         });
@@ -250,16 +245,12 @@ export function TheCraftings({ projects, isLoading, isError }: ProjectHomeProps)
                 const dist = Math.abs(angleDeg);
                 const opacity = Math.max(0.5, 1 - dist / 80);
 
-                const blurAmount = Math.min(dist / 30, 1.5);
-                const brightness = Math.max(0.8, 1 - dist / 150);
-
                 gsap.set(item, {
                   x: x,
                   y: y,
                   yPercent: -50,
                   rotation: angleDeg,
                   opacity: opacity,
-                  filter: `blur(${blurAmount}px) brightness(${brightness})`,
                   zIndex: 100 - Math.round(dist),
                 });
               });

@@ -34,11 +34,10 @@ export function TheAlchemistJournal() {
         if (text) {
           gsap.fromTo(
             text,
-            { opacity: 0, y: 50, filter: "blur(8px)" },
+            { opacity: 0, y: 50 },
             {
               opacity: 1,
               y: 0,
-              filter: "blur(0px)",
               duration: 1.5,
               ease: "power2.out",
               scrollTrigger: {

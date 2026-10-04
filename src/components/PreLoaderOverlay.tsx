@@ -50,7 +50,6 @@ export default function LoaderWithOverlay() {
           duration: 1.0,
           scale: 0.95,
           opacity: 0,
-          filter: "blur(15px)",
           ease: "power2.inOut",
         },
         0
