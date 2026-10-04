@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Environment } from "@react-three/drei";
 import { useGSAP } from "@gsap/react";
@@ -7,6 +7,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { BookScene } from "./components/scene/BookScene";
 import { useGrimoireTimeline } from "./hooks";
+import { TickerDriver } from "@/components/shared/TickerDriver";
 import { TechParticles } from "./components/scene/TechParticles";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
@@ -18,6 +19,16 @@ export const TechGrimoire = () => {
     containerRef,
   });
 
+  // The book is only drawn while its section is on screen
+  const onScreen = useRef(false);
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => (onScreen.current = e.isIntersecting));
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   return (
     <section
       ref={containerRef}
@@ -26,10 +37,12 @@ export const TechGrimoire = () => {
     >
       <div className="absolute inset-0 z-10">
         <Canvas
+          frameloop="never"
           dpr={[1, 1.5]}
           camera={{ position: [0, 2, 8], fov: 35 }}
           gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
         >
+          <TickerDriver active={onScreen} />
           <ambientLight intensity={0.3} />
           <spotLight
             position={[5, 8, 5]}

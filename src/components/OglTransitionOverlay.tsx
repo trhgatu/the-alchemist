@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useImperativeHandle, forwardRef } from "react";
+import { onFrame } from "@/lib/frame";
 import { Renderer, Camera, Program, Mesh, Triangle } from "ogl";
 
 export interface OglTransitionRef {
@@ -109,7 +110,6 @@ export const OglTransitionOverlay = forwardRef<OglTransitionRef, OglTransitionOv
     const containerRef = useRef<HTMLDivElement>(null);
     const rendererRef = useRef<Renderer | null>(null);
     const programRef = useRef<Program | null>(null);
-    const animationFrameRef = useRef<number>(0);
 
     const currentProgress = useRef<number>(0);
 
@@ -167,19 +167,20 @@ export const OglTransitionOverlay = forwardRef<OglTransitionRef, OglTransitionOv
       window.addEventListener("resize", resize, false);
       resize();
 
-      // Render loop
-      const update = (t: number) => {
-        animationFrameRef.current = requestAnimationFrame(update);
-        if (programRef.current) {
-          programRef.current.uniforms.uTime.value = t * 0.001;
-        }
+      // At progress 0 the shader discards every pixel, so once the canvas has
+      // been cleared there is nothing to draw until the next transition
+      let idleDrawn = false;
+      const stop = onFrame((time) => {
+        const idle = currentProgress.current < 0.01;
+        if (idle && idleDrawn) return;
+        idleDrawn = idle;
+        if (programRef.current) programRef.current.uniforms.uTime.value = time;
         renderer.render({ scene: mesh, camera });
-      };
-      animationFrameRef.current = requestAnimationFrame(update);
+      });
 
       return () => {
         window.removeEventListener("resize", resize);
-        cancelAnimationFrame(animationFrameRef.current);
+        stop();
         if (gl.canvas && gl.canvas.parentNode) {
           gl.canvas.parentNode.removeChild(gl.canvas);
         }

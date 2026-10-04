@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { isHiddenOnScreen } from "@/lib/visibility";
+import { onFrame } from "@/lib/frame";
 import { Renderer, Camera, Program, Mesh, Triangle } from "ogl";
 
 const vertexShader = `
@@ -148,7 +149,6 @@ export function OglStarField({ cool = 1, coolRef }: OglStarFieldProps = {}) {
 
     const mesh = new Mesh(gl, { geometry, program });
 
-    let animationId: number;
     let targetMouseX = 0;
     let targetMouseY = 0;
     let currentMouseX = 0;
@@ -172,21 +172,15 @@ export function OglStarField({ cool = 1, coolRef }: OglStarFieldProps = {}) {
     window.addEventListener("mousemove", handleMouseMove);
     handleResize();
 
-    let lastTime = performance.now();
     let frame = 0;
     let hidden = false;
-    const update = (now: number) => {
+    const update = (_time: number, deltaMs: number) => {
       // The scroll timelines fade this layer out for long stretches; check
       // a few times a second and skip drawing while it cannot be seen
       if (frame++ % 15 === 0) hidden = isHiddenOnScreen(container);
-      if (hidden) {
-        lastTime = now;
-        animationId = requestAnimationFrame(update);
-        return;
-      }
+      if (hidden) return;
 
-      const delta = Math.min((now - lastTime) / 1000, 0.1);
-      lastTime = now;
+      const delta = Math.min(deltaMs / 1000, 0.1);
 
       program.uniforms.uTime.value += delta;
 
@@ -204,15 +198,14 @@ export function OglStarField({ cool = 1, coolRef }: OglStarFieldProps = {}) {
       program.uniforms.uMouse.value = [currentMouseX, currentMouseY];
 
       renderer.render({ scene: mesh, camera });
-      animationId = requestAnimationFrame(update);
     };
 
-    animationId = requestAnimationFrame(update);
+    const stop = onFrame(update);
 
     return () => {
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("mousemove", handleMouseMove);
-      cancelAnimationFrame(animationId);
+      stop();
       if (container && gl.canvas.parentNode === container) {
         container.removeChild(gl.canvas);
       }

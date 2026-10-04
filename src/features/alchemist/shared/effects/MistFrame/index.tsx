@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { Mesh, Program, Renderer, Texture, Triangle } from "ogl";
+import { onFrameWhileVisible } from "@/lib/frame";
 import { cn } from "@/lib/utils";
 
 // Ported from the thatu portfolio (ProjectMistPortal), reduced to the resting
@@ -163,9 +164,6 @@ export function MistFrame({ src, alt, className, focus = TOP_CENTER, zoom = 1 }:
     if (!container) return;
 
     let alive = true;
-    let visible = false;
-    let rafId = 0;
-    const start = performance.now();
 
     const renderer = new Renderer({
       alpha: true,
@@ -237,9 +235,9 @@ export function MistFrame({ src, alt, className, focus = TOP_CENTER, zoom = 1 }:
     };
     window.addEventListener("mousemove", onPointerMove, { passive: true });
 
-    const render = () => {
-      if (!alive || !visible) return;
-      program.uniforms.uTime.value = (performance.now() - start) / 1000;
+    const render = (time: number) => {
+      if (!alive) return;
+      program.uniforms.uTime.value = time;
 
       // Map the pointer through the on-screen rect as a fraction, so any CSS
       // transform (the parallax scale) still lands on the right pixel
@@ -255,20 +253,12 @@ export function MistFrame({ src, alt, className, focus = TOP_CENTER, zoom = 1 }:
       program.uniforms.uHover.value = hover;
 
       renderer.render({ scene: mesh });
-      rafId = requestAnimationFrame(render);
     };
-
-    const io = new IntersectionObserver(([entry]) => {
-      visible = entry.isIntersecting;
-      cancelAnimationFrame(rafId);
-      if (visible) rafId = requestAnimationFrame(render);
-    });
-    io.observe(container);
+    const stop = onFrameWhileVisible(container, render);
 
     return () => {
       alive = false;
-      cancelAnimationFrame(rafId);
-      io.disconnect();
+      stop();
       window.removeEventListener("mousemove", onPointerMove);
       ro.disconnect();
       if (canvas.parentElement === container) container.removeChild(canvas);

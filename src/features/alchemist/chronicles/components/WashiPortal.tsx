@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { onFrameWhileVisible } from "@/lib/frame";
 import { Mesh, Program, Renderer, Texture, Triangle } from "ogl";
 
 /**
@@ -184,29 +185,20 @@ export function WashiPortal({
     // The mask needs the real typeface, which may still be loading
     document.fonts.ready.then(() => alive && resize());
 
-    let onScreen = true;
-    const io = new IntersectionObserver(([e]) => (onScreen = e.isIntersecting));
-    io.observe(host);
-
-    let raf = 0;
-    const start = performance.now();
-    const loop = () => {
-      raf = requestAnimationFrame(loop);
+    const stop = onFrameWhileVisible(host, (time) => {
       const { zoom, alpha } = stateRef.current;
       host.style.visibility = alpha < 0.001 ? "hidden" : "";
-      if (!onScreen || alpha < 0.001) return;
+      if (alpha < 0.001) return;
       program.uniforms.uZoom.value = zoom;
       program.uniforms.uAlpha.value = alpha;
-      program.uniforms.uTime.value = (performance.now() - start) / 1000;
+      program.uniforms.uTime.value = time;
       renderer.render({ scene: mesh });
-    };
-    loop();
+    });
 
     return () => {
       alive = false;
-      cancelAnimationFrame(raf);
+      stop();
       ro.disconnect();
-      io.disconnect();
       if (canvas.parentElement === host) host.removeChild(canvas);
       gl.getExtension("WEBGL_lose_context")?.loseContext();
     };

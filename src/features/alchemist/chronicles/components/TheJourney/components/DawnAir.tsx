@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { onFrameWhileVisible } from "@/lib/frame";
 import { Mesh, Program, Renderer, Triangle } from "ogl";
 
 // The air over the desert at dawn: a band of clouds lit from below near the
@@ -93,26 +94,13 @@ export function DawnAir({ className = "" }: { className?: string }) {
     ro.observe(host);
     resize();
 
-    let raf = 0;
-    let visible = false;
-    const start = performance.now();
-    const render = () => {
-      if (!visible) return;
-      program.uniforms.uTime.value = (performance.now() - start) / 1000;
+    const stop = onFrameWhileVisible(host, (time) => {
+      program.uniforms.uTime.value = time;
       renderer.render({ scene: mesh });
-      raf = requestAnimationFrame(render);
-    };
-    const io = new IntersectionObserver(([e]) => {
-      visible = e.isIntersecting;
-      cancelAnimationFrame(raf);
-      if (visible) raf = requestAnimationFrame(render);
     });
-    io.observe(host);
 
     return () => {
-      visible = false;
-      cancelAnimationFrame(raf);
-      io.disconnect();
+      stop();
       ro.disconnect();
       if (canvas.parentElement === host) host.removeChild(canvas);
       gl.getExtension("WEBGL_lose_context")?.loseContext();

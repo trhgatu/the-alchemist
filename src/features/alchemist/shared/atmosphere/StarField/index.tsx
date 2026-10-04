@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { onFrame } from "@/lib/frame";
 import { isHiddenOnScreen } from "@/lib/visibility";
 
 interface Star {
@@ -104,16 +105,11 @@ export function StarField() {
       });
     };
 
-    let animationId: number;
-
     let frame = 0;
     let hidden = false;
     const draw = () => {
       if (frame++ % 15 === 0) hidden = isHiddenOnScreen(canvas);
-      if (hidden) {
-        animationId = requestAnimationFrame(draw);
-        return;
-      }
+      if (hidden) return;
       ctx.clearRect(0, 0, width, height);
 
       // Star colors: Ivory to pale gold
@@ -212,19 +208,17 @@ export function StarField() {
         ctx.arc(s.x, s.y, 2, 0, Math.PI * 2);
         ctx.fill();
       }
-
-      animationId = requestAnimationFrame(draw);
     };
 
     handleResize();
     window.addEventListener("resize", handleResize);
     window.addEventListener("mousemove", handleMouseMove);
-    animationId = requestAnimationFrame(draw);
+    const stop = onFrame(draw);
 
     return () => {
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("mousemove", handleMouseMove);
-      cancelAnimationFrame(animationId);
+      stop();
     };
   }, []);
 

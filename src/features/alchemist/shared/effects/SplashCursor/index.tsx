@@ -2,6 +2,7 @@
 
 "use client";
 import React, { useEffect, useRef } from "react";
+import { onFrame } from "@/lib/frame";
 
 interface ColorRGB {
   r: number;
@@ -955,7 +956,6 @@ export default function SplashCursor({
           sleeping = true;
         }
         lastUpdateTime = Date.now();
-        requestAnimationFrame(updateFrame);
         return;
       }
       const dt = calcDeltaTime();
@@ -964,8 +964,13 @@ export default function SplashCursor({
       applyInputs();
       step(dt);
       render(null);
-      requestAnimationFrame(updateFrame);
     }
+
+    // Starts on the first pointer contact, then runs on the shared frame clock
+    let stopFrames: (() => void) | null = null;
+    const startFrames = () => {
+      stopFrames ??= onFrame(updateFrame);
+    };
 
     function calcDeltaTime() {
       const now = Date.now();
@@ -1321,7 +1326,7 @@ export default function SplashCursor({
       const posX = scaleByPixelRatio(e.clientX);
       const posY = scaleByPixelRatio(e.clientY);
       const color = generateColor();
-      updateFrame();
+      startFrames();
       updatePointerMoveData(pointer, posX, posY, color);
       document.body.removeEventListener("mousemove", handleFirstMouseMove);
     }
@@ -1341,7 +1346,7 @@ export default function SplashCursor({
       for (let i = 0; i < touches.length; i++) {
         const posX = scaleByPixelRatio(touches[i].clientX);
         const posY = scaleByPixelRatio(touches[i].clientY);
-        updateFrame();
+        startFrames();
         updatePointerDownData(pointer, touches[i].identifier, posX, posY);
       }
       document.body.removeEventListener("touchstart", handleFirstTouchStart);
@@ -1383,6 +1388,7 @@ export default function SplashCursor({
         updatePointerUpData(pointer);
       }
     });
+    return () => stopFrames?.();
   }, [
     SIM_RESOLUTION,
     DYE_RESOLUTION,
