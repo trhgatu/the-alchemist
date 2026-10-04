@@ -1,18 +1,24 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { Mesh, Program, Renderer, Texture, Triangle } from "ogl";
-import { onFrameWhileVisible } from "@/lib/frame";
+import { useEffect, useMemo, useRef } from "react";
+import * as THREE from "three";
+import { View } from "@react-three/drei";
+import { useFrame } from "@react-three/fiber";
 import { cn } from "@/lib/utils";
 
 // Ported from the thatu portfolio (ProjectMistPortal), reduced to the resting
 // frame: one image whose edge dissolves into slow silver smoke, with the
-// cursor ripple and mist vortex. No case-study expansion, no image morphing.
+// cursor ripple and mist vortex.
+//
+// Every MistFrame draws into the one shared canvas (ViewCanvas) through a
+// drei <View>, which scissors each frame to its element's box. A page full of
+// frames costs no extra WebGL contexts.
 
 const VERTEX_SHADER = `
-attribute vec2 position;
+varying vec2 vUv;
 void main() {
-  gl_Position = vec4(position, 0.0, 1.0);
+  vUv = uv;
+  gl_Position = vec4(position.xy, 0.0, 1.0);
 }
 `;
 
@@ -21,7 +27,9 @@ precision highp float;
 
 uniform sampler2D uTex;
 uniform vec2 uImageSize;
-uniform vec2 uRes;      // canvas size in drawing-buffer px
+varying vec2 vUv;
+uniform vec2 uRes;      // this frame's size in drawing-buffer px
+uniform float uOpacity; // CSS opacity of the frame's ancestors
 uniform float uTime;
 uniform vec2 uFocus;   // 0–1, the point of the image kept in frame
 uniform float uZoom;   // 1 = cover fit, >1 crops tighter around uFocus
@@ -84,7 +92,9 @@ vec2 getCoverUv(vec2 uv, vec2 imgSize, vec2 targetSize) {
 }
 
 void main() {
-  vec2 frag = gl_FragCoord.xy;
+  // Pixel position inside this frame (the shared canvas draws many frames,
+  // so gl_FragCoord would be relative to the whole screen)
+  vec2 frag = vUv * uRes;
   vec2 uv = frag / uRes;
   float H = uRes.y;
   float aspect = uRes.x / uRes.y;
@@ -136,7 +146,7 @@ void main() {
 
   float rim = exp(-pow((dist + 0.008) * 36.0, 2.0)) * 0.35;
   rim += exp(-pow((dist + 0.004) * 32.0, 2.0)) * uHover * 0.40;
-  gl_FragColor = vec4(color + mistColor * rim, alpha);
+  gl_FragColor = vec4(color + mistColor * rim, alpha * uOpacity);
 }
 `;
 
@@ -152,128 +162,141 @@ type MistFrameProps = {
   zoom?: number;
 };
 
-/** An image framed by drifting silver mist. Renders only while on screen. */
+/** Product of the CSS opacity of an element and its ancestors (0 if hidden). */
+function effectiveOpacity(el: HTMLElement): number {
+  let o = 1;
+  for (let n: HTMLElement | null = el; n && n !== document.body; n = n.parentElement) {
+    const cs = getComputedStyle(n);
+    if (cs.visibility === "hidden" || cs.display === "none") return 0;
+    o *= Number(cs.opacity);
+  }
+  return o;
+}
+
+function MistPlane({
+  src,
+  focus,
+  zoom,
+  frameRef,
+}: {
+  src: string;
+  focus: [number, number];
+  zoom: number;
+  frameRef: React.RefObject<HTMLDivElement | null>;
+}) {
+  const material = useMemo(
+    () =>
+      new THREE.ShaderMaterial({
+        vertexShader: VERTEX_SHADER,
+        fragmentShader: FRAGMENT_SHADER,
+        uniforms: {
+          uTex: { value: null },
+          uImageSize: { value: new THREE.Vector2(16, 9) },
+          uRes: { value: new THREE.Vector2(1, 1) },
+          uTime: { value: 0 },
+          uFill: { value: FILL },
+          uFocus: { value: new THREE.Vector2(focus[0], 1 - focus[1]) },
+          uZoom: { value: zoom },
+          uMouse: { value: new THREE.Vector2(-9999, -9999) },
+          uMouseStrength: { value: 0 },
+          uHover: { value: 0 },
+          uOpacity: { value: 1 },
+        },
+        transparent: true,
+        depthTest: false,
+        depthWrite: false,
+      }),
+    // focus and zoom are constants per frame
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
+
+  useEffect(() => {
+    let alive = true;
+    const tex = new THREE.TextureLoader().load(src, (t) => {
+      if (!alive) return;
+      const img = t.image as HTMLImageElement;
+      material.uniforms.uImageSize.value.set(img.naturalWidth || 16, img.naturalHeight || 9);
+      material.uniforms.uTex.value = t;
+    });
+    // Raw colours straight through: this shader has no colour-space conversion
+    tex.colorSpace = THREE.NoColorSpace;
+    tex.generateMipmaps = false;
+    tex.minFilter = THREE.LinearFilter;
+    return () => {
+      alive = false;
+      tex.dispose();
+    };
+  }, [src, material]);
+
+  useEffect(() => () => material.dispose(), [material]);
+
+  // Pointer in client px; hover eases in/out so the ripple fades gently
+  const mouse = useRef({ x: -9999, y: -9999, strength: 0, hovered: false, hover: 0 });
+  useEffect(() => {
+    const onMove = (e: MouseEvent) => {
+      const m = mouse.current;
+      m.x = e.clientX;
+      m.y = e.clientY;
+      const el = frameRef.current;
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      m.hovered =
+        e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
+      if (m.hovered) m.strength = Math.min(m.strength + 0.35, 1);
+    };
+    window.addEventListener("mousemove", onMove, { passive: true });
+    return () => window.removeEventListener("mousemove", onMove);
+  }, [frameRef]);
+
+  const frame = useRef(0);
+  useFrame((state) => {
+    const el = frameRef.current;
+    if (!el) return;
+    const u = material.uniforms;
+    const dpr = state.viewport.dpr;
+    const r = el.getBoundingClientRect();
+    u.uRes.value.set(r.width * dpr, r.height * dpr);
+    u.uTime.value = state.clock.elapsedTime;
+
+    // Cards fade and hide through CSS on their ancestors; mirror that here
+    if (frame.current++ % 10 === 0) u.uOpacity.value = effectiveOpacity(el);
+
+    const m = mouse.current;
+    u.uMouse.value.set(
+      ((m.x - r.left) / r.width) * r.width * dpr,
+      ((r.bottom - m.y) / r.height) * r.height * dpr
+    );
+    u.uMouseStrength.value = m.strength;
+    m.strength *= 0.94;
+    m.hover += ((m.hovered ? 1 : 0) - m.hover) * 0.12;
+    u.uHover.value = m.hover;
+  });
+
+  return (
+    <mesh frustumCulled={false} material={material}>
+      <planeGeometry args={[2, 2]} />
+    </mesh>
+  );
+}
+
 // Screenshots keep their header in view by default
 const TOP_CENTER: [number, number] = [0.5, 0];
 
+/** An image framed by drifting silver mist, drawn into the shared canvas. */
 export function MistFrame({ src, alt, className, focus = TOP_CENTER, zoom = 1 }: MistFrameProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    let alive = true;
-
-    const renderer = new Renderer({
-      alpha: true,
-      premultipliedAlpha: false,
-      dpr: Math.min(window.devicePixelRatio || 1, 2),
-    });
-    const gl = renderer.gl;
-    const canvas = gl.canvas as HTMLCanvasElement;
-    canvas.className = "absolute inset-0 h-full w-full";
-    container.appendChild(canvas);
-
-    const texture = new Texture(gl, { generateMipmaps: false });
-    const program = new Program(gl, {
-      vertex: VERTEX_SHADER,
-      fragment: FRAGMENT_SHADER,
-      uniforms: {
-        uTex: { value: texture },
-        uImageSize: { value: [16, 9] },
-        uRes: { value: [1, 1] },
-        uTime: { value: 0 },
-        uFill: { value: FILL },
-        uFocus: { value: [focus[0], 1 - focus[1]] },
-        uZoom: { value: zoom },
-        uMouse: { value: [-9999, -9999] },
-        uMouseStrength: { value: 0 },
-        uHover: { value: 0 },
-      },
-      transparent: true,
-      depthTest: false,
-    });
-    const mesh = new Mesh(gl, { geometry: new Triangle(gl), program });
-
-    const img = new Image();
-    img.onload = () => {
-      if (!alive) return;
-      texture.image = img;
-      texture.update();
-      program.uniforms.uImageSize.value = [img.naturalWidth || 16, img.naturalHeight || 9];
-    };
-    img.src = src;
-
-    const resize = () => {
-      // Layout size, not the on-screen rect: parents may scale the frame
-      // (the journal parallax does), and the buffer must not follow that
-      const width = container.offsetWidth;
-      const height = container.offsetHeight;
-      if (width === 0 || height === 0) return;
-      renderer.setSize(width, height);
-      program.uniforms.uRes.value = [gl.canvas.width, gl.canvas.height];
-    };
-    const ro = new ResizeObserver(resize);
-    ro.observe(container);
-    resize();
-
-    // Pointer in client px; hover eases in/out so the ripple fades gently
-    const mouse = { x: -9999, y: -9999, strength: 0 };
-    let hovered = false;
-    let hover = 0;
-    const onPointerMove = (e: MouseEvent) => {
-      mouse.x = e.clientX;
-      mouse.y = e.clientY;
-      const rect = container.getBoundingClientRect();
-      hovered =
-        e.clientX >= rect.left &&
-        e.clientX <= rect.right &&
-        e.clientY >= rect.top &&
-        e.clientY <= rect.bottom;
-      if (hovered) mouse.strength = Math.min(mouse.strength + 0.35, 1);
-    };
-    window.addEventListener("mousemove", onPointerMove, { passive: true });
-
-    const render = (time: number) => {
-      if (!alive) return;
-      program.uniforms.uTime.value = time;
-
-      // Map the pointer through the on-screen rect as a fraction, so any CSS
-      // transform (the parallax scale) still lands on the right pixel
-      const rect = container.getBoundingClientRect();
-      const [bufW, bufH] = program.uniforms.uRes.value as number[];
-      program.uniforms.uMouse.value = [
-        ((mouse.x - rect.left) / rect.width) * bufW,
-        ((rect.bottom - mouse.y) / rect.height) * bufH,
-      ];
-      program.uniforms.uMouseStrength.value = mouse.strength;
-      mouse.strength *= 0.94;
-      hover += ((hovered ? 1 : 0) - hover) * 0.12;
-      program.uniforms.uHover.value = hover;
-
-      renderer.render({ scene: mesh });
-    };
-    const stop = onFrameWhileVisible(container, render);
-
-    return () => {
-      alive = false;
-      stop();
-      window.removeEventListener("mousemove", onPointerMove);
-      ro.disconnect();
-      if (canvas.parentElement === container) container.removeChild(canvas);
-      gl.getExtension("WEBGL_lose_context")?.loseContext();
-    };
-    // focus is read once; callers pass a constant
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [src, zoom]);
+  const frameRef = useRef<HTMLDivElement>(null);
 
   return (
     <div
-      ref={containerRef}
+      ref={frameRef}
       role="img"
       aria-label={alt}
       className={cn("relative aspect-video w-full select-none", className)}
-    />
+    >
+      <View className="absolute inset-0">
+        <MistPlane src={src} focus={focus} zoom={zoom} frameRef={frameRef} />
+      </View>
+    </div>
   );
 }
