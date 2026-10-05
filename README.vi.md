@@ -4,100 +4,54 @@
 
 > _"Trong điệu vũ giả kim của sự tồn tại, cái mới không thể thành hình cho đến khi cái cũ được buông bỏ."_
 
-Portfolio của tôi, viết thành một cuốn sách theo _Nhà Giả Kim_ của Paulo Coelho. Không phải bản liệt kê kinh nghiệm, mà là câu chuyện tôi đã học cách tạo ra mọi thứ như thế nào, kể theo các giai đoạn của Đại Công Trình: bắt đầu bên lò rèn, đi qua màn đêm, và kết thúc lúc bình minh trên sa mạc.
+Portfolio này không phải một bản lý lịch. Nó là ghi chép về cách tôi học cách tạo tác: gom nhặt những mảnh vỡ, bước vào lò luyện, và dùng toán học cùng mã lệnh để định hình lại thực tại.
 
-**Xem trực tiếp:** [thatu.is-a.dev](https://thatu.is-a.dev) · có tiếng Anh và tiếng Việt
+![](.github/assets/hero.webp)
 
-![Cái tên](.github/assets/hero.webp)
+**Trải nghiệm trực tiếp:** [thatu.is-a.dev](https://thatu.is-a.dev) (song ngữ EN / VI)
 
-## Cuốn sách
+Lấy cảm hứng từ _Nhà Giả Kim_, toàn bộ không gian này được dựng nên như một cuốn sách cổ, trải qua bốn giai đoạn chuyển hoá:
 
-### Mở đầu
+- **Nigredo (Hắc hoá):** màn đêm của sự hoang mang, nơi mọi ảo tưởng cũ buộc phải cháy rụi thành tro.
+- **Albedo (Bạch hoá):** đốm lửa nhen nhóm từ những dòng code sơ khai, tìm kiếm trật tự trong hỗn mang.
+- **Citrinitas (Hoàng hoá):** khoảnh khắc thức tỉnh, khi tư duy kiến trúc và mỹ cảm bắt đầu hợp nhất.
+- **Rubedo (Hồng hoá):** Đại Công Trình tiếp diễn, tạo ra những tác phẩm có thể tự đứng vững và phát sáng.
 
-Nhà giả kim nào cũng bắt đầu từ một cái tên và một ngọn lửa. Ba câu nói mở đầu cuốn sách đã gói trọn mọi điều phía sau: cái cũ phải được buông bỏ, thử thách là thứ tôi luyện ý chí, và ai bước ra khỏi lò luyện cũng không còn là người cũ.
+![](.github/assets/journal.webp)
 
-![Vào trong lửa](.github/assets/portal.webp)
-![Câu nói đầu tiên](.github/assets/quote.webp)
+## Phía sau lò luyện
 
-### I. Nhà Giả Kim
+Mỗi trang sách, ngọn lửa hay làn sương trên màn hình đều không phải video dựng sẵn. Chúng được vẽ ra theo thời gian thực, từng pixel một.
 
-Tôi đã đến với việc tạo ra mọi thứ như thế nào, kể qua bốn giai đoạn của Đại Công Trình. **Nigredo**, những năm lạc lối trong bóng tối. **Albedo**, những dòng code đầu tiên và đốm lửa nhỏ chúng thắp lên. **Citrinitas**, cái đêm mọi thứ bỗng trở nên rõ ràng. **Rubedo**, công việc vẫn còn đang tiếp diễn.
+**Tự sự bằng shader.** Cái tên mở đầu và ngọn lửa ngầm trong từng nét chữ là một shader WebGL2 (OGL), sắc nét ở mọi cự ly. Những khung viền tan vào sương quanh mỗi tấm ảnh cũng là shader viết tay, cuộn theo con trỏ của người xem.
 
-![Nhà Giả Kim](.github/assets/the-alchemist.webp)
-![Nigredo](.github/assets/journal.webp)
+![](.github/assets/portal.webp)
 
-### II. Cổ thư
+**Cổ thư và chòm sao.** Một không gian ba chiều dựng bằng React Three Fiber, nơi các công cụ kỹ thuật rời khỏi trang giấy để trở thành những tọa độ dẫn đường.
 
-Những công cụ tôi đã học được, cất giữ như các câu thần chú trong một cuốn sách cổ. Rời khỏi trang sách, chúng thành những vì sao trên đầu mỗi khi tôi làm việc.
+|              Cổ thư               |                Chòm sao                |
+| :-------------------------------: | :------------------------------------: |
+| ![](.github/assets/grimoire.webp) | ![](.github/assets/constellation.webp) |
 
-![Cổ thư](.github/assets/grimoire.webp)
-![Chòm sao](.github/assets/constellation.webp)
+**Kỷ luật của hiệu năng.** Một trải nghiệm thị giác chỉ có giá trị khi nó mượt mà.
 
-### III. Các tác phẩm
+- Mọi chuyển động (Lenis, GSAP, OGL, R3F) cùng chạy trên một nhịp `gsap.ticker` duy nhất, nên không lớp nào lệch nhịp hay giật so với lớp nào.
+- Mọi khung sương mù vẽ chung trên một WebGL context nhờ `<View>` của drei.
+- Hệ thống tự đo sức tải của phần cứng (`src/lib/quality.ts`) để hạ cấp shader trên thiết bị yếu. Cái đẹp phải đến được với người xem mà không làm bỏng tay họ.
 
-Những gì ngọn lửa đã làm ra cho đến giờ. Mỗi tác phẩm là một ngôi sao trên quỹ đạo của riêng nó, và mỗi cái có một trang riêng.
+|            Các tác phẩm            |             Maktub              |
+| :--------------------------------: | :-----------------------------: |
+| ![](.github/assets/craftings.webp) | ![](.github/assets/maktub.webp) |
 
-![Các tác phẩm](.github/assets/craftings.webp)
+## Chất liệu
 
-### IV. Hành trình
-
-Đêm nhường chỗ cho bình minh. Cuốn sách khép lại ở nơi câu chuyện của Santiago khép lại, giữa sa mạc, với chữ đã có từ trước khi mọi chuyện bắt đầu: _Maktub_, mọi thứ đã được viết sẵn.
-
-![Những câu nói cuối](.github/assets/closing.webp)
-![Maktub](.github/assets/maktub.webp)
-
-### Trang cuối
-
-Một lời mời viết thư.
-
-![Trang cuối](.github/assets/footer.webp)
-
-### Từng tác phẩm
-
-Mỗi tác phẩm còn có trang riêng, với câu chuyện, công nghệ và thêm nhiều hình ảnh của nó.
-
-![Tất cả tác phẩm](.github/assets/craftings-index.webp)
-![Một tác phẩm](.github/assets/detail.webp)
-
-## Phía sau trang sách
-
-- **Cái tên** là một shader WebGL2 duy nhất (OGL), gồm tờ giấy, con chữ và ngọn lửa bên trong. Con chữ được vẽ một lần thành mặt nạ, nên vẫn sắc nét dù camera tiến gần đến đâu.
-- **Khung sương mù** quanh mọi tấm ảnh là một shader làm viền ảnh tan vào làn sương, cuộn theo con trỏ.
-- **Cổ thư** là một cảnh React Three Fiber, gồm cuốn sách, vòng tròn ma thuật và các công nghệ nó thả ra.
-- **Khi chuyển trang**, một shader nhiễu OGL đốt cháy màn hình rồi hé mở lại.
-
-### Giữ cho mượt
-
-- **Một nhịp đồng hồ chung.** Lenis, GSAP, các shader OGL và các cảnh R3F cùng chạy trên một `gsap.ticker` (`src/lib/frame.ts`). Lenis chạy trước, nên mỗi khung hình đều vẽ theo vị trí cuộn đã ổn định.
-- **Chỉ vẽ thứ đang thấy.** Mỗi hiệu ứng ngừng vẽ khi ra khỏi màn hình hoặc đã mờ hẳn.
-- **Ít WebGL context.** Mọi khung sương mù vẽ chung vào một canvas qua `<View>` của drei.
-- **Chỉ animate thuộc tính rẻ.** Chuyển động chỉ dùng transform, opacity và uniform của shader. Không có blur hay text-shadow chuyển động.
-- **Mức chất lượng** (`src/lib/quality.ts`). Máy ít RAM, điện thoại cấu hình vừa phải và người bật giảm chuyển động được dùng shader nhẹ hơn. Các máy còn lại được đo nhanh tốc độ khung hình, và tự hạ mức nếu không theo kịp. Thêm `?quality=high` hoặc `?quality=low` để ép một mức.
-
-## Công nghệ
-
-- **[Next.js 15](https://nextjs.org)** (App Router, Turbopack) · **React 19** · **TypeScript**
-- **[GSAP](https://gsap.com)** với `ScrollTrigger`, và **[Lenis](https://lenis.darkroom.engineering)** cho cuộn mượt
-- **[React Three Fiber](https://r3f.docs.pmnd.rs)** và **drei**
-- **[OGL](https://github.com/oframe/ogl)** cho các shader toàn màn hình
-- **Zustand** cho trạng thái ứng dụng và ngôn ngữ EN / VI, **TanStack Query** cho dữ liệu dự án
-- **Tailwind CSS v4**, chữ dùng Kings và EB Garamond
-
-## Chạy thử
-
-```bash
-pnpm install
-pnpm dev
-```
-
-Mở [localhost:3000](http://localhost:3000). Các tác phẩm nằm ở `src/features/alchemist/craftings/constants/mock-projects.ts`, còn toàn bộ chữ của trang, cả hai ngôn ngữ, nằm ở `src/constants/translations.ts`.
-
-## Ghi nhận
-
-Câu chuyện mượn hình hài và các câu nói từ _Nhà Giả Kim_ của Paulo Coelho. Mã nguồn dùng giấy phép MIT (xem [LICENSE](LICENSE)).
+- **Lõi:** Next.js 15 (App Router, Turbopack) · React 19 · TypeScript
+- **Thị giác và chuyển động:** OGL · React Three Fiber và drei · GSAP và ScrollTrigger · Lenis
+- **Cấu trúc và dữ liệu:** Tailwind CSS v4 · Zustand · TanStack Query
+- **Kiểu chữ:** Kings · EB Garamond
 
 ---
 
-Làm bởi **trhgatu**. [GitHub](https://github.com/trhgatu)
+Một ghi chép của **trhgatu**. [GitHub](https://github.com/trhgatu)
 
 **Maktub.**
