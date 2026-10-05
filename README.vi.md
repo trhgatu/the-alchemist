@@ -1,95 +1,103 @@
-# 🌌 Nhà Giả Kim (The Alchemist)
+# The Alchemist
 
 [English](README.md) | **Tiếng Việt**
 
-> _"Trong vũ điệu giả kim của sự tồn tại, không điều gì mới có thể được sinh ra cho đến khi cái cũ được rũ bỏ."_
+> _"Trong điệu vũ giả kim của sự tồn tại, cái mới không thể thành hình cho đến khi cái cũ được buông bỏ."_
 
-Đây không phải là một Portfolio.  
-Đây là **Grimoire** cá nhân — một cuộn giấy sống nơi những dòng mã trở thành thơ ca, và logic hòa quyện vào vũ điệu vô tận của trí tưởng tượng.
+Portfolio của tôi, viết thành một cuốn sách theo _Nhà Giả Kim_ của Paulo Coelho. Không phải bản liệt kê kinh nghiệm, mà là câu chuyện tôi đã học cách tạo ra mọi thứ như thế nào, kể theo các giai đoạn của Đại Công Trình: bắt đầu bên lò rèn, đi qua màn đêm, và kết thúc lúc bình minh trên sa mạc.
 
-Lấy cảm hứng từ cuốn sách **Nhà Giả Kim** của Paulo Coelho, đây là bản ghi chép về hành trình băng qua lửa rèn, sự chuyển hóa và cuộc theo đuổi vĩnh cửu "Truyền thuyết cá nhân".
+**Xem trực tiếp:** [thatu.is-a.dev](https://thatu.is-a.dev) · có tiếng Anh và tiếng Việt
 
-🔗 **[Bước vào Mật Thất (Enter the Sanctum)](https://thatu.is-a.dev)**
+![Cái tên](.github/assets/hero.webp)
+
+## Cuốn sách
+
+### Mở đầu
+
+Nhà giả kim nào cũng bắt đầu từ một cái tên và một ngọn lửa. Ba câu nói mở đầu cuốn sách đã gói trọn mọi điều phía sau: cái cũ phải được buông bỏ, thử thách là thứ tôi luyện ý chí, và ai bước ra khỏi lò luyện cũng không còn là người cũ.
+
+![Vào trong lửa](.github/assets/portal.webp)
+![Câu nói đầu tiên](.github/assets/quote.webp)
+
+### I. Nhà Giả Kim
+
+Tôi đã đến với việc tạo ra mọi thứ như thế nào, kể qua bốn giai đoạn của Đại Công Trình. **Nigredo**, những năm lạc lối trong bóng tối. **Albedo**, những dòng code đầu tiên và đốm lửa nhỏ chúng thắp lên. **Citrinitas**, cái đêm mọi thứ bỗng trở nên rõ ràng. **Rubedo**, công việc vẫn còn đang tiếp diễn.
+
+![Nhà Giả Kim](.github/assets/the-alchemist.webp)
+![Nigredo](.github/assets/journal.webp)
+
+### II. Cổ thư
+
+Những công cụ tôi đã học được, cất giữ như các câu thần chú trong một cuốn sách cổ. Rời khỏi trang sách, chúng thành những vì sao trên đầu mỗi khi tôi làm việc.
+
+![Cổ thư](.github/assets/grimoire.webp)
+![Chòm sao](.github/assets/constellation.webp)
+
+### III. Các tác phẩm
+
+Những gì ngọn lửa đã làm ra cho đến giờ. Mỗi tác phẩm là một ngôi sao trên quỹ đạo của riêng nó, và mỗi cái có một trang riêng.
+
+![Các tác phẩm](.github/assets/craftings.webp)
+
+### IV. Hành trình
+
+Đêm nhường chỗ cho bình minh. Cuốn sách khép lại ở nơi câu chuyện của Santiago khép lại, giữa sa mạc, với chữ đã có từ trước khi mọi chuyện bắt đầu: _Maktub_, mọi thứ đã được viết sẵn.
+
+![Những câu nói cuối](.github/assets/closing.webp)
+![Maktub](.github/assets/maktub.webp)
+
+### Trang cuối
+
+Một lời mời viết thư.
+
+![Trang cuối](.github/assets/footer.webp)
+
+### Từng tác phẩm
+
+Mỗi tác phẩm còn có trang riêng, với câu chuyện, công nghệ và thêm nhiều hình ảnh của nó.
+
+![Tất cả tác phẩm](.github/assets/craftings-index.webp)
+![Một tác phẩm](.github/assets/detail.webp)
+
+## Phía sau trang sách
+
+- **Cái tên** là một shader WebGL2 duy nhất (OGL), gồm tờ giấy, con chữ và ngọn lửa bên trong. Con chữ được vẽ một lần thành mặt nạ, nên vẫn sắc nét dù camera tiến gần đến đâu.
+- **Khung sương mù** quanh mọi tấm ảnh là một shader làm viền ảnh tan vào làn sương, cuộn theo con trỏ.
+- **Cổ thư** là một cảnh React Three Fiber, gồm cuốn sách, vòng tròn ma thuật và các công nghệ nó thả ra.
+- **Khi chuyển trang**, một shader nhiễu OGL đốt cháy màn hình rồi hé mở lại.
+
+### Giữ cho mượt
+
+- **Một nhịp đồng hồ chung.** Lenis, GSAP, các shader OGL và các cảnh R3F cùng chạy trên một `gsap.ticker` (`src/lib/frame.ts`). Lenis chạy trước, nên mỗi khung hình đều vẽ theo vị trí cuộn đã ổn định.
+- **Chỉ vẽ thứ đang thấy.** Mỗi hiệu ứng ngừng vẽ khi ra khỏi màn hình hoặc đã mờ hẳn.
+- **Ít WebGL context.** Mọi khung sương mù vẽ chung vào một canvas qua `<View>` của drei.
+- **Chỉ animate thuộc tính rẻ.** Chuyển động chỉ dùng transform, opacity và uniform của shader. Không có blur hay text-shadow chuyển động.
+- **Mức chất lượng** (`src/lib/quality.ts`). Máy ít RAM, điện thoại cấu hình vừa phải và người bật giảm chuyển động được dùng shader nhẹ hơn. Các máy còn lại được đo nhanh tốc độ khung hình, và tự hạ mức nếu không theo kịp. Thêm `?quality=high` hoặc `?quality=low` để ép một mức.
+
+## Công nghệ
+
+- **[Next.js 15](https://nextjs.org)** (App Router, Turbopack) · **React 19** · **TypeScript**
+- **[GSAP](https://gsap.com)** với `ScrollTrigger`, và **[Lenis](https://lenis.darkroom.engineering)** cho cuộn mượt
+- **[React Three Fiber](https://r3f.docs.pmnd.rs)** và **drei**
+- **[OGL](https://github.com/oframe/ogl)** cho các shader toàn màn hình
+- **Zustand** cho trạng thái ứng dụng và ngôn ngữ EN / VI, **TanStack Query** cho dữ liệu dự án
+- **Tailwind CSS v4**, chữ dùng Kings và EB Garamond
+
+## Chạy thử
+
+```bash
+pnpm install
+pnpm dev
+```
+
+Mở [localhost:3000](http://localhost:3000). Các tác phẩm nằm ở `src/features/alchemist/craftings/constants/mock-projects.ts`, còn toàn bộ chữ của trang, cả hai ngôn ngữ, nằm ở `src/constants/translations.ts`.
+
+## Ghi nhận
+
+Câu chuyện mượn hình hài và các câu nói từ _Nhà Giả Kim_ của Paulo Coelho. Mã nguồn dùng giấy phép MIT (xem [LICENSE](LICENSE)).
 
 ---
 
-## 🛠️ Bộ Máy Giả Kim (The Alchemical Engine)
-
-Mật thất được vận hành bởi một bộ máy tự sự đặc biệt, được thiết kế để xóa nhòa ranh giới giữa nghệ thuật kỹ thuật số và thực tại sống động.
-
-### 🌌 Đồng bộ không gian (Global Atmosphere Sync)
-
-Một lớp nền thống nhất được rèn nên từ sự hài hòa giữa **Bầu trời sao (StarField)** và **Tàn lửa (GoldenSparks)**. Không gian này "thở" cùng người dùng, chuyển dịch từ cái nóng rực của lò rèn sang sự tĩnh lặng, minh triết của vũ trụ khi hành trình tiến triển.
-
-### 📜 Những trang giấy cổ (Procedural Parchment - SVG Filters)
-
-Kỹ thuật biến dạng SVG tùy chỉnh được sử dụng để tạo ra những cạnh rách tự nhiên cho cuốn nhật ký số. Những bộ lọc này cho phép ánh sáng hổ phách chảy tràn qua những khiếm khuyết của trang giấy, kết nối nét mộc mạc cổ xưa với mã nguồn hiện đại.
-
-### ⚡ Kiến trúc ViewCanvas Hợp nhất
-
-Xây dựng trên nền tảng **Next.js 15**, **Three.js (R3F)** và **Drei's View**. Tất cả các tương tác 3D — từ Vòng Tròn Ma Thuật đến các hệ thống hành tinh — đều chia sẻ một Canvas duy nhất, đảm bảo mọi chuyển động đều mượt mà và tối ưu hiệu suất.
-
-### 🔮 Trạng thái & Đa ngôn ngữ (Zustand + i18n)
-
-Linh hồn của Mật thất được thống nhất thông qua **Zustand**, quản lý các trạng thái toàn cục từ việc kích hoạt khí quyển đến các câu chuyện được bản địa hóa. Hệ thống **i18n tùy chỉnh** cho phép chuyển đổi mượt mà giữa tiếng Anh và tiếng Việt thông qua **"Viên ngọc Giả kim"** — một thành phần giao diện huyền bí đồng nhất với thẩm mỹ của toàn dự án.
-
----
-
-## 🔥 Hành trình: Những chương của sự Chuyển Hóa
-
-### Chương I: Sự thức tỉnh (The Awakening)
-
-Danh tính thành hình từ hư không. Từng chữ cái một, hơi thở đầu tiên được rèn nên trong không gian số. Đây là nơi tiếng rì rào thầm lặng của sự tồn tại bắt đầu.
-
-### Chương II: Lò Luyện (The Crucible)
-
-Trái tim của lò rèn. Tại đây, lớp vỏ cố định của "những gì đang là" bị đập tan để hé lộ "những gì có thể". Các hạt vật chất xoáy qua ba giai đoạn linh thiêng: **Hỗn mang (Chaos)**, **Hỏa thiêu (Fire)** và **Tái sinh (Rebirth)**.
-
-### Chương III: Ký ức được tinh lọc (Procedural Memories)
-
-Những cuốn nhật ký được khắc lên lớp da thuộc kỹ thuật số, ghi lại những suy nghĩ mà ngọn lửa đã tinh lọc: nơi tri thức được chuyển hóa thành sức mạnh.
-
-### Chương IV: Minh triết giữa Hư không (The Grimoire)
-
-Sự chuyển giao giữa giấy cổ và không gian. Khi tàn lửa mờ dần, bầu trời sao hiện ra, báo hiệu sự chuyển dịch từ sức nóng của lò luyện sang sự bao la của logic vũ trụ.
-
-### Chương V: Những tạo vật (The Craftings)
-
-Mỗi dự án là một tạo vật hành tinh. Được rèn trong lửa, chúng cư ngụ trong một hệ thống nơi mỗi dòng code là một di sản — một dấu ấn để lại để truyền cảm hứng và tồn tại vĩnh cửu.
-
-### Chương VI: Sa mạc Chân lý (The Journey)
-
-Thử thách cuối cùng. Bước ra khỏi mật thất và đi vào những dải cát dịch chuyển của sa mạc. Tại đây, có một ngôn ngữ vượt ngoài ngôn từ — lòng can đảm để đi theo Truyền thuyết cá nhân cho đến khi đôi tay xây dựng được những gì mà trái tim vốn đã thấu hiểu từ lâu.
-
-> **"Và khi bạn thực sự khao khát điều gì đó, cả vũ trụ sẽ hợp sức giúp bạn đạt được nó."**  
-> — _Paulo Coelho, Nhà Giả Kim_
-
----
-
-## 🗝️ Những Ký tự Sáng thế (The Runes of Creation)
-
-Những công cụ được dùng để rèn nên thế giới này:
-
-| Khía cạnh       | Runes (Công nghệ)         | Ý nghĩa                               |
-| :-------------- | :------------------------ | :------------------------------------ |
-| **Linh hồn**    | TypeScript / Node.js      | Logic sâu thẳm vận hành vũ trụ.       |
-| **Hình hài**    | React / Next.js 15        | Bình chứa đựng ánh sáng tinh tú.      |
-| **Không gian**  | Three.js / R3F            | Hư không nơi các ý tưởng thành hình.  |
-| **Chuyển động** | GSAP / ScrollTrigger      | Nhịp thở của câu chuyện.              |
-| **Ý chí**       | Zustand                   | Ý định thống nhất đằng sau thế giới.  |
-| **Thẩm mỹ**     | Vanilla CSS / SVG Filters | Nghệ thuật chế tác sự không hoàn hảo. |
-
----
-
-## 🧙 Nhà Giả Kim (The Alchemist)
-
-**trhgatu** — _Kẻ lữ hành trên con đường tìm kiếm "Truyền thuyết cá nhân"._
-
-[GitHub](https://github.com/trhgatu) • [The Sanctum](https://thatu.is-a.dev)
-
----
-
-> "Tất cả là một."  
-> Cuốn Grimoire này là nhật ký ghi lại những gì đã học được từ ngôn ngữ không lời, như một lời nhắc nhở rằng: Hành trình chỉ thực sự bắt đầu khi ta dám bước đi.
+Làm bởi **trhgatu**. [GitHub](https://github.com/trhgatu)
 
 **Maktub.**

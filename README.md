@@ -1,95 +1,103 @@
-# 🌌 The Alchemist
+# The Alchemist
 
 **English** | [Tiếng Việt](README.vi.md)
 
 > _"In the alchemical dance of existence, nothing new can be born until the old is surrendered."_
 
-This is not a portfolio.  
-This is a **grimoire** — a living scroll where syntax becomes poetry, and bound logic flows into the infinite dance of imagination.
+My portfolio, written as a book after Paulo Coelho's _The Alchemist_. Not a list of jobs, but the story of how I learned to make things, told in the shape of the Great Work: it begins at the forge, passes through the night, and ends at dawn in the desert.
 
-Inspired by **The Alchemist** by Paulo Coelho, this is a record of a journey through fire, transformation, and the eternal pursuit of the Personal Legend.
+**Live:** [thatu.is-a.dev](https://thatu.is-a.dev) · in English and Vietnamese
 
-🔗 **[Enter the Sanctum](https://thatu.is-a.dev)**
+![The name](.github/assets/hero.webp)
+
+## The book
+
+### Prologue
+
+Every alchemist begins with a name and a fire. Three sayings open the book, and between them they hold all of it: the old must be let go, trial is what tempers the will, and whoever comes out of the crucible comes out changed.
+
+![Into the fire](.github/assets/portal.webp)
+![The first saying](.github/assets/quote.webp)
+
+### I. The Alchemist
+
+How I came to make things, told in the four stages of the Great Work. **Nigredo**, the years spent lost in the dark. **Albedo**, the first lines of code and the small flame they lit. **Citrinitas**, the night it all finally made sense. **Rubedo**, the work that is still going on.
+
+![The Alchemist](.github/assets/the-alchemist.webp)
+![Nigredo](.github/assets/journal.webp)
+
+### II. The grimoire
+
+The tools I have learned, kept like spells in an old book. Released from its pages, they become the stars I work under.
+
+![The grimoire](.github/assets/grimoire.webp)
+![The constellation](.github/assets/constellation.webp)
+
+### III. The craftings
+
+What the fire has made so far. Each work is a star on its own orbit, and each has its own page.
+
+![The craftings](.github/assets/craftings.webp)
+
+### IV. The journey
+
+The night gives way to dawn. The book ends where Santiago's story does, in the desert, with the word that was there before any of it began: _Maktub_, it is written.
+
+![The last sayings](.github/assets/closing.webp)
+![Maktub](.github/assets/maktub.webp)
+
+### The last page
+
+An invitation to write.
+
+![The last page](.github/assets/footer.webp)
+
+### The works, one by one
+
+Every work also has a page of its own, with its story, its materials and more of its pictures.
+
+![All craftings](.github/assets/craftings-index.webp)
+![A crafting](.github/assets/detail.webp)
+
+## Behind the pages
+
+- **The name** is a single WebGL2 shader (OGL): the paper, the letters and the fire inside them. The letters are drawn once into a mask, so they stay sharp however close the camera comes.
+- **The mist frames** around every photograph and screenshot are a shader that dissolves the edges into fog and stirs it toward the cursor.
+- **The grimoire** is a React Three Fiber scene: the book, its magic circle and the tech stack it releases.
+- **Between pages**, an OGL noise shader burns the screen out and back in.
+
+### Keeping it smooth
+
+- **One clock.** Lenis, GSAP, the OGL shaders and the R3F scenes all run on one `gsap.ticker` (`src/lib/frame.ts`). Lenis goes first, so every frame draws against a settled scroll position.
+- **Only draw what is seen.** Each effect stops drawing when it is off screen or faded out.
+- **Few WebGL contexts.** All mist frames render into one shared canvas through drei's `<View>`.
+- **Cheap properties only.** Animation stays on transforms, opacity and shader uniforms. There are no animated blurs or text shadows.
+- **Quality tiers** (`src/lib/quality.ts`). Low-memory devices, modest phones and visitors who prefer reduced motion get lighter shaders. Everyone else gets a short frame-rate check, and the tier drops if the machine struggles. `?quality=high` or `?quality=low` forces either one.
+
+## Stack
+
+- **[Next.js 15](https://nextjs.org)** (App Router, Turbopack) · **React 19** · **TypeScript**
+- **[GSAP](https://gsap.com)** with `ScrollTrigger`, and **[Lenis](https://lenis.darkroom.engineering)** for smooth scroll
+- **[React Three Fiber](https://r3f.docs.pmnd.rs)** and **drei**
+- **[OGL](https://github.com/oframe/ogl)** for the full-screen shaders
+- **Zustand** for app state and the EN / VI language store, and **TanStack Query** for project data
+- **Tailwind CSS v4**, typeset in Kings and EB Garamond
+
+## Running it
+
+```bash
+pnpm install
+pnpm dev
+```
+
+Open [localhost:3000](http://localhost:3000). The works live in `src/features/alchemist/craftings/constants/mock-projects.ts`, and the site's text, in both languages, in `src/constants/translations.ts`.
+
+## Credits
+
+The story borrows its shape and its sayings from Paulo Coelho's _The Alchemist_. The code is MIT licensed (see [LICENSE](LICENSE)).
 
 ---
 
-## 🛠️ The Alchemical Engine
-
-The Sanctum is powered by a custom-built narrative engine designed to dissolve the boundary between digital art and immersive reality.
-
-### 🌌 Global Atmosphere Sync
-
-A centralized background layer harmonizes **StarField** (celestial starlight) and **GoldenSparks** (forge embers). The atmosphere breathes with the visitor, transitioning from the intense heat of the forge to the cold clarity of the cosmos as the journey unfolds.
-
-### 📜 Procedural Parchment (SVG Filters)
-
-Custom SVG displacement maps are used to generate organic, procedurally-torn edges for digital journals. These filters bleed amber starlight through the "burnt" imperfections of the paper, bridging the gap between ancient texture and modern code.
-
-### ⚡ Unified ViewCanvas Architecture
-
-Built on **Next.js 15**, **Three.js (R3F)**, and **Drei's View**. All 3D interactions — from the Magic Circle to the planetary orbital systems — share a single, high-performance canvas to ensure buttery-smooth motion and zero redundant memory overhead.
-
-### 🔮 State & Localization (Zustand + i18n)
-
-The soul of the Sanctum is unified using **Zustand**, managing global states from atmospheric ignition to localized narratives. A custom **i18n system** enables seamless switching between English and Vietnamese, toggled via a floating **"Alchemist's Orb"** — a mystical UI element that mirrors the project's aesthetic.
-
----
-
-## 🔥 The Journey: Chapters of Transmutation
-
-### Chapter I: The Awakening
-
-Identity materializes from the void. Letter by letter, the first breath is forged in the digital expanse. This is where the quiet hum of existence begins.
-
-### Chapter II: The Crucible
-
-The heart of the forge. Here, the fixed shell of "what is" is shattered to reveal "what can be." Particles swirl through three sacred phases: **Chaos**, **Fire**, and **Rebirth**.
-
-### Chapter III: Procedural Memories
-
-Journals etched onto digital vellum. Using the _Torn Paper Filter_, thoughts refined by fire are recorded: knowledge transmuted into power.
-
-### Chapter IV: The Void's Knowledge (The Grimoire)
-
-A space-parchment hybrid transition. As the tàn lửa (embers) fade, the starfield emerges, signaling the shift from the forge's heat to the vastness of universal logic.
-
-### Chapter V: Bound Legacies (The Craftings)
-
-Every project is a planetary artifact. Forged in fire, they inhabit a planetary system where each line of code is a legacy — a trace left behind to inspire, empower, and endure.
-
-### Chapter VI: The Desert of Truth (The Journey)
-
-The final test. Stepping out of the sanctum and into the shifting sands of the desert. Here, there is a language beyond words — the courage to follow the Personal Legend until the hands build what the heart has always known.
-
-> **"And, when you want something, all the universe conspires in helping you to achieve it."**  
-> — _Paulo Coelho, The Alchemist_
-
----
-
-## 🗝️ The Runes of Creation
-
-The tools used to forge this world:
-
-| Aspect         | Rune (Technology)         | Interpretation                          |
-| :------------- | :------------------------ | :-------------------------------------- |
-| **Soul**       | TypeScript / Node.js      | The deep logic governing the universe.  |
-| **Form**       | React / Next.js 15        | The vessel that contains the starlight. |
-| **Space**      | Three.js / R3F            | The 3D void where ideas take shape.     |
-| **Motion**     | GSAP / ScrollTrigger      | The rhythmic breath of the narrative.   |
-| **Will**       | Zustand                   | The unified intent behind the world.    |
-| **Aesthetics** | Vanilla CSS / SVG Filters | The art of crafting imperfection.       |
-
----
-
-## 🧙 The Alchemist
-
-**trhgatu** — _A traveler on the path to the Personal Legend._
-
-[GitHub](https://github.com/trhgatu) • [The Sanctum](https://thatu.is-a.dev)
-
----
-
-> "All is one."  
-> This Grimoire is a record of what has been learned from the language beyond words. It remains as a reminder: the journey only truly begins when one dares to take the first step.
+Made by **trhgatu**. [GitHub](https://github.com/trhgatu)
 
 **Maktub.**
