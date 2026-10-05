@@ -17,7 +17,9 @@ gsap.registerPlugin(useGSAP, ScrollTrigger);
 const WASHI_COVER_END = 0.8;
 
 const AnimatedQuote = ({ text, className }: { text: string; className?: string }) => {
-  const words = text.split(" ");
+  // The last two words travel together, so no word is left alone on a line
+  const split = text.split(" ");
+  const words = split.length > 2 ? [...split.slice(0, -2), split.slice(-2).join("\u00A0")] : split;
   return (
     <span className={cn("inline-block", className)}>
       {words.map((word, idx) => (

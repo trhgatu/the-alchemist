@@ -5,7 +5,7 @@ export const translations = {
       craftings: "Craftings",
     },
     hero: {
-      role: "Creative developer — I write code the way a smith works metal.",
+      role: "Creative developer. This is a record of how I learned to make things.",
       scroll: "scroll to open",
     },
     chronicles: {
@@ -98,7 +98,7 @@ export const translations = {
       craftings: "Chế Tác",
     },
     hero: {
-      role: "Lập trình viên sáng tạo — viết code như người thợ rèn kim loại.",
+      role: "Creative developer. Đây là ghi chép về cách tôi học làm ra mọi thứ.",
       scroll: "cuộn để mở",
     },
     chronicles: {

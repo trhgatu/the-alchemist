@@ -164,3 +164,27 @@
     transform: translateY(-50%);
   }
 }
+
+/* Visitors who ask for less motion get the still version of idle loops */
+@media (prefers-reduced-motion: reduce) {
+  .scroll-hint,
+  .fire-flare,
+  .burning-edge-glow {
+    animation: none !important;
+  }
+}
+
+/* No orphans: headings and quotes share their lines evenly; running text
+   avoids leaving a single word alone on its last line */
+h1,
+h2,
+h3,
+blockquote,
+figcaption {
+  text-wrap: balance;
+}
+p,
+li,
+dd {
+  text-wrap: pretty;
+}
