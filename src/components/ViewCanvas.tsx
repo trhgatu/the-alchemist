@@ -3,9 +3,11 @@
 import { Canvas } from "@react-three/fiber";
 import { Preload, View } from "@react-three/drei";
 import { TickerDriver } from "@/components/shared/TickerDriver";
+import { useQuality } from "@/lib/quality";
 import { Suspense } from "react";
 
 export default function ViewCanvas() {
+  const quality = useQuality();
   return (
     <>
       <Canvas
@@ -18,7 +20,7 @@ export default function ViewCanvas() {
         }}
         shadows
         frameloop="never"
-        dpr={[1, 1.5]}
+        dpr={quality === "low" ? 1 : [1, 1.5]}
         gl={{ antialias: true }}
         camera={{
           fov: 30,

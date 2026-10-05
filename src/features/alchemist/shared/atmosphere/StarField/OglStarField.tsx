@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { isHiddenOnScreen } from "@/lib/visibility";
 import { onFrame } from "@/lib/frame";
+import { onQualityChange, reducedMotion, softDpr } from "@/lib/quality";
 import { Renderer, Camera, Program, Mesh, Triangle } from "ogl";
 
 const vertexShader = `
@@ -122,7 +123,8 @@ export function OglStarField({ cool = 1, coolRef }: OglStarFieldProps = {}) {
     if (!container) return;
 
     // Soft clouds need no retina detail; 1x is a quarter of the pixels at dpr 2
-    const renderer = new Renderer({ alpha: true, dpr: 1 });
+    const renderer = new Renderer({ alpha: true, dpr: softDpr(1) });
+    const still = reducedMotion();
     const gl = renderer.gl;
     gl.canvas.className = "absolute inset-0 w-full h-full pointer-events-none";
     container.appendChild(gl.canvas);
@@ -157,6 +159,7 @@ export function OglStarField({ cool = 1, coolRef }: OglStarFieldProps = {}) {
     let currentScroll = 0;
 
     const handleResize = () => {
+      renderer.dpr = softDpr(1);
       const width = window.innerWidth;
       const height = window.innerHeight;
       renderer.setSize(width, height);
@@ -182,7 +185,7 @@ export function OglStarField({ cool = 1, coolRef }: OglStarFieldProps = {}) {
 
       const delta = Math.min(deltaMs / 1000, 0.1);
 
-      program.uniforms.uTime.value += delta;
+      if (!still) program.uniforms.uTime.value += delta;
 
       // Smooth scroll interpolation normalized by viewport height
       targetScroll = (window.scrollY || 0) / Math.max(window.innerHeight, 1);
@@ -201,11 +204,13 @@ export function OglStarField({ cool = 1, coolRef }: OglStarFieldProps = {}) {
     };
 
     const stop = onFrame(update);
+    const offQuality = onQualityChange(handleResize);
 
     return () => {
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("mousemove", handleMouseMove);
       stop();
+      offQuality();
       if (container && gl.canvas.parentNode === container) {
         container.removeChild(gl.canvas);
       }

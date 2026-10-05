@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { onFrameWhileVisible } from "@/lib/frame";
+import { getQuality, reducedMotion } from "@/lib/quality";
 import { Mesh, Program, Renderer, Texture, Triangle } from "ogl";
 
 /**
@@ -131,7 +132,8 @@ export function WashiPortal({
     const host = hostRef.current;
     if (!host) return;
 
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const dpr = getQuality() === "low" ? 1 : Math.min(window.devicePixelRatio || 1, 2);
+    const still = reducedMotion();
     const renderer = new Renderer({ alpha: true, premultipliedAlpha: false, dpr, webgl: 2 });
     const gl = renderer.gl;
     const canvas = gl.canvas as HTMLCanvasElement;
@@ -191,7 +193,7 @@ export function WashiPortal({
       if (alpha < 0.001) return;
       program.uniforms.uZoom.value = zoom;
       program.uniforms.uAlpha.value = alpha;
-      program.uniforms.uTime.value = time;
+      program.uniforms.uTime.value = still ? 3 : time;
       renderer.render({ scene: mesh });
     });
 

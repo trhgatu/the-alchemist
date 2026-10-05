@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
 import { View } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
+import { reducedMotion } from "@/lib/quality";
 import { cn } from "@/lib/utils";
 
 // Ported from the thatu portfolio (ProjectMistPortal), reduced to the resting
@@ -250,6 +251,10 @@ function MistPlane({
   }, [frameRef]);
 
   const frame = useRef(0);
+  const still = useRef(false);
+  useEffect(() => {
+    still.current = reducedMotion();
+  }, []);
   useFrame((state) => {
     const el = frameRef.current;
     if (!el) return;
@@ -257,7 +262,7 @@ function MistPlane({
     const dpr = state.viewport.dpr;
     const r = el.getBoundingClientRect();
     u.uRes.value.set(r.width * dpr, r.height * dpr);
-    u.uTime.value = state.clock.elapsedTime;
+    u.uTime.value = still.current ? 4 : state.clock.elapsedTime;
 
     // Cards fade and hide through CSS on their ancestors; mirror that here
     if (frame.current++ % 10 === 0) u.uOpacity.value = effectiveOpacity(el);

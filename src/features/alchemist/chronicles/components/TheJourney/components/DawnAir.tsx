@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { onFrameWhileVisible } from "@/lib/frame";
+import { onQualityChange, reducedMotion, softDpr } from "@/lib/quality";
 import { Mesh, Program, Renderer, Triangle } from "ogl";
 
 // The air over the desert at dawn: a band of clouds lit from below near the
@@ -67,7 +68,7 @@ export function DawnAir({ className = "" }: { className?: string }) {
     const renderer = new Renderer({
       alpha: true,
       premultipliedAlpha: false,
-      dpr: 1, // soft clouds; full resolution buys nothing but fill cost
+      dpr: softDpr(1), // soft clouds; full resolution buys nothing but fill cost
     });
     const gl = renderer.gl;
     const canvas = gl.canvas as HTMLCanvasElement;
@@ -84,6 +85,7 @@ export function DawnAir({ className = "" }: { className?: string }) {
     const mesh = new Mesh(gl, { geometry: new Triangle(gl), program });
 
     const resize = () => {
+      renderer.dpr = softDpr(1);
       const w = host.offsetWidth;
       const h = host.offsetHeight;
       if (!w || !h) return;
@@ -94,13 +96,17 @@ export function DawnAir({ className = "" }: { className?: string }) {
     ro.observe(host);
     resize();
 
+    const still = reducedMotion();
+    const offQuality = onQualityChange(resize);
     const stop = onFrameWhileVisible(host, (time) => {
-      program.uniforms.uTime.value = time;
+      // Reduced motion: the clouds hold still
+      program.uniforms.uTime.value = still ? 12 : time;
       renderer.render({ scene: mesh });
     });
 
     return () => {
       stop();
+      offQuality();
       ro.disconnect();
       if (canvas.parentElement === host) host.removeChild(canvas);
       gl.getExtension("WEBGL_lose_context")?.loseContext();

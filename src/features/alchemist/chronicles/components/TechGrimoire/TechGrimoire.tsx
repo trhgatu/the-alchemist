@@ -8,11 +8,14 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { BookScene } from "./components/scene/BookScene";
 import { useGrimoireTimeline } from "./hooks";
 import { TickerDriver } from "@/components/shared/TickerDriver";
+import { useQuality } from "@/lib/quality";
+import { CameraFit } from "./components/scene/CameraFit";
 import { TechParticles } from "./components/scene/TechParticles";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 export const TechGrimoire = () => {
+  const quality = useQuality();
   const containerRef = useRef<HTMLDivElement>(null);
 
   const { scrollProgress } = useGrimoireTimeline({
@@ -38,11 +41,12 @@ export const TechGrimoire = () => {
       <div className="absolute inset-0 z-10">
         <Canvas
           frameloop="never"
-          dpr={[1, 1.5]}
+          dpr={quality === "low" ? 1 : [1, 1.5]}
           camera={{ position: [0, 2, 8], fov: 35 }}
           gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
         >
           <TickerDriver active={onScreen} />
+          <CameraFit />
           <ambientLight intensity={0.3} />
           <spotLight
             position={[5, 8, 5]}

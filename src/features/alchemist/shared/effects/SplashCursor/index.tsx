@@ -1,7 +1,8 @@
 /* eslint-disable */
 
 "use client";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { reducedMotion, useQuality } from "@/lib/quality";
 import { onFrame } from "@/lib/frame";
 
 interface ColorRGB {
@@ -55,7 +56,21 @@ function pointerPrototype(): Pointer {
   };
 }
 
-export default function SplashCursor({
+/**
+ * The ink trail follows a mouse; on touch screens, low quality or reduced
+ * motion it is not rendered at all.
+ */
+export default function SplashCursor(props: SplashCursorProps) {
+  const quality = useQuality();
+  const [pointerFine, setPointerFine] = useState(false);
+  useEffect(() => {
+    setPointerFine(window.matchMedia("(pointer: fine)").matches && !reducedMotion());
+  }, []);
+  if (quality === "low" || !pointerFine) return null;
+  return <FluidTrail {...props} />;
+}
+
+function FluidTrail({
   SIM_RESOLUTION = 128,
   DYE_RESOLUTION = 720,
   CAPTURE_RESOLUTION = 512,
