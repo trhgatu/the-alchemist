@@ -147,7 +147,7 @@ const TEXT: Record<"en" | "vi", Record<string, Text>> = {
     },
     "kim-khanh": {
       description:
-        "Trang web làm riêng cho Kim Khanh, như một cuốn sổ lưu niệm: có hoa, có những nơi đã đi qua, có những niềm vui nho nhỏ mỗi ngày, nâng niu như cánh hoa ép trong trang sách.",
+        "Trang web dành riêng cho Kim Khanh, như một cuốn sổ lưu niệm: có hoa, có những nơi đã đi qua, có những niềm vui nho nhỏ mỗi ngày, nâng niu như cánh hoa ép trong trang sách.",
       credit:
         'Mô hình 3D "Rhododendron - Azalea" của Nestaeric trên Sketchfab, giấy phép CC BY 4.0.',
     },
