@@ -3,30 +3,32 @@ export interface Project {
   slug: string;
   name: string;
   description: string;
+  /** Attribution owed to borrowed assets (licensed models, photos). */
+  credit?: string;
   thumbnail?: string;
   images?: string[];
   tech?: {
     name: string;
   }[];
   category?: string;
-  projectStatus: 'Completed' | 'In Progress';
-  status: 'published' | 'draft';
+  projectStatus: "Completed" | "In Progress";
+  status: "published" | "draft";
   link?: string;
   repo?: string;
   featured?: boolean;
-  downloads: number;
+  downloads?: number;
   year?: number;
   publishedAt?: string;
   createdAt?: string;
   updatedAt?: string;
 }
 
-export type ViewMode = 'grid' | 'list';
+export type ViewMode = "grid" | "list";
 export type Category =
-  | 'All'
-  | 'Full-Stack'
-  | 'Frontend'
-  | 'Backend'
-  | 'AI/ML'
-  | 'Mobile'
-  | 'Productivity';
+  | "All"
+  | "Full-Stack"
+  | "Frontend"
+  | "Backend"
+  | "AI/ML"
+  | "Mobile"
+  | "Productivity";

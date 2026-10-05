@@ -1,187 +1,168 @@
 import { Project } from "@/types";
 import { ProjectTypeEnum } from "../enums";
 
-export const MOCK_PROJECTS_EN: Project[] = [
+const IMG = "/assets/images/craftings";
+
+type Text = Pick<Project, "description" | "credit">;
+
+// What stays the same in every language
+const WORKS: Omit<Project, keyof Text>[] = [
   {
     _id: "proj-1",
     slug: "magnum-opus",
     name: "Magnum Opus",
-    description:
-      "The Great Work — A sovereign digital sanctuary of memory and reflection, forged through unyielding architectural mastery and the alchemy of code.",
-    thumbnail: "/assets/images/craftings/magnum-opus.png",
+    thumbnail: `${IMG}/magnum-opus.webp`,
     images: [
-      "/assets/images/craftings/magnum-opus.png",
-      "/assets/images/craftings/magic_circle.png",
+      `${IMG}/magnum-opus.webp`,
+      `${IMG}/magnum-opus-architecture.webp`,
+      `${IMG}/magnum-opus-sign-in.webp`,
     ],
     tech: [
-      { name: "Turborepo" },
-      { name: "NestJS (DDD/CQRS)" },
-      { name: "Next.js 15" },
-      { name: "Vite Admin" },
-      { name: "Prisma & Postgres" },
+      { name: "TypeScript" },
+      { name: "NestJS" },
+      { name: "Next.js" },
+      { name: "PostgreSQL & Prisma" },
       { name: "Redis & BullMQ" },
-      { name: "Socket.IO" },
+      { name: "Docker" },
     ],
     category: "Full-Stack",
     projectStatus: "In Progress",
     status: "published",
-    link: "https://magnum-opus.dev/",
-    repo: "https://github.com/trhgatu",
+    link: "https://www.magnum-opus.dev",
+    repo: "https://github.com/trhgatu/magnum-opus",
     featured: true,
-    downloads: 320,
     year: 2026,
-    publishedAt: "2026-01-01T00:00:00.000Z",
   },
   {
     _id: "proj-2",
     slug: "the-ronin",
     name: "The Ronin",
-    description:
-      "An ethereal Japanese Sumi-e interactive experience — Chronicling the path of the masterless warrior through traditional ink artistry and dynamic 3D physics.",
-    thumbnail: "/assets/images/craftings/the-ronin.png",
+    thumbnail: `${IMG}/the-ronin.webp`,
     images: [
-      "/assets/images/craftings/the-ronin.png",
-      "/assets/images/craftings/bg_sumi_e_snow.png",
-      "/assets/images/craftings/sumi_tree.png",
+      `${IMG}/the-ronin.webp`,
+      `${IMG}/the-ronin-lake.webp`,
+      `${IMG}/the-ronin-philosophy.webp`,
+      `${IMG}/the-ronin-summons.webp`,
+    ],
+    tech: [
+      { name: "Next.js" },
+      { name: "React Three Fiber" },
+      { name: "OGL" },
+      { name: "GSAP" },
+      { name: "Lenis" },
+      { name: "Tailwind CSS" },
+    ],
+    category: "Frontend",
+    projectStatus: "Completed",
+    status: "published",
+    link: "https://thatu.dev",
+    repo: "https://github.com/trhgatu/thatu",
+    featured: true,
+    year: 2026,
+  },
+  {
+    _id: "proj-3",
+    slug: "kim-khanh",
+    name: "Kim Khanh",
+    thumbnail: `${IMG}/kim-khanh.webp`,
+    images: [
+      `${IMG}/kim-khanh.webp`,
+      `${IMG}/kim-khanh-about.webp`,
+      `${IMG}/kim-khanh-journey.webp`,
+      `${IMG}/kim-khanh-notes.webp`,
     ],
     tech: [
       { name: "Next.js" },
       { name: "Three.js" },
+      { name: "OGL" },
       { name: "GSAP" },
-      { name: "Sumi-e Shaders" },
+      { name: "Lenis" },
       { name: "Tailwind CSS" },
     ],
     category: "Frontend",
     projectStatus: "Completed",
     status: "published",
-    link: "https://thatu.vercel.app/",
-    repo: "https://github.com/trhgatu",
+    link: "https://kimkhanh-portfolio.vercel.app/",
+    repo: "https://github.com/trhgatu/kimkhanh-portfolio",
     featured: true,
-    downloads: 215,
     year: 2026,
-    publishedAt: "2026-01-01T00:00:00.000Z",
   },
   {
-    _id: "proj-3",
+    _id: "proj-4",
     slug: "the-alchemist",
     name: "The Alchemist",
-    description:
-      "An interactive 3D digital grimoire portfolio and alchemical forge — Transmuting abstract logic and code into enduring structural art.",
-    thumbnail: "/assets/images/craftings/alchemist_forge_bg.png",
+    thumbnail: `${IMG}/the-alchemist.webp`,
     images: [
-      "/assets/images/craftings/alchemist_forge_bg.png",
-      "/assets/images/craftings/alchemist_mountain_path.png",
-      "/assets/images/craftings/alchemist_silhoutte_boy.png",
+      `${IMG}/the-alchemist.webp`,
+      `${IMG}/the-alchemist-hero.webp`,
+      `${IMG}/the-alchemist-journal.webp`,
+      `${IMG}/the-alchemist-desert.webp`,
     ],
     tech: [
-      { name: "Next.js 15" },
-      { name: "Three.js / OGL" },
+      { name: "Next.js" },
+      { name: "React Three Fiber" },
+      { name: "OGL" },
       { name: "GSAP" },
-      { name: "SVG Displacement" },
+      { name: "Zustand" },
       { name: "Tailwind CSS" },
     ],
     category: "Frontend",
     projectStatus: "Completed",
     status: "published",
-    link: "https://thatu.is-a.dev/",
+    link: "https://thatu.is-a.dev",
     repo: "https://github.com/trhgatu/the-alchemist",
     featured: true,
-    downloads: 180,
-    year: 2026,
-    publishedAt: "2026-01-01T00:00:00.000Z",
+    year: 2025,
   },
 ];
 
-export const MOCK_PROJECTS_VI: Project[] = [
-  {
-    _id: "proj-1",
-    slug: "magnum-opus",
-    name: "Magnum Opus",
-    description:
-      "The Great Work — Thánh địa kỹ thuật số lưu giữ ký ức và tâm thức, được đúc kết từ hàng vạn dòng lệnh bất hoại và quy luật kiến trúc vĩnh hằng.",
-    thumbnail: "/assets/images/craftings/magnum-opus.png",
-    images: [
-      "/assets/images/craftings/magnum-opus.png",
-      "/assets/images/craftings/magic_circle.png",
-    ],
-    tech: [
-      { name: "Turborepo" },
-      { name: "NestJS (DDD/CQRS)" },
-      { name: "Next.js 15" },
-      { name: "Vite Admin" },
-      { name: "Prisma & Postgres" },
-      { name: "Redis & BullMQ" },
-      { name: "Socket.IO" },
-    ],
-    category: "Full-Stack",
-    projectStatus: "In Progress",
-    status: "published",
-    link: "https://magnum-opus.dev/",
-    repo: "https://github.com/trhgatu",
-    featured: true,
-    downloads: 320,
-    year: 2026,
-    publishedAt: "2026-01-01T00:00:00.000Z",
+const TEXT: Record<"en" | "vi", Record<string, Text>> = {
+  en: {
+    "magnum-opus": {
+      description:
+        "The great work is a life. A private place to keep days, moods and memories, and to see in them, slowly, what needs to change.",
+    },
+    "the-ronin": {
+      description:
+        "A masterless swordsman walks through ink and snow. My portfolio, told as a samurai's tale, each chapter a page of torn washi.",
+    },
+    "kim-khanh": {
+      description:
+        "Made for Kim Khanh. A scrapbook of flowers, places and small everyday joys, kept as gently as petals pressed between pages.",
+      credit: '3D model "Rhododendron - Azalea" by Nestaeric on Sketchfab, licensed CC BY 4.0.',
+    },
+    "the-alchemist": {
+      description:
+        "The book in your hands. The tale of a shepherd boy who left home to find his treasure, retold through my own years of learning to make things.",
+    },
   },
-  {
-    _id: "proj-2",
-    slug: "the-ronin",
-    name: "The Ronin",
-    description:
-      "Tuyệt tác thủy mặc tương tác sống động — Khắc họa hành trình kiếm sĩ vô danh qua nghệ thuật Sumi-e truyền thống và công nghệ 3D tân tiến.",
-    thumbnail: "/assets/images/craftings/the-ronin.png",
-    images: [
-      "/assets/images/craftings/the-ronin.png",
-      "/assets/images/craftings/bg_sumi_e_snow.png",
-      "/assets/images/craftings/sumi_tree.png",
-    ],
-    tech: [
-      { name: "Next.js" },
-      { name: "Three.js" },
-      { name: "GSAP" },
-      { name: "Sumi-e Shaders" },
-      { name: "Tailwind CSS" },
-    ],
-    category: "Frontend",
-    projectStatus: "Completed",
-    status: "published",
-    link: "https://thatu.vercel.app/",
-    repo: "https://github.com/trhgatu",
-    featured: true,
-    downloads: 215,
-    year: 2026,
-    publishedAt: "2026-01-01T00:00:00.000Z",
+  vi: {
+    "magnum-opus": {
+      description:
+        "Đời người là kiệt tác lớn nhất. Một chốn riêng để cất giữ ngày tháng, buồn vui và ký ức, để mỗi lần nhìn lại là thấy rõ hơn mình cần thay đổi điều gì.",
+    },
+    "the-ronin": {
+      description:
+        "Portfolio của tôi, kể bằng câu chuyện một lãng nhân lang bạt giữa mực tàu và tuyết trắng. Mỗi chương là một trang giấy washi rách mép.",
+    },
+    "kim-khanh": {
+      description:
+        "Trang web làm riêng cho Kim Khanh, như một cuốn sổ lưu niệm: có hoa, có những nơi đã đi qua, có những niềm vui nho nhỏ mỗi ngày, nâng niu như cánh hoa ép trong trang sách.",
+      credit:
+        'Mô hình 3D "Rhododendron - Azalea" của Nestaeric trên Sketchfab, giấy phép CC BY 4.0.',
+    },
+    "the-alchemist": {
+      description:
+        "Chính là cuốn sách bạn đang đọc. Chuyện cậu bé chăn cừu rời quê đi tìm kho báu, kể lại qua chính những năm tháng tôi học cách tạo ra mọi thứ.",
+    },
   },
-  {
-    _id: "proj-3",
-    slug: "the-alchemist",
-    name: "The Alchemist",
-    description:
-      "Bản thảo ma thuật 3D tương tác đa chiều — Nơi dòng lệnh biến thành thi ca và tư duy logic hòa quyện cùng triết lý giả kim thuật.",
-    thumbnail: "/assets/images/craftings/alchemist_forge_bg.png",
-    images: [
-      "/assets/images/craftings/alchemist_forge_bg.png",
-      "/assets/images/craftings/alchemist_mountain_path.png",
-      "/assets/images/craftings/alchemist_silhoutte_boy.png",
-    ],
-    tech: [
-      { name: "Next.js 15" },
-      { name: "Three.js / OGL" },
-      { name: "GSAP" },
-      { name: "SVG Displacement" },
-      { name: "Tailwind CSS" },
-    ],
-    category: "Frontend",
-    projectStatus: "Completed",
-    status: "published",
-    link: "https://thatu.is-a.dev/",
-    repo: "https://github.com/trhgatu/the-alchemist",
-    featured: true,
-    downloads: 180,
-    year: 2026,
-    publishedAt: "2026-01-01T00:00:00.000Z",
-  },
-];
+};
+
+const withText = (lang: "en" | "vi"): Project[] =>
+  WORKS.map((work) => ({ ...work, ...TEXT[lang][work.slug] }));
+
+export const MOCK_PROJECTS_EN: Project[] = withText("en");
+export const MOCK_PROJECTS_VI: Project[] = withText("vi");
 
 export const MOCK_PROJECTS: Project[] = MOCK_PROJECTS_EN;
 

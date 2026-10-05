@@ -146,18 +146,6 @@ export function TheCraftings({ projects, isLoading, isError }: ProjectHomeProps)
       );
 
       // 3. Astrolabe golden divider expands from center
-      entranceTl.fromTo(
-        ".craftings-divider",
-        { opacity: 0, scaleX: 0 },
-        { opacity: 1, scaleX: 1, duration: 1.0, ease: "power2.inOut" },
-        "-=0.7"
-      );
-      entranceTl.fromTo(
-        ".craftings-divider-star",
-        { rotation: -180, scale: 0 },
-        { rotation: 0, scale: 1, duration: 0.9, ease: "back.out(1.7)" },
-        "<"
-      );
 
       // 4. Poetic Lore desc softly manifests
       entranceTl.fromTo(
@@ -330,13 +318,6 @@ export function TheCraftings({ projects, isLoading, isError }: ProjectHomeProps)
           </h2>
 
           {/* ✧ 3. Expanding Astrolabe Rule */}
-          <div className="craftings-divider flex items-center justify-center gap-4 my-4 relative z-20 w-full max-w-xs opacity-0">
-            <div className="flex-1 h-[1px] bg-gradient-to-r from-transparent via-amber-400/50 to-amber-300" />
-            <span className="craftings-divider-star text-lg text-amber-300 drop-shadow-[0_0_8px_#f59e0b] select-none">
-              ✧
-            </span>
-            <div className="flex-1 h-[1px] bg-gradient-to-l from-transparent via-amber-400/50 to-amber-300" />
-          </div>
 
           {/* 📜 4. Poetic Lore Inscription in Bilbo */}
           <p

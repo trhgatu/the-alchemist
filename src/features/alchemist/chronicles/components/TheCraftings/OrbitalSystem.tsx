@@ -13,7 +13,10 @@ export const OrbitalSystem = forwardRef<HTMLDivElement, OrbitalSystemProps>(
     const centerX = -radius + 140;
 
     return (
-      <div ref={ref} className="w-[300px] shrink-0 h-full relative overflow-visible z-10">
+      <div
+        ref={ref}
+        className="hidden md:block w-[300px] shrink-0 h-full relative overflow-visible z-10"
+      >
         <svg className="absolute inset-0 w-full h-full pointer-events-none z-0">
           <defs>
             <linearGradient id="orbitalGradient" x1="0%" y1="0%" x2="0%" y2="100%">

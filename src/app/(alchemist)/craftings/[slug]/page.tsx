@@ -138,6 +138,11 @@ export default function CraftingDetailPage() {
                     </a>
                   )}
                 </div>
+                {project.credit && (
+                  <p className="mt-8 font-garamond text-base italic text-[#8a7e69]">
+                    {project.credit}
+                  </p>
+                )}
               </div>
 
               <dl className="rise font-garamond text-lg md:col-span-4 md:col-start-9">
