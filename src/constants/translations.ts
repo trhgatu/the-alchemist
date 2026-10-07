@@ -128,17 +128,17 @@ export const translations = {
         journal: {
           nigredo: {
             title: "Nigredo: Hư Vô",
-            desc: "Có một thời, người học việc lạc giữa bóng tối, chưa biết mình là ai, cũng chưa biết phải đi về đâu. Những ngày trôi qua không hình hài, như kim loại thô nằm im dưới đáy lò. Nhưng sách xưa vẫn chép: muốn luyện thành vàng, trước hết kim loại phải hoá đen.",
+            desc: "Khoảng thời gian lạc giữa bóng tối, chưa biết mình là ai, chưa rõ lối đi. Chuỗi ngày không hình hài, tựa kim loại thô nằm chìm nơi đáy lò. Nhưng sách xưa vẫn chép: muốn luyện nên vàng ròng, trước hết kim loại phải hoá đen.",
             initial: "N",
           },
           albedo: {
             title: "Albedo: Thanh Tẩy",
-            desc: "Rồi những dòng mã đầu tiên xuất hiện, và kẻ lạc lối ấy lần đầu nhóm lửa trong lò. Ngày này qua tháng khác, từng lớp tạp âm được gạn đi, để những dòng lệnh thô ráp dần mang nhịp thở đều đặn. Không ai chứng kiến, chỉ có ngọn lửa nhỏ chưa từng tắt, và tấm gương trong lòng mỗi ngày một trong hơn.",
+            desc: "Những dòng mã đầu tiên xuất hiện, và một ngọn lửa nhỏ nhóm lên nơi đáy lò. Tạp âm được gạn lọc qua năm tháng, để dòng lệnh thô ráp dần có được nhịp thở đều đặn. Không cần ai chứng kiến, chỉ có ngọn lửa chưa từng tàn, và tâm trí mỗi ngày một sáng tỏ.",
             initial: "A",
           },
           citrinitas: {
             title: "Citrinitas: Thức Tỉnh",
-            desc: "Rồi một đêm, giữa im lặng của lò rèn, tia lửa ấy bùng lên. Tiếng gọi của Vận Mệnh vang lên rõ ràng, và những danh xưng chật hẹp rơi xuống như trút một tấm áo cũ. Từ đó, đôi tay không còn làm vì sợ hãi, mà vì niềm vui được thổi hồn vào những điều chưa có hình hài.",
+            desc: "Rồi một đêm, giữa sự im lặng của lò rèn, tia lửa ấy bùng lên. Con đường phía trước hiện ra rõ ràng, và mọi danh xưng chật hẹp bỗng rơi rụng như trút bỏ tấm áo cũ. Kể từ đó, đôi tay không còn làm việc vì sợ hãi, mà vì niềm vui được dựng nên những điều chưa từng có hình hài.",
             initial: "C",
           },
           rubedo: {

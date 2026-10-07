@@ -53,10 +53,9 @@ export const useAtmosphereTimeline = ({
           end: ATMOSPHERE_CONFIG.CRAFTINGS_FADE_END,
           scrub: true,
           onUpdate: (self) => {
-            const fadeProgress = gsap.utils.clamp(0, 1, (self.progress - 0.8) * 5);
             gsap.set(starsRef.current, {
-              opacity: 1 - fadeProgress,
-              autoAlpha: fadeProgress >= 1 ? 0 : 1,
+              opacity: 1 - self.progress,
+              autoAlpha: self.progress >= 1 ? 0 : 1,
             });
           },
         });

@@ -93,7 +93,6 @@ export default function CraftingDetailPage() {
 
         {project && (
           <>
-            {/* Title */}
             <header className="mt-14 text-center md:mt-16">
               <p className="reveal font-garamond text-base italic text-[#a39680]">
                 {[project.year, project.category].filter(Boolean).join(" · ")}
@@ -102,15 +101,11 @@ export default function CraftingDetailPage() {
                 {project.name}
               </h1>
             </header>
-
-            {/* The work itself, held in the same mist as on the chronicle */}
             {cover && (
               <div className="reveal mx-auto mt-10 max-w-6xl md:mt-14">
                 <MistFrame src={cover} alt={project.name} />
               </div>
             )}
-
-            {/* Folio: the account of the work, and its ledger */}
             <section className="mt-16 grid grid-cols-1 gap-14 md:mt-24 md:grid-cols-12 md:gap-10">
               <div className="rise md:col-span-7">
                 <p className="font-garamond text-2xl leading-[1.6] text-[#e9dfcc] md:text-3xl">
@@ -151,13 +146,13 @@ export default function CraftingDetailPage() {
                     key={row.label}
                     className="flex items-baseline justify-between gap-6 border-t border-[#e9dfcc]/10 py-3"
                   >
-                    <dt className="text-base italic text-[#8a7e69]">{row.label}</dt>
-                    <dd className="text-right text-[#e9dfcc]">{row.value}</dd>
+                    <dt className="text-lg italic">{row.label}</dt>
+                    <dd className="text-right">{row.value}</dd>
                   </div>
                 ))}
                 {project.tech && project.tech.length > 0 && (
                   <div className="border-y border-[#e9dfcc]/10 py-3">
-                    <dt className="text-base italic text-[#8a7e69]">{t.labels.materials}</dt>
+                    <dt className="text-lg italic">{t.labels.materials}</dt>
                     <dd className="mt-2 space-y-1 text-[#c8bca5]">
                       {project.tech.map((x) => (
                         <p key={x.name}>{x.name}</p>

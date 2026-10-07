@@ -31,7 +31,7 @@ const WORKS: Omit<Project, keyof Text>[] = [
     link: "https://www.magnum-opus.dev",
     repo: "https://github.com/trhgatu/magnum-opus",
     featured: true,
-    year: 2026,
+    year: "2026",
   },
   {
     _id: "proj-2",
@@ -58,7 +58,7 @@ const WORKS: Omit<Project, keyof Text>[] = [
     link: "https://thatu.dev",
     repo: "https://github.com/trhgatu/thatu",
     featured: true,
-    year: 2026,
+    year: "2026",
   },
   {
     _id: "proj-3",
@@ -85,7 +85,7 @@ const WORKS: Omit<Project, keyof Text>[] = [
     link: "https://kimkhanh-portfolio.vercel.app/",
     repo: "https://github.com/trhgatu/kimkhanh-portfolio",
     featured: true,
-    year: 2026,
+    year: "2026",
   },
   {
     _id: "proj-4",
@@ -112,7 +112,7 @@ const WORKS: Omit<Project, keyof Text>[] = [
     link: "https://thatu.is-a.dev",
     repo: "https://github.com/trhgatu/the-alchemist",
     featured: true,
-    year: 2025,
+    year: "2025–2026",
   },
 ];
 

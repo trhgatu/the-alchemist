@@ -23,8 +23,8 @@ export function ProphecyCard({ project: p, index: i, activeIndex }: ProphecyCard
         }`}
       >
         <div className="lg:w-[34%] lg:shrink-0">
-          {p.year && <p className="text-lg text-neutral-500">{p.year}</p>}
-          <h2 className="mt-2 font-garamond italic text-4xl sm:text-5xl md:text-6xl xl:text-7xl leading-[1.05] text-white">
+          {p.year && <p className="text-xl md:text-2xl text-neutral-500 italic">{p.year}</p>}
+          <h2 className="mt-2 font-garamond italic text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.05] text-white">
             <Link href={`/craftings/${p.slug}`} className="hover:text-amber-200 transition-colors">
               {p.name}
             </Link>

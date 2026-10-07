@@ -17,7 +17,7 @@ export interface Project {
   repo?: string;
   featured?: boolean;
   downloads?: number;
-  year?: number;
+  year?: string;
   publishedAt?: string;
   createdAt?: string;
   updatedAt?: string;
