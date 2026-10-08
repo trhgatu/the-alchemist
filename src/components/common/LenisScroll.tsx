@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import Lenis from "lenis";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/all";
+import { setLenis } from "@/lib/lenis";
 
 export default function LenisScroll() {
   const lenisRef = useRef<Lenis | null>(null);
@@ -18,6 +19,7 @@ export default function LenisScroll() {
       smoothWheel: true,
     });
     lenisRef.current = lenis;
+    setLenis(lenis);
 
     lenis.on("scroll", ScrollTrigger.update);
 
@@ -31,6 +33,7 @@ export default function LenisScroll() {
       gsap.ticker.remove(tick);
       lenis.destroy();
       lenisRef.current = null;
+      setLenis(null);
     };
   }, []);
 

@@ -37,9 +37,9 @@ export function ProphecyCard({ project: p, index: i, activeIndex }: ProphecyCard
               href={p.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-8 inline-block font-garamond text-lg text-neutral-400 hover:text-amber-200 transition-colors"
+              className="mt-8 inline-block font-garamond text-lg text-neutral-300 hover:text-amber-200 transition-colors"
             >
-              {t.liveManifestation}
+              {t.visitSite}
             </a>
           )}
         </div>

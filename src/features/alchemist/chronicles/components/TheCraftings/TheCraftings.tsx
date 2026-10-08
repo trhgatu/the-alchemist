@@ -10,6 +10,7 @@ import { OrbitalSystem } from "./OrbitalSystem";
 import { ProphecyCard } from "./ProphecyCard";
 import { useLang } from "@/hooks/useLang";
 import { translations } from "@/constants/translations";
+import { getLenis } from "@/lib/lenis";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -23,6 +24,10 @@ export function TheCraftings({ projects, isLoading, isError }: ProjectHomeProps)
   const sectionRef = useRef<HTMLDivElement>(null);
   const backgroundRef = useRef<HTMLDivElement>(null);
   const orbitalRef = useRef<HTMLDivElement>(null);
+  // Fractional index of the work in front; the flame stars read it every frame
+  const orbitProgressRef = useRef(0);
+  // The pinned scroll that walks the works, so a fire can be clicked to its work
+  const walkRef = useRef<ScrollTrigger | null>(null);
   const gridRef = useRef<HTMLDivElement>(null);
   const prophecyListRef = useRef<HTMLDivElement>(null);
   const lang = useLang();
@@ -155,40 +160,10 @@ export function TheCraftings({ projects, isLoading, isError }: ProjectHomeProps)
         "-=0.6"
       );
 
-      const items = sectionRef.current?.querySelectorAll(".sidebar-item");
-      if (items && projects.length > 0) {
-        const radius = dimensions.height * 0.55;
-        const startY = dimensions.height * 0.45;
-        const centerXOffset = -radius + 140;
-        const spacing = 32;
-        const totalProgress = 0;
-
-        items.forEach((item, i) => {
-          const diff = i - totalProgress;
-          const angleDeg = diff * spacing;
-          const angleRad = angleDeg * (Math.PI / 180);
-
-          const x = centerXOffset + Math.cos(angleRad) * radius - 48;
-          const y = startY + Math.sin(angleRad) * radius;
-
-          const dist = Math.abs(angleDeg);
-          const opacity = Math.max(0.5, 1 - dist / 80);
-
-          gsap.set(item, {
-            x: x,
-            y: y,
-            yPercent: -50,
-            rotation: angleDeg,
-            opacity: opacity,
-            zIndex: 100 - Math.round(dist),
-          });
-        });
-      }
-
       if (prophecyListRef.current && projects.length > 1) {
         const progressObj = { value: 0 };
 
-        gsap.to(progressObj, {
+        const walk = gsap.to(progressObj, {
           value: 1,
           ease: "none",
           scrollTrigger: {
@@ -213,38 +188,10 @@ export function TheCraftings({ projects, isLoading, isError }: ProjectHomeProps)
                 prophecyListRef.current.parentElement.clientHeight;
               gsap.set(prophecyListRef.current, { y: -p * totalDist });
             }
-
-            const items = sectionRef.current?.querySelectorAll(".sidebar-item");
-            if (items) {
-              const radius = dimensions.height * 0.55;
-              const startY = dimensions.height * 0.45;
-              const centerXOffset = -radius + 140;
-              const spacing = 32;
-              const totalProgress = p * (projects.length - 1);
-
-              items.forEach((item, i) => {
-                const diff = i - totalProgress;
-                const angleDeg = diff * spacing;
-                const angleRad = angleDeg * (Math.PI / 180);
-
-                const x = centerXOffset + Math.cos(angleRad) * radius - 48;
-                const y = startY + Math.sin(angleRad) * radius;
-
-                const dist = Math.abs(angleDeg);
-                const opacity = Math.max(0.5, 1 - dist / 80);
-
-                gsap.set(item, {
-                  x: x,
-                  y: y,
-                  yPercent: -50,
-                  rotation: angleDeg,
-                  opacity: opacity,
-                  zIndex: 100 - Math.round(dist),
-                });
-              });
-            }
+            orbitProgressRef.current = p * (projects.length - 1);
           },
         });
+        walkRef.current = walk.scrollTrigger ?? null;
       }
     },
     { scope: sectionRef, dependencies: [projects.length, dimensions, lang], revertOnUpdate: true }
@@ -270,6 +217,16 @@ export function TheCraftings({ projects, isLoading, isError }: ProjectHomeProps)
     },
     { scope: sectionRef, dependencies: [activeIndex] }
   );
+
+  // Scroll the pinned walk to work `i`
+  const showWork = (i: number) => {
+    const st = walkRef.current;
+    if (!st || projects.length < 2) return;
+    const y = st.start + ((st.end - st.start) * i) / (projects.length - 1);
+    const lenis = getLenis();
+    if (lenis) lenis.scrollTo(y, { duration: 1.4 });
+    else window.scrollTo({ top: y, behavior: "smooth" });
+  };
 
   if (isLoading) {
     return (
@@ -324,7 +281,7 @@ export function TheCraftings({ projects, isLoading, isError }: ProjectHomeProps)
             key={`craftings-desc-${lang}`}
             className="craftings-desc font-garamond text-2xl sm:text-3xl md:text-4xl text-white/90 max-w-2xl text-center leading-relaxed tracking-wide opacity-0"
           >
-            &ldquo;{t.desc}&rdquo;
+            {t.desc}
           </p>
         </div>
         <div ref={gridRef} className="h-screen w-full flex overflow-hidden relative z-20 min-h-0">
@@ -332,7 +289,8 @@ export function TheCraftings({ projects, isLoading, isError }: ProjectHomeProps)
           <OrbitalSystem
             ref={orbitalRef}
             projects={projects}
-            activeIndex={activeIndex}
+            progressRef={orbitProgressRef}
+            onSelect={showWork}
             dimensions={dimensions}
           />
 

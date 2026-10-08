@@ -7,7 +7,6 @@ interface UseAtmosphereTimelineProps {
   containerRef: React.RefObject<HTMLDivElement | null>;
   starsRef: React.RefObject<HTMLDivElement | null>;
   embersRef: React.RefObject<HTMLDivElement | null>;
-  /** Nebula temperature, 0 = forge, 1 = night; written as the forge embers die out */
   coolRef: React.RefObject<number>;
   setEmbersVisible: (visible: boolean) => void;
 }

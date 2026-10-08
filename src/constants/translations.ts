@@ -58,9 +58,8 @@ export const translations = {
       },
       craftings: {
         title: "The Craftings",
-        desc: "Artifacts forged from code and persistence, each creation is a fragment of the soul made manifest.",
-        examineChronicle: "Examine Chronicle",
-        liveManifestation: "Live Manifestation",
+        desc: "What has come out of the furnace so far, each work still warm.",
+        visitSite: "Visit the site →",
       },
       journey: {
         quote:
@@ -149,10 +148,9 @@ export const translations = {
         },
       },
       craftings: {
-        title: "Tuyệt Tác Giả Kim",
-        desc: "Những cổ vật được rèn nên từ dòng lệnh và sự kiên trì, mỗi tạo tác là một mảnh linh hồn được hữu hình hóa.",
-        examineChronicle: "Khám Phá",
-        liveManifestation: "Trải Nghiệm",
+        title: "Chế Tác",
+        desc: "Những gì đã ra khỏi lò luyện cho đến nay, tác phẩm nào cũng còn hơi ấm.",
+        visitSite: "Xem trang →",
       },
       journey: {
         quote:
