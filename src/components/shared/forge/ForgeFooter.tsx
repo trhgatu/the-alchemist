@@ -6,7 +6,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useLang } from "@/hooks/useLang";
 import { translations } from "@/constants/translations";
-import { useTransitionRouter } from "@/hooks/useTransitionRouter";
+import { OglStarField } from "@/features/alchemist/shared/atmosphere/StarField/OglStarField";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -14,37 +14,35 @@ const year = new Date().getFullYear();
 
 const OWNER = "trhgatu";
 const EMAIL = "trhgatu.dev@gmail.com";
-const ELSEWHERE = [
+const LINKS = [
+  { label: "Mail", href: `mailto:${EMAIL}` },
   { label: "GitHub", href: "https://github.com/trhgatu" },
   { label: "LinkedIn", href: "https://linkedin.com/in/trhgatu1103" },
   { label: "Instagram", href: "https://instagram.com/th_atu" },
 ];
 
-const QUIET_LINK = "text-neutral-400 hover:text-amber-200 transition-colors duration-300";
-const LABEL = "mb-3 text-sm italic text-neutral-600";
-
 /**
- * The last page of the book. The name rises out of the bottom edge like the
- * sun the desert scene above just watched come up, and burns.
+ * The last page of the book. The name rises like the sun over the horizon,
+ * with minimal, elegant contact links arranged below.
  */
 export const ForgeFooter = () => {
   const scope = useRef<HTMLElement>(null);
   const lang = useLang();
   const t = translations[lang];
-  const { transitionTo } = useTransitionRouter();
 
   useGSAP(
     () => {
       gsap.fromTo(
         ".footer-name",
-        { yPercent: 45 },
+        { yPercent: 40, opacity: 0.6 },
         {
           yPercent: 0,
+          opacity: 1,
           ease: "none",
           scrollTrigger: {
             trigger: scope.current,
-            start: "top bottom",
-            end: "bottom bottom",
+            start: "top 85%",
+            end: "top 30%",
             scrub: 1,
           },
         }
@@ -53,16 +51,35 @@ export const ForgeFooter = () => {
     { scope }
   );
 
-  const pages = [
-    { name: t.nav.chronicles, link: "/chronicles" },
-    { name: t.nav.craftings, link: "/craftings" },
-  ];
-
   return (
     <footer
       ref={scope}
-      className="relative w-full overflow-hidden bg-[#0b0806] font-garamond text-neutral-300"
+      className="relative w-full overflow-hidden font-garamond text-neutral-300"
+      style={{
+        background:
+          "radial-gradient(130% 100% at 50% 100%, #1a0c06 0%, #0d0813 35%, #06050b 70%, #030306 100%)",
+      }}
     >
+      {/* Soft celestial transition from the dunes/sections above */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-[#0b0806] via-transparent to-transparent opacity-80 z-10"
+      />
+
+      {/* Living Cosmos: Volumetric Nebula Clouds */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 z-0 opacity-80 overflow-hidden"
+      >
+        <OglStarField cool={0.4} />
+      </div>
+
+      {/* Ambient alchemical furnace aura behind the signature name */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute top-12 left-1/2 -translate-x-1/2 w-[90vw] max-w-5xl h-[380px] rounded-full bg-radial from-amber-500/25 via-orange-600/10 to-transparent blur-3xl z-0"
+      />
+
       <style jsx>{`
         /* The glow is painted once; only the opacity of a second, brighter copy
            flickers, which the compositor handles without repainting the text */
@@ -94,80 +111,40 @@ export const ForgeFooter = () => {
         }
       `}</style>
 
-      <div className="mx-auto max-w-7xl px-6 pt-24 md:px-12 md:pt-32">
-        <div className="grid grid-cols-1 gap-14 md:grid-cols-12">
-          {/* The invitation */}
-          <div className="md:col-span-7">
-            <p className="text-xl italic text-neutral-500">{t.colophon.write}</p>
-            <a
-              href={`mailto:${EMAIL}`}
-              className="group mt-3 inline-block text-3xl leading-tight text-neutral-100 sm:text-4xl lg:text-5xl"
-            >
-              <span className="bg-linear-to-r from-amber-200 to-amber-200 bg-[length:0%_1px] bg-left-bottom bg-no-repeat pb-1 transition-[background-size,color] duration-500 group-hover:bg-[length:100%_1px] group-hover:text-amber-100">
-                {EMAIL}
-              </span>
-            </a>
-          </div>
-
-          <div className="grid grid-cols-2 gap-8 text-lg md:col-span-5 md:grid-cols-3">
-            <div>
-              <p className={LABEL}>Elsewhere</p>
-              <ul className="space-y-1.5">
-                {ELSEWHERE.map((item) => (
-                  <li key={item.label}>
-                    <a
-                      href={item.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={QUIET_LINK}
-                    >
-                      {item.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <p className={LABEL}>Pages</p>
-              <ul className="space-y-1.5">
-                {pages.map((item) => (
-                  <li key={item.link}>
-                    <a
-                      href={item.link}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        transitionTo(item.link);
-                      }}
-                      className={QUIET_LINK}
-                    >
-                      {item.name}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <p className={LABEL}>{year}</p>
-              <button
-                type="button"
-                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-                className={`${QUIET_LINK} cursor-pointer text-left`}
-              >
-                {lang === "vi" ? "Về trang đầu ↑" : "Back to the start ↑"}
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <p className="mt-20 text-sm text-neutral-500">
-          &copy; {year} {OWNER}. {t.colophon.rights}
-        </p>
-      </div>
-
-      <div aria-hidden className="relative mt-16 h-[14vw] select-none">
-        <div className="footer-name absolute inset-x-0 top-0 whitespace-nowrap text-center font-kings text-[16vw] leading-[0.8] will-change-transform">
+      {/* Grand Signature: Name Rises First at the Top of the Footer */}
+      <div aria-hidden className="relative pt-24 md:pt-36 pb-8 md:pb-12 select-none z-10">
+        <div className="footer-name relative whitespace-nowrap text-center font-kings text-[15vw] leading-[0.8] will-change-transform">
           <span className="fire-flare absolute inset-0 block">trhgatu</span>
           <span className="fire relative block">trhgatu</span>
+        </div>
+      </div>
+
+      {/* Horizontal Links: Mail · GitHub · LinkedIn · Instagram */}
+      <div className="relative z-10 mx-auto max-w-4xl px-6 pt-6 pb-16 md:pb-24">
+        <nav aria-label="Social and contact links" className="text-center">
+          <ul className="flex flex-wrap items-center justify-center gap-8 sm:gap-12 md:gap-16 font-garamond text-xl md:text-2xl text-neutral-400">
+            {LINKS.map((item) => (
+              <li key={item.label}>
+                <a
+                  href={item.href}
+                  target={item.href.startsWith("mailto:") ? undefined : "_blank"}
+                  rel={item.href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
+                  className="group relative inline-block py-1 tracking-wide transition-colors duration-300 hover:text-amber-200"
+                >
+                  <span>{item.label}</span>
+                  <span className="absolute inset-x-0 bottom-0 h-[1px] bg-gradient-to-r from-transparent via-amber-200/70 to-transparent scale-x-0 transition-transform duration-300 group-hover:scale-x-100" />
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        {/* Colophon & Maktub */}
+        <div className="mt-14 md:mt-20 flex flex-col sm:flex-row justify-between items-center gap-4 border-t border-neutral-800/60 pt-8 text-sm text-neutral-500">
+          <p>
+            &copy; {year} {OWNER}. {t.colophon.rights}
+          </p>
+          <p className="font-kings text-base text-amber-200/40 tracking-wider">Maktub.</p>
         </div>
       </div>
       <span className="sr-only">trhgatu</span>
