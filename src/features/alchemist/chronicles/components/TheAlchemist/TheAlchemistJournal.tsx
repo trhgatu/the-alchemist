@@ -13,7 +13,7 @@ const PHOTOS = {
   nigredo: { src: "/assets/images/the-alchemist/old.webp", focus: [0.42, 0.62], zoom: 1 },
   albedo: { src: "/assets/images/the-alchemist/night.webp", focus: [0.62, 0.5], zoom: 1.9 },
   citrinitas: { src: "/assets/images/the-alchemist/desk.webp", focus: [0.62, 0.6], zoom: 1 },
-  rubedo: { src: "/assets/images/the-alchemist/now.webp", focus: [0.55, 0.52], zoom: 1 },
+  rubedo: { src: "/assets/images/the-alchemist/menow.webp", focus: [0.5, 0.5], zoom: 1 },
 } as const satisfies Record<string, { src: string; focus: [number, number]; zoom: number }>;
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
@@ -90,6 +90,7 @@ export function TheAlchemistJournal() {
             alt="Looking out over a grey sea"
             focus={[...PHOTOS.nigredo.focus]}
             zoom={PHOTOS.nigredo.zoom}
+            transmuteOnHover
             className="aspect-4/5 w-full"
           />
         </div>
@@ -103,6 +104,7 @@ export function TheAlchemistJournal() {
             alt="Coding alone late at night, lit only by the screens"
             focus={[...PHOTOS.albedo.focus]}
             zoom={PHOTOS.albedo.zoom}
+            transmuteOnHover
             className="aspect-4/5 w-full"
           />
         </div>
@@ -137,6 +139,7 @@ export function TheAlchemistJournal() {
             alt="A desk under warm lamplight, The Alchemist on the shelf"
             focus={[...PHOTOS.citrinitas.focus]}
             zoom={PHOTOS.citrinitas.zoom}
+            transmuteOnHover
             className="aspect-4/5 w-full"
           />
         </div>
@@ -149,6 +152,7 @@ export function TheAlchemistJournal() {
             alt="Standing in the sun, looking out to sea"
             focus={[...PHOTOS.rubedo.focus]}
             zoom={PHOTOS.rubedo.zoom}
+            transmuteOnHover
             className="aspect-4/5 w-full"
           />
         </div>

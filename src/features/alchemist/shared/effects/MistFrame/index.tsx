@@ -38,6 +38,8 @@ uniform float uFill;    // share of the canvas the image occupies; the rest is m
 uniform vec2 uMouse;    // drawing-buffer px, origin bottom-left
 uniform float uMouseStrength;
 uniform float uHover;
+uniform float uBurn;
+uniform float uTransmute;
 
 vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
 vec2 mod289(vec2 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
@@ -137,6 +139,41 @@ void main() {
   // Transparent images (cut-out portraits) sit on a pale backdrop, not black
   color = mix(vec3(0.93, 0.92, 0.89), color, centerTexel.a);
 
+  // Alchemical Transmutation: Resting antique charcoal/silver -> Slow organic amber-gold burn into rich colour on hover
+  if (uTransmute > 0.5) {
+    float lum = dot(color, vec3(0.299, 0.587, 0.114));
+    vec3 shadowTone = vec3(0.10, 0.09, 0.08);
+    vec3 highlightTone = vec3(0.96, 0.94, 0.90);
+    vec3 mono = mix(shadowTone, highlightTone, lum);
+    mono = mix(vec3(lum), mono, 0.45);
+
+    // Organic burning edge using multi-octave noise
+    float burnNoise = (snoise(uv * 5.5 + vec2(uTime * 0.12, -uTime * 0.09)) * 0.65 +
+                       snoise(uv * 13.0 - vec2(uTime * 0.06, uTime * 0.14)) * 0.35) * 0.12;
+    float effectiveDist = mDist + burnNoise;
+
+    // Radius expands gracefully with an eased curve (starts slow, crawls outwards steadily)
+    float burnProgress = pow(uBurn, 1.35);
+    float bloomRadius = burnProgress * 1.55;
+
+    // Tight flame frontier so color only wakes up right where the flame has travelled
+    float radialReveal = smoothstep(bloomRadius, bloomRadius - 0.22, effectiveDist);
+    // Global subtle warmth settles only in the final stages of the burn
+    float globalReveal = smoothstep(0.65, 1.0, uBurn) * 0.35;
+    float reveal = clamp(max(radialReveal, globalReveal), 0.0, 1.0);
+
+    // Glowing alchemical ember band along the advancing burning frontier
+    float rimBand = smoothstep(0.01, 0.35, reveal) * smoothstep(0.98, 0.65, reveal);
+    // Fire color gradient: hot white-yellow core + rich amber-gold halo
+    vec3 emberCore = vec3(1.0, 0.94, 0.68);
+    vec3 emberHalo = vec3(1.0, 0.52, 0.12);
+    vec3 goldEmber = mix(emberHalo, emberCore, pow(rimBand, 1.6));
+
+    color = mix(mono, color, reveal);
+    // Burn glow radiates along the frontier
+    color += goldEmber * rimBand * 0.60 * smoothstep(0.01, 0.15, uBurn);
+  }
+
   float spotlight = exp(-mDist * 3.2) * uHover;
   color += vec3(1.0, 0.94, 0.84) * spotlight * 0.32;
   float focusRing = exp(-pow((mDist - 0.12 - sin(uTime * 3.5) * 0.018) * 18.0, 2.0)) * uHover * 0.25;
@@ -161,6 +198,8 @@ type MistFrameProps = {
   focus?: [number, number];
   /** Crop tighter around `focus`; 1 = plain cover fit */
   zoom?: number;
+  /** When true, image rests in antique charcoal/silver and blooms into colour on hover */
+  transmuteOnHover?: boolean;
 };
 
 /** Product of the CSS opacity of an element and its ancestors (0 if hidden). */
@@ -178,11 +217,13 @@ function MistPlane({
   src,
   focus,
   zoom,
+  transmuteOnHover = false,
   frameRef,
 }: {
   src: string;
   focus: [number, number];
   zoom: number;
+  transmuteOnHover?: boolean;
   frameRef: React.RefObject<HTMLDivElement | null>;
 }) {
   const material = useMemo(
@@ -201,6 +242,8 @@ function MistPlane({
           uMouse: { value: new THREE.Vector2(-9999, -9999) },
           uMouseStrength: { value: 0 },
           uHover: { value: 0 },
+          uBurn: { value: 0 },
+          uTransmute: { value: transmuteOnHover ? 1 : 0 },
           uOpacity: { value: 1 },
         },
         transparent: true,
@@ -211,6 +254,10 @@ function MistPlane({
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
+
+  useEffect(() => {
+    material.uniforms.uTransmute.value = transmuteOnHover ? 1 : 0;
+  }, [transmuteOnHover, material]);
 
   useEffect(() => {
     let alive = true;
@@ -233,7 +280,7 @@ function MistPlane({
   useEffect(() => () => material.dispose(), [material]);
 
   // Pointer in client px; hover eases in/out so the ripple fades gently
-  const mouse = useRef({ x: -9999, y: -9999, strength: 0, hovered: false, hover: 0 });
+  const mouse = useRef({ x: -9999, y: -9999, strength: 0, hovered: false, hover: 0, burn: 0 });
   useEffect(() => {
     const onMove = (e: MouseEvent) => {
       const m = mouse.current;
@@ -255,7 +302,7 @@ function MistPlane({
   useEffect(() => {
     still.current = reducedMotion();
   }, []);
-  useFrame((state) => {
+  useFrame((state, delta) => {
     const el = frameRef.current;
     if (!el) return;
     const u = material.uniforms;
@@ -276,6 +323,18 @@ function MistPlane({
     m.strength *= 0.94;
     m.hover += ((m.hovered ? 1 : 0) - m.hover) * 0.12;
     u.uHover.value = m.hover;
+
+    // Slow, measured alchemical burn:
+    // Takes ~4.5 seconds to creep across the picture, ~2.0 seconds to gently cool down
+    const safeDelta = Math.min(delta, 0.05);
+    const burnDuration = m.hovered ? 4.5 : 2.0;
+    const step = safeDelta / burnDuration;
+    if (m.hovered) {
+      m.burn = Math.min(1, m.burn + step);
+    } else {
+      m.burn = Math.max(0, m.burn - step);
+    }
+    u.uBurn.value = m.burn;
   });
 
   return (
@@ -289,7 +348,14 @@ function MistPlane({
 const TOP_CENTER: [number, number] = [0.5, 0];
 
 /** An image framed by drifting silver mist, drawn into the shared canvas. */
-export function MistFrame({ src, alt, className, focus = TOP_CENTER, zoom = 1 }: MistFrameProps) {
+export function MistFrame({
+  src,
+  alt,
+  className,
+  focus = TOP_CENTER,
+  zoom = 1,
+  transmuteOnHover = false,
+}: MistFrameProps) {
   const frameRef = useRef<HTMLDivElement>(null);
 
   return (
@@ -300,7 +366,13 @@ export function MistFrame({ src, alt, className, focus = TOP_CENTER, zoom = 1 }:
       className={cn("relative aspect-video w-full select-none", className)}
     >
       <View className="absolute inset-0">
-        <MistPlane src={src} focus={focus} zoom={zoom} frameRef={frameRef} />
+        <MistPlane
+          src={src}
+          focus={focus}
+          zoom={zoom}
+          transmuteOnHover={transmuteOnHover}
+          frameRef={frameRef}
+        />
       </View>
     </div>
   );
