@@ -17,7 +17,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function ChroniclesPage() {
   const lang = useLang();
-  const { data: projects = [], isLoading, isError } = usePublicProjects(lang);
+  const { data: projects = [] } = usePublicProjects(lang);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -43,7 +43,7 @@ export default function ChroniclesPage() {
       <div className="relative z-20 w-full">
         <TheAlchemist />
         <TechGrimoire />
-        <TheCraftings projects={projects} isLoading={isLoading} isError={isError} />
+        <TheCraftings projects={projects} />
         <TheJourney />
       </div>
     </main>

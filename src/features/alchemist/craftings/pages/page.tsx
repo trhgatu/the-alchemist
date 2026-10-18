@@ -15,7 +15,7 @@ export default function CraftingsPage() {
   const scope = useRef<HTMLDivElement>(null);
   const lang = useLang();
   const t = translations[lang].craftingsPage;
-  const { data: projects = [], isLoading, isError } = usePublicProjects(lang);
+  const { data: projects = [] } = usePublicProjects(lang);
 
   useGSAP(
     () => {
@@ -46,15 +46,6 @@ export default function CraftingsPage() {
         <header className="pt-36 pb-12 md:pt-48 md:pb-16">
           <h1 className="intro-line font-kings text-3xl md:text-4xl text-[#f3ead8]">{t.title}</h1>
         </header>
-
-        {isLoading && (
-          <p className="font-garamond italic text-[#8a7e69]">{translations[lang].common.loading}</p>
-        )}
-        {isError && (
-          <p className="font-garamond italic text-amber-300/90">
-            {translations[lang].common.error}
-          </p>
-        )}
 
         <CraftingsIndex projects={projects} />
 

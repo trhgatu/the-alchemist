@@ -24,7 +24,7 @@ export default function CraftingDetailPage() {
   const lang = useLang();
   const t = translations[lang].craftingsPage;
   const { transitionTo } = useTransitionRouter();
-  const { data: projects = [], isLoading } = usePublicProjects(lang);
+  const { data: projects = [] } = usePublicProjects(lang);
 
   const index = projects.findIndex((p) => p.slug === slug);
   const project = projects[index];
@@ -81,13 +81,7 @@ export default function CraftingDetailPage() {
           ← {t.back}
         </Link>
 
-        {isLoading && (
-          <p className="mt-24 font-garamond italic text-[#8a7e69]">
-            {translations[lang].common.loading}
-          </p>
-        )}
-
-        {!isLoading && !project && (
+        {!project && (
           <p className="mt-24 pb-40 font-garamond text-xl italic text-[#c8bca5]">{t.notFound}</p>
         )}
 

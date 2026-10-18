@@ -166,11 +166,11 @@ export const MOCK_PROJECTS_VI: Project[] = withText("vi");
 
 export const MOCK_PROJECTS: Project[] = MOCK_PROJECTS_EN;
 
-export const getMockProjects = async (
+export const getMockProjects = (
   lang: string,
   _type?: ProjectTypeEnum,
   featured?: boolean
-): Promise<Project[]> => {
+): Project[] => {
   const source = lang === "vi" ? MOCK_PROJECTS_VI : MOCK_PROJECTS_EN;
   let result = [...source];
   if (featured !== undefined) {
@@ -179,7 +179,7 @@ export const getMockProjects = async (
   return result;
 };
 
-export const getMockProjectBySlug = async (slug: string, lang?: string): Promise<Project> => {
+export const getMockProjectBySlug = (slug: string, lang?: string): Project => {
   const source = lang === "vi" ? MOCK_PROJECTS_VI : MOCK_PROJECTS_EN;
   const project = source.find((p) => p.slug === slug);
   if (!project) {

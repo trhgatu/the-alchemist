@@ -16,11 +16,9 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 interface ProjectHomeProps {
   projects: Project[];
-  isLoading?: boolean;
-  isError?: boolean;
 }
 
-export function TheCraftings({ projects, isLoading, isError }: ProjectHomeProps) {
+export function TheCraftings({ projects }: ProjectHomeProps) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const backgroundRef = useRef<HTMLDivElement>(null);
   const orbitalRef = useRef<HTMLDivElement>(null);
@@ -227,32 +225,6 @@ export function TheCraftings({ projects, isLoading, isError }: ProjectHomeProps)
     if (lenis) lenis.scrollTo(y, { duration: 1.4 });
     else window.scrollTo({ top: y, behavior: "smooth" });
   };
-
-  if (isLoading) {
-    return (
-      <section className="relative w-full h-screen bg-neutral-950 flex items-center justify-center">
-        <div className="text-center space-y-4">
-          <div className="w-12 h-12 border-2 border-amber-500/20 border-t-amber-500 rounded-full animate-spin mx-auto" />
-          <p className="font-kings text-xl text-amber-200/60 tracking-wider">
-            {translations[lang].common.loading}
-          </p>
-        </div>
-      </section>
-    );
-  }
-
-  if (isError) {
-    return (
-      <section className="relative w-full h-screen bg-neutral-950 flex items-center justify-center">
-        <div className="text-center space-y-2">
-          <h3 className="font-kings text-3xl text-amber-500/80">Flux Disruption</h3>
-          <p className="font-garamond text-xs text-neutral-500 tracking-wider">
-            {translations[lang].common.error}
-          </p>
-        </div>
-      </section>
-    );
-  }
 
   return (
     <section ref={sectionRef} id="craftings" className="relative w-full min-h-screen text-white">
