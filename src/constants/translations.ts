@@ -51,7 +51,7 @@ export const translations = {
           },
           rubedo: {
             title: "Rubedo: Realization",
-            desc: "Now the raw metal of those years glows red in the fire. The journey is not over, but the furnace door has opened onto the wide desert, where the whole universe waits.",
+            desc: "Now the raw metal of those years has crystallized into pure gold. The flames of trial subside, giving way to the pride of creation. The furnace door swings wide open, carrying creations still warm into the world.",
             initial: "R",
           },
         },
@@ -127,7 +127,7 @@ export const translations = {
         journal: {
           nigredo: {
             title: "Nigredo: Hư Vô",
-            desc: "Khoảng thời gian lạc giữa bóng tối, chưa biết mình là ai, chưa rõ lối đi. Chuỗi ngày không hình hài, tựa kim loại thô nằm chìm nơi đáy lò. Nhưng sách xưa vẫn chép: muốn luyện nên vàng ròng, trước hết kim loại phải hoá đen.",
+            desc: "Những ngày lạc giữa bóng tối, chưa biết mình là ai, chưa rõ lối đi. Chuỗi ngày không hình hài, tựa kim loại thô nằm chìm nơi đáy lò. Nhưng sách xưa vẫn chép: muốn luyện nên vàng ròng, trước hết kim loại phải hoá đen.",
             initial: "N",
           },
           albedo: {
@@ -137,12 +137,12 @@ export const translations = {
           },
           citrinitas: {
             title: "Citrinitas: Thức Tỉnh",
-            desc: "Rồi một đêm, giữa sự im lặng của lò rèn, tia lửa ấy bùng lên. Con đường phía trước hiện ra rõ ràng, và mọi danh xưng chật hẹp bỗng rơi rụng như trút bỏ tấm áo cũ. Kể từ đó, đôi tay không còn làm việc vì sợ hãi, mà vì niềm vui được dựng nên những điều chưa từng có hình hài.",
+            desc: "Rồi một đêm, giữa sự im lặng của lò rèn, tia lửa ấy bùng lên. Vận mệnh của chính mình cất tiếng gọi, và mọi danh xưng chật hẹp bỗng rơi rụng như trút bỏ tấm áo cũ. Kể từ đó, đôi tay không còn làm việc vì sợ hãi, mà vì niềm vui được dựng nên những điều chưa từng có hình hài.",
             initial: "C",
           },
           rubedo: {
             title: "Rubedo: Hiện Thực",
-            desc: "Giờ đây, thứ kim loại thô năm ấy đã đỏ rực trong lửa. Hành trình chưa khép lại, nhưng cửa lò luyện đã mở ra phía sa mạc mênh mông, nơi cả vũ trụ đang chờ.",
+            desc: "Giờ đây, thứ kim loại thô năm ấy đã kết tinh thành vàng ròng. Ngọn lửa thử thách lắng xuống, nhường chỗ cho niềm kiêu hãnh của sự kiến tạo. Cửa lò mở toang, mang theo những tạo vật còn nguyên hơi ấm bước ra thế giới.",
             initial: "R",
           },
         },
