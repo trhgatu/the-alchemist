@@ -58,7 +58,7 @@ export const translations = {
       },
       craftings: {
         title: "The Craftings",
-        desc: "What has come out of the furnace so far, each work still warm.",
+        desc: "A curated archive of digital craft, waiting to be explored.",
         visitSite: "Visit the site →",
       },
       journey: {
@@ -149,7 +149,7 @@ export const translations = {
       },
       craftings: {
         title: "Chế Tác",
-        desc: "Những gì đã ra khỏi lò luyện cho đến nay, tác phẩm nào cũng còn hơi ấm.",
+        desc: "Tuyển tập những tạo tác kỹ thuật số, sẵn sàng để được chiêm ngưỡng.",
         visitSite: "Xem trang →",
       },
       journey: {
