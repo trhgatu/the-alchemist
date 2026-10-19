@@ -36,22 +36,22 @@ export const translations = {
         journal: {
           nigredo: {
             title: "Nigredo: The Void",
-            desc: "There was a time when the apprentice was lost in the dark, not knowing who to become, nor which way to go. The days passed without shape, like raw metal lying still at the bottom of the furnace. Yet the old books are clear: before metal can turn to gold, it must first turn black.",
+            desc: "Lost in the dark, not knowing who to become, nor which way to go. Days passed without shape, like raw metal lying still at the bottom of the furnace. Yet the old books are clear: before metal can turn to gold, it must first turn black.",
             initial: "N",
           },
           albedo: {
             title: "Albedo: Purification",
-            desc: "Then came the first lines of code, and the lost one lit the furnace for the very first time. Day after day, month after month, the noise was washed away, until rough lines of code found an even breath. No one was watching, only a small flame that never went out, and a mirror within growing clearer each day.",
+            desc: "The first lines of code appeared, and a small flame lit the furnace for the very first time. Noise was washed away with the years, until rough syntax found an even breath. No one was watching, only a small flame that never went out, and a mirror within growing clearer each day.",
             initial: "A",
           },
           citrinitas: {
             title: "Citrinitas: Awakening",
-            desc: "Then one night, in the silence of the forge, the spark caught. A Personal Legend called out, clear at last, and every narrow title fell away like an old cloak. From then on, the hands worked not out of fear, but for the joy of breathing life into things that had no form.",
+            desc: "In the silence of the forge, the spark caught. A Personal Legend called out, clear at last, and every narrow title fell away like an old cloak. From then on, the hands worked not out of fear, but for the joy of breathing life into things that had no form.",
             initial: "C",
           },
           rubedo: {
             title: "Rubedo: Realization",
-            desc: "Now the raw metal of those years has crystallized into pure gold. The flames of trial subside, giving way to the pride of creation. The furnace door swings wide open, carrying creations still warm into the world.",
+            desc: "The raw metal of those years has crystallized into pure gold. The flames of trial subside, giving way to the pride of creation. The furnace door swings wide open, carrying creations still warm into the world.",
             initial: "R",
           },
         },
@@ -127,7 +127,7 @@ export const translations = {
         journal: {
           nigredo: {
             title: "Nigredo: Hư Vô",
-            desc: "Những ngày lạc giữa bóng tối, chưa biết mình là ai, chưa rõ lối đi. Chuỗi ngày không hình hài, tựa kim loại thô nằm chìm nơi đáy lò. Nhưng sách xưa vẫn chép: muốn luyện nên vàng ròng, trước hết kim loại phải hoá đen.",
+            desc: "Lạc giữa bóng tối, chưa biết mình là ai, chưa rõ lối đi. Chuỗi ngày không hình hài, tựa kim loại thô nằm chìm nơi đáy lò. Nhưng sách xưa vẫn chép: muốn luyện nên vàng ròng, trước hết kim loại phải hoá đen.",
             initial: "N",
           },
           albedo: {
@@ -137,12 +137,12 @@ export const translations = {
           },
           citrinitas: {
             title: "Citrinitas: Thức Tỉnh",
-            desc: "Rồi một đêm, giữa sự im lặng của lò rèn, tia lửa ấy bùng lên. Vận mệnh của chính mình cất tiếng gọi, và mọi danh xưng chật hẹp bỗng rơi rụng như trút bỏ tấm áo cũ. Kể từ đó, đôi tay không còn làm việc vì sợ hãi, mà vì niềm vui được dựng nên những điều chưa từng có hình hài.",
+            desc: "Giữa sự im lặng của lò rèn, tia lửa bùng lên. Vận mệnh của chính mình cất tiếng gọi, và mọi danh xưng chật hẹp bỗng rơi rụng như trút bỏ tấm áo cũ. Kể từ đó, đôi tay không còn làm việc vì sợ hãi, mà vì niềm vui được dựng nên những điều chưa từng có hình hài.",
             initial: "C",
           },
           rubedo: {
             title: "Rubedo: Hiện Thực",
-            desc: "Giờ đây, thứ kim loại thô năm ấy đã kết tinh thành vàng ròng. Ngọn lửa thử thách lắng xuống, nhường chỗ cho niềm kiêu hãnh của sự kiến tạo. Cửa lò mở toang, mang theo những tạo vật còn nguyên hơi ấm bước ra thế giới.",
+            desc: "Kim loại thô năm ấy nay đã kết tinh thành vàng ròng. Ngọn lửa thử thách lắng xuống, nhường chỗ cho niềm kiêu hãnh của sự kiến tạo. Cửa lò mở toang, mang theo những tạo vật còn nguyên hơi ấm bước ra thế giới.",
             initial: "R",
           },
         },
