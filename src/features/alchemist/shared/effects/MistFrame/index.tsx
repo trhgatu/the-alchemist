@@ -327,7 +327,7 @@ function MistPlane({
     // Slow, measured alchemical burn:
     // Takes ~4.5 seconds to creep across the picture, ~2.0 seconds to gently cool down
     const safeDelta = Math.min(delta, 0.05);
-    const burnDuration = m.hovered ? 4.5 : 2.0;
+    const burnDuration = m.hovered ? 2.0 : 2.0;
     const step = safeDelta / burnDuration;
     if (m.hovered) {
       m.burn = Math.min(1, m.burn + step);

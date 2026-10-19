@@ -144,7 +144,6 @@ export const ForgeFooter = () => {
           <p>
             &copy; {year} {OWNER}. {t.colophon.rights}
           </p>
-          <p className="font-kings text-base text-amber-200/40 tracking-wider">Maktub.</p>
         </div>
       </div>
       <span className="sr-only">trhgatu</span>
