@@ -51,7 +51,7 @@ export const translations = {
           },
           rubedo: {
             title: "Rubedo: Realization",
-            desc: "The raw metal of those years has crystallized into pure gold. The flames of trial subside, giving way to the pride of creation. The furnace door swings wide open, carrying creations still warm into the world.",
+            desc: "The raw metal of those years has crystallized into pure gold. The flames of trial subside, giving way to the pride of creation. It is time to carry creations still warm into the world.",
             initial: "R",
           },
         },
@@ -142,7 +142,7 @@ export const translations = {
           },
           rubedo: {
             title: "Rubedo: Hiện Thực",
-            desc: "Kim loại thô năm ấy nay đã kết tinh thành vàng ròng. Ngọn lửa thử thách lắng xuống, nhường chỗ cho niềm kiêu hãnh của sự kiến tạo. Cửa lò mở toang, mang theo những tạo vật còn nguyên hơi ấm bước ra thế giới.",
+            desc: "Kim loại thô năm ấy nay đã kết tinh thành vàng ròng. Ngọn lửa thử thách lắng xuống, nhường chỗ cho niềm kiêu hãnh của sự kiến tạo. Đã đến lúc mang những tạo vật còn nguyên hơi ấm bước ra thế giới.",
             initial: "R",
           },
         },
