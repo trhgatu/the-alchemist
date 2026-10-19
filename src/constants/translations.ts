@@ -5,7 +5,8 @@ export const translations = {
       craftings: "Craftings",
     },
     hero: {
-      role: "Creative developer. This is a record of how I learned to make things.",
+      role: "Creative Developer",
+      tagline: "This is a record of how I learned to make things.",
       scroll: "scroll to open",
     },
     chronicles: {
@@ -97,7 +98,8 @@ export const translations = {
       craftings: "Chế Tác",
     },
     hero: {
-      role: "Creative developer. Đây là ghi chép về cách tôi học làm ra mọi thứ.",
+      role: "Creative Developer",
+      tagline: "Đây là ghi chép về cách tôi học làm ra mọi thứ.",
       scroll: "cuộn để mở",
     },
     chronicles: {

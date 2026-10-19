@@ -216,9 +216,18 @@ export const HeroForgeEntry = () => {
       `}</style>
 
       {/* Who this is, and how to go in */}
-      <div className="hero-fade-out absolute inset-x-0 bottom-0 z-30 flex h-[28%] flex-col items-center justify-between px-6 pb-10 text-center pointer-events-none">
-        <p className="font-garamond text-lg italic text-neutral-800 md:text-2xl">{t.role}</p>
-        <p className="scroll-hint font-garamond text-base italic text-neutral-600">{t.scroll}</p>
+      <div className="hero-fade-out absolute inset-x-0 bottom-0 z-30 flex flex-col items-center justify-end px-6 pb-8 md:pb-12 text-center pointer-events-none">
+        <div className="space-y-2 md:space-y-3 max-w-4xl">
+          <p className="font-garamond font-semibold text-base sm:text-lg md:text-xl tracking-[0.25em] md:tracking-[0.3em] uppercase text-neutral-900">
+            {t.role}
+          </p>
+          <p className="font-garamond text-xl sm:text-2xl md:text-3xl lg:text-4xl italic text-neutral-800 leading-snug">
+            {t.tagline}
+          </p>
+        </div>
+        <p className="scroll-hint mt-6 md:mt-8 font-garamond text-sm md:text-base italic text-neutral-500 tracking-wider">
+          {t.scroll}
+        </p>
       </div>
     </section>
   );
