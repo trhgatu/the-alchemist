@@ -1,7 +1,6 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ATMOSPHERE_CONFIG } from "../constants";
 
 interface UseAtmosphereTimelineProps {
   containerRef: React.RefObject<HTMLDivElement | null>;
@@ -26,7 +25,6 @@ export const useAtmosphereTimeline = ({
       setEmbersVisible(true);
 
       const techGrimoireEl = document.getElementById("tech-grimoire");
-      const craftingsEl = document.getElementById("craftings");
 
       if (techGrimoireEl) {
         ScrollTrigger.create({
@@ -41,21 +39,6 @@ export const useAtmosphereTimeline = ({
               autoAlpha: self.progress >= 1 ? 0 : 1,
             });
             setEmbersVisible(self.progress < 1);
-          },
-        });
-      }
-
-      if (craftingsEl) {
-        ScrollTrigger.create({
-          trigger: craftingsEl,
-          start: ATMOSPHERE_CONFIG.CRAFTINGS_FADE_START,
-          end: ATMOSPHERE_CONFIG.CRAFTINGS_FADE_END,
-          scrub: true,
-          onUpdate: (self) => {
-            gsap.set(starsRef.current, {
-              opacity: 1 - self.progress,
-              autoAlpha: self.progress >= 1 ? 0 : 1,
-            });
           },
         });
       }

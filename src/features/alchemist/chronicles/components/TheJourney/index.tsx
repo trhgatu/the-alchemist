@@ -68,6 +68,7 @@ export function TheJourney() {
 
       // Dawn: the sky lightens from the horizon up, the sun rises, the land appears
       tl.to(".dawn-sky", { opacity: 1, duration: 4, ease: "power1.inOut" }, "+=0.5")
+        .to(".global-stars", { opacity: 0, duration: 4, ease: "power1.inOut" }, "<")
         .to(".dawn-sun", { yPercent: 0, opacity: 1, duration: 4, ease: "power2.out" }, "<1")
         .to(".dawn-land", { yPercent: 0, opacity: 1, duration: 3, ease: "power2.out" }, "<0.5")
         .to(".dawn-air", { opacity: 1, duration: 3, ease: "power1.inOut" }, "<0.5");

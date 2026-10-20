@@ -11,7 +11,4 @@ export const ATMOSPHERE_CONFIG = {
   STARS_MAX_OPACITY: 1,
   STARS_MID_OPACITY: 0.5,
   EMBERS_MIN_OPACITY: 0,
-
-  CRAFTINGS_FADE_START: "bottom 50%",
-  CRAFTINGS_FADE_END: "bottom top",
 } as const;
