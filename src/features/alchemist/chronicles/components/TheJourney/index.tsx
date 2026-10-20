@@ -40,7 +40,7 @@ export function TheJourney() {
       gsap.set(entries, { opacity: 0, scale: 0.9 });
       gsap.set(".dawn-sky", { opacity: 0 });
       gsap.set(".dawn-sun", { yPercent: 60, opacity: 0 });
-      gsap.set(".dawn-land", { yPercent: 12, opacity: 0 });
+      gsap.set(".dawn-land", { yPercent: 8, opacity: 0 });
       gsap.set(".dawn-air", { opacity: 0 });
       gsap.set([".dawn-quote", ".dawn-author"], { opacity: 0, y: 24 });
       gsap.set(".maktub-pen", { attr: { x: -420 } });
@@ -50,7 +50,7 @@ export function TheJourney() {
         scrollTrigger: {
           trigger: containerRef.current,
           start: "top top",
-          end: "+=400%",
+          end: "+=450%",
           pin: true,
           scrub: 1.5,
           anticipatePin: 1,
@@ -66,16 +66,20 @@ export function TheJourney() {
           .to(entry, { opacity: 0, scale: 1.08, duration: 1.5, ease: "power2.in" }, at + 4.5);
       });
 
-      // Dawn: the sky lightens from the horizon up, the sun rises, the land appears
-      tl.to(".dawn-sky", { opacity: 1, duration: 4, ease: "power1.inOut" }, "+=0.5")
-        .to(".global-stars", { opacity: 0, duration: 4, ease: "power1.inOut" }, "<")
-        .to(".dawn-sun", { yPercent: 0, opacity: 1, duration: 4, ease: "power2.out" }, "<1")
-        .to(".dawn-land", { yPercent: 0, opacity: 1, duration: 3, ease: "power2.out" }, "<0.5")
-        .to(".dawn-air", { opacity: 1, duration: 3, ease: "power1.inOut" }, "<0.5");
+      // Dawn:
+      // 1. The sky lightens gracefully from the horizon, cosmic stars dissolve into morning light
+      tl.to(".dawn-sky", { opacity: 1, duration: 5, ease: "power1.inOut" }, "+=0.8")
+        .to(".global-stars", { opacity: 0, duration: 4.5, ease: "power1.inOut" }, "<")
 
-      // The caravan sets off towards the pyramid (the sketch draws the camels
-      // facing left), leaving footprints behind
-      tl.addLabel("onward", "-=1")
+        // 2. The sun rises over the horizon as golden light spreads
+        .to(".dawn-sun", { yPercent: 0, opacity: 1, duration: 4.5, ease: "power2.out" }, "<1.5")
+
+        // 3. The pyramids and desert dunes emerge softly through the morning haze
+        .to(".dawn-land", { yPercent: 0, opacity: 1, duration: 4, ease: "power1.inOut" }, "<1.8")
+        .to(".dawn-air", { opacity: 1, duration: 3.5, ease: "power1.inOut" }, "<0.5");
+
+      // 4. With the pyramids now in clear view, the caravan begins its march towards them
+      tl.addLabel("onward", "+=0.6")
         .to(
           ".dawn-caravan",
           { xPercent: -14, yPercent: -4, scale: 0.82, duration: 9, ease: "none" },
@@ -83,11 +87,11 @@ export function TheJourney() {
         )
         .to(".caravan-trail", { strokeDashoffset: 0, duration: 9, ease: "none" }, "onward");
 
-      // One quote, then the word that answers it, written by hand
-      tl.to(".dawn-quote", { opacity: 1, y: 0, duration: 2, ease: "power2.out" }, "onward")
-        .to(".dawn-author", { opacity: 1, y: 0, duration: 1.2, ease: "power2.out" }, "-=0.8")
-        .to(".maktub-pen", { attr: { x: 0 }, duration: 3.5, ease: "power1.inOut" }, "+=0.8")
-        .to({}, { duration: 1.5 });
+      // 5. The final wisdom & Maktub inscription written by hand
+      tl.to(".dawn-quote", { opacity: 1, y: 0, duration: 2.5, ease: "power2.out" }, "onward+=0.8")
+        .to(".dawn-author", { opacity: 1, y: 0, duration: 1.5, ease: "power2.out" }, "-=1.0")
+        .to(".maktub-pen", { attr: { x: 0 }, duration: 4, ease: "power1.inOut" }, "+=0.6")
+        .to({}, { duration: 2 });
     },
     { scope: containerRef, dependencies: [lang], revertOnUpdate: true }
   );
@@ -133,9 +137,9 @@ export function TheJourney() {
         </svg>
 
         {/* The sketch, square like its viewBox so percentages map onto it */}
-        <div className="absolute bottom-[38%] left-1/2 aspect-square h-[150%] -translate-x-1/2 opacity-50 mix-blend-multiply">
+        <div className="absolute bottom-[38%] left-1/2 aspect-square h-[150%] -translate-x-1/2 opacity-50 mix-blend-multiply will-change-transform">
           <div className="absolute inset-0" style={{ clipPath: WITHOUT_CARAVAN }}>
-            <Image src="/assets/images/adventure.svg" alt="" fill sizes="500px" />
+            <Image src="/assets/images/adventure.svg" alt="" fill sizes="500px" priority />
           </div>
 
           <svg className="absolute inset-0 h-full w-full" viewBox="0 0 1200 1200">
@@ -165,10 +169,10 @@ export function TheJourney() {
           </svg>
 
           <div
-            className="dawn-caravan absolute inset-0"
+            className="dawn-caravan absolute inset-0 will-change-transform"
             style={{ clipPath: CARAVAN_ONLY, transformOrigin: `${(L + Rr) / 2}% ${B}%` }}
           >
-            <Image src="/assets/images/adventure.svg" alt="" fill sizes="500px" />
+            <Image src="/assets/images/adventure.svg" alt="" fill sizes="500px" priority />
           </div>
         </div>
 

@@ -1,17 +1,21 @@
 "use client";
 
-import { NavbarForge, ForgeFooter } from "@/components/shared/forge";
 import React from "react";
+import { usePathname } from "next/navigation";
+import { NavbarForge, ForgeFooter } from "@/components/shared/forge";
 
 export function ForgeNavigationWrapper({ children }: { children: React.ReactNode }) {
-  // Define routes where we want a clean, immersive experience (no nav/footer)
-  const isImmersiveRoute = false; // Add immersive routes here in the future
+  const pathname = usePathname();
+
+  // Crafting detail pages (/craftings/[slug]) have their own dedicated "The next work"
+  // navigation and folio space; the grand home footer is hidden to preserve immersion.
+  const isDetailPage = /^\/craftings\/[^/]+\/?$/.test(pathname);
 
   return (
     <>
-      {!isImmersiveRoute && <NavbarForge />}
+      <NavbarForge />
       {children}
-      {!isImmersiveRoute && <ForgeFooter />}
+      {!isDetailPage && <ForgeFooter />}
     </>
   );
 }

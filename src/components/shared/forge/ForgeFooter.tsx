@@ -139,8 +139,8 @@ export const ForgeFooter = () => {
           </ul>
         </nav>
 
-        {/* Colophon & Maktub */}
-        <div className="mt-14 md:mt-20 flex flex-col sm:flex-row justify-between items-center gap-4 border-t border-neutral-800/60 pt-8 text-sm text-neutral-500">
+        {/* Colophon */}
+        <div className="mt-14 md:mt-20 flex items-center justify-center border-t border-neutral-800/60 pt-8 text-center font-garamond text-base sm:text-lg md:text-xl text-neutral-400 tracking-wider">
           <p>
             &copy; {year} {OWNER}. {t.colophon.rights}
           </p>
