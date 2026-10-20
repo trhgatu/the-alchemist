@@ -49,15 +49,6 @@ export const HeroForgeEntry = () => {
       const setNavTone = useAppStore.getState().setNavTone;
       setNavTone("ink");
 
-      // While the paper fills the screen nothing behind it can be seen, so the
-      // night layers are hidden; their render loops skip hidden layers.
-      const coverStars = (covered: boolean) => {
-        document.querySelectorAll<HTMLElement>(".global-stars").forEach((el) => {
-          el.style.visibility = covered ? "hidden" : "";
-        });
-      };
-      coverStars(window.scrollY < 2);
-
       gsap.to(scope.current, { autoAlpha: 1, duration: 0.5 });
 
       const tl = gsap.timeline({
@@ -72,7 +63,6 @@ export const HeroForgeEntry = () => {
         onUpdate() {
           const tone = this.time() < WASHI_COVER_END ? "ink" : "light";
           if (useAppStore.getState().navTone !== tone) setNavTone(tone);
-          coverStars(this.time() < 0.01);
         },
       });
       tl.to(
@@ -154,7 +144,6 @@ export const HeroForgeEntry = () => {
 
       return () => {
         setNavTone("light");
-        coverStars(false);
       };
     },
     { scope, dependencies: [lang], revertOnUpdate: true }

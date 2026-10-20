@@ -22,14 +22,16 @@ export const GlobalAtmosphere = ({
   sparkCount = 200,
 }: GlobalAtmosphereProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const nebulaRef = useRef<HTMLDivElement>(null);
+  const whiteStarsRef = useRef<HTMLDivElement>(null);
   const embersRef = useRef<HTMLDivElement>(null);
-  const starsRef = useRef<HTMLDivElement>(null);
   const [embersVisible, setEmbersVisible] = useState(true);
   const coolRef = useRef(0);
 
   useAtmosphereTimeline({
     containerRef,
-    starsRef,
+    nebulaRef,
+    whiteStarsRef,
     embersRef,
     coolRef,
     setEmbersVisible: (visible) => {
@@ -39,13 +41,25 @@ export const GlobalAtmosphere = ({
 
   return (
     <div ref={containerRef} className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+      {/* 1. Nebula Layer: Ambient cosmic aura (Red & amber at Forge/Hero -> Silver & blue at Night/Grimoire) */}
+      <div
+        ref={nebulaRef}
+        className="absolute inset-0 z-0 global-nebula global-stars pointer-events-none"
+      >
+        <OglStarField coolRef={coolRef} />
+      </div>
+
+      {/* 2. 2D White StarField: Hidden at Hero to prevent visual noise with embers; fades in at Tech Grimoire */}
       {showStars && (
-        <div ref={starsRef} className="absolute inset-0 z-0 global-stars pointer-events-none">
-          <OglStarField coolRef={coolRef} />
+        <div
+          ref={whiteStarsRef}
+          className="absolute inset-0 z-10 global-white-stars global-stars pointer-events-none"
+        >
           <StarField />
         </div>
       )}
 
+      {/* 3. Forge Embers: Red/golden sparks burning at Hero, dying out as we reach the Grimoire */}
       <div ref={embersRef} className="absolute inset-0 z-30 global-embers pointer-events-none">
         <View className="w-full h-full">
           {showSeal && <MagicCircle isIgnited={isIgnited} />}
